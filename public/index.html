@@ -27,9 +27,24 @@
     </script>
     <!--babel-->
 
-    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-functions.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDDl0PS2g1IeegZzOgZjOsKMHGss0Nrzbg",
+        authDomain: "seng471project.firebaseapp.com",
+        databaseURL: "https://seng471project.firebaseio.com",
+        projectId: "seng471project",
+        storageBucket: "seng471project.appspot.com",
+        messagingSenderId: "809199169718",
+        appId: "1:809199169718:web:b100ef5e66b70a54"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
     <!-- Everything from firebase -->
 
     
@@ -42,7 +57,7 @@
         crossorigin="anonymous">
     <!-- font awesome -->
 
-    <link href="./style.css" rel='stylesheet'>
+      <link href="./style.css" rel='stylesheet'>
     <!-- extra css -->
 
   </head>
@@ -88,6 +103,7 @@
       </div>
     </div><!-- modal container -->
     
+    <script src="./request.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
