@@ -27,7 +27,6 @@
  app.use(cors())
 
  require('dotenv').config() // sets up the environment for DB
- const db = require('./db')// to be used on the endpoints
 
  // serving the client side
  app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))

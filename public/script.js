@@ -11,7 +11,7 @@
  */
 
 
-{ // scope
+{ // local scope
     const GREETING = "Hello World"
     /*
         Instead of navigating to different pages, since we're doing
