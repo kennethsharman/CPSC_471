@@ -9,6 +9,7 @@ const requestService = (url, method, params, success, error) => {
 
     let req = new XMLHttpRequest()
     
+    // interfaces response from back end
     req.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
             console.log('success!')
@@ -22,9 +23,9 @@ const requestService = (url, method, params, success, error) => {
         }
     }
 
-    req.open(method,`https://us-central1-seng471project.cloudfunctions.net/app${url}`,true)
+    req.open(method,`https://us-central1-seng471project.cloudfunctions.net/app${url}`,true) // backend
     req.setRequestHeader("Content-Type", "application/json")
     req.setRequestHeader('Access-Control-Allow-Headers', '*')
-    req.setRequestHeader('Access-Control-Allow-Origin', `https://seng471project.firebaseapp.com/`)
+    req.setRequestHeader('Access-Control-Allow-Origin', `https://seng471project.firebaseapp.com/`) // front end
     req.send(JSON.stringify(params))
 }

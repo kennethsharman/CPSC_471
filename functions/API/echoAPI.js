@@ -1,5 +1,8 @@
+/**
+ * Just for testing
+ */
 const echoAPI = {
-    test(req, res, next) {
+    testEP(req, res, next) {
         // logic here
         console.log(req.body)
         
