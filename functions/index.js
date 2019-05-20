@@ -28,14 +28,15 @@
 
  require('dotenv').config() // sets up the environment for DB
  const db = require('./db')// to be used on the endpoints
-  
- // serving the index.html file
+
+ // serving the client side
  app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))
 
 // recieves back end post/get/put/delete
  app.post('/echo', validator.echoMW, echoAPI.testEP)
 
  // more endpoints go here
+
 
 
  exports.app = functions.https.onRequest(app)
