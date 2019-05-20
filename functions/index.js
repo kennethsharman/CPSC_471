@@ -3,6 +3,12 @@
  const functions = require('firebase-functions')
  const bodyParser = require('body-parser')
  const cors = require('cors')
+
+ // back end code
+ const echoAPI = require('./API/echoAPI')
+ const validator = require('./API/validatorMW')
+
+ require('dotenv').config()
  firebase.initializeApp(functions.config().firebase)
 
  const app = require('express')()
@@ -15,8 +21,8 @@
  // serving the client side
  app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))
 
+// recieves back end post/get/put/delete
+ app.post('/echo', validator.echo, echoAPI.test)
 
-//  app.post('/endpoint here', )
- 
- 
+
  exports.app = functions.https.onRequest(app)
