@@ -3,8 +3,9 @@
 ## Instructions
 
 1) Clone
-
-2) Open index.html
+2) Copy `.runtimeconfig.json` into the `functions` folder
+3) Run `firebase serve`
+4) Visit the app at http://localhost:5000
 
 ## File Descriptions
 
@@ -30,7 +31,7 @@ If an query results in an error, Firestore will help to create a new index to fi
 Cloud Firestore Security Rules.
 
     e.g. Allow read/write access to all documents to any user signed into the application
-    
+
 ### package-lock.json & package.json
 
 Created by Node Package Manager (npm). Describes project dependencies (modules needed to run
