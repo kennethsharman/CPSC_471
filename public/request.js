@@ -3,7 +3,7 @@
 const deployment = false
 
 const requestService = (url, method, params, success, error) => {
-    const serverURL = deployment? `https://us-central1-seng471project.cloudfunctions.net/app`: `http://localhost:5002/seng471project/us-central1/app`
+    const serverURL = deployment? `https://us-central1-seng471project.cloudfunctions.net/app`: `http://localhost:5001/seng471project/us-central1/app`
 
 
     console.log("URL", url)
