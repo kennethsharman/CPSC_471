@@ -1,18 +1,17 @@
 const { Client } = require('pg');
+const functions = require('firebase-functions')
+
 const db = () => {
 
+    console.log(functions.config().envs.pg_host)
     const client = new Client({
+        host: functions.config().envs.pg_host,
+        port: functions.config().envs.pg_port,
+        user: functions.config().envs.pg_user,
+        password: functions.config().envs.pg_password,
+        database: functions.config().envs.pg_database,
         ssl: true
     })
-
-    client.connect();
-    client.query('SELECT * FROM test_table;', (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-    }
-    client.end();
-    });
 
     return client
 }

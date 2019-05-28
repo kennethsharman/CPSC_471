@@ -13,7 +13,7 @@ const requestService = (url, method, params, success, error) => {
     console.log(JSON.stringify(params))
 
     let req = new XMLHttpRequest()
-    
+
     // interfaces response from back end
     req.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
@@ -30,7 +30,5 @@ const requestService = (url, method, params, success, error) => {
 
     req.open(method,`${serverURL}${url}`,true) // backend
     req.setRequestHeader("Content-Type", "application/json")
-    req.setRequestHeader('Access-Control-Allow-Headers', '*')
-    req.setRequestHeader('Access-Control-Allow-Origin', `*`) // front end
     req.send(JSON.stringify(params))
 }
