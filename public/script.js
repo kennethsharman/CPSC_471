@@ -1,51 +1,43 @@
 /**
- * This is the main front end code.
- * 
- * We might want to split this up per view, such as for one for
- * * logging in
- * * admin view
- * * customer view
- * 
- *  depending on what the UX dictates
- * 
+ *  Project front end ideas
  */
 
 
 { // local scope
-    const GREETING = "Hello World"
-    /*
-        Instead of navigating to different pages, since we're doing
-        a web app, we can use JQuery as such:
-        $(containerID).html(newContent)
+    const GREETING = "Welcome"
 
-        to display other content
+    loadLogin() // landing page is login
 
-        the alternative is to use something like React, but that's
-        another learning curve
-    */
-    $('#main-bar').html(`
-        <p>${GREETING}. Click this button to continue</p>
-        <button type="btn btn-primary" id='test-btn'>
-            Test it out
-        </button>
-    `)
+    // Load Login Page
+    function loadLogin() {
 
-    // jquery event listeners - moslty for clicking buttons
-    $(document).on('click', '#test-btn', event => {
-        event.preventDefault()
+      $('#main-bar').html(`
+          <br>
+          <img id="login_img" src="The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="500">
+          <br><h1>${GREETING}</h1><br>
+          <p>Username <textarea rows="1" cols="20"> </textarea></p>
+          <p>Password <textarea rows="1" cols="20"> </textarea></p>
+          <button type="btn btn-primary" id='login-btn'>
+              Login
+          </button>
+      `)
 
-        const success = request => {
-            console.log(request.response)
-        }
+    } // end loadLogin
 
-        const error = request => {
-            console.log(request)
-        }
+    // login button
+    $(document).on('click', '#login-btn', event => {
+        event.preventDefault
 
-        // calling the back end - see request.js and functions/index.js
-        requestService(`/echo`, "POST", {
-            msg: "abc"
-            }, success, error)
-    })
+      //$.getScript("./adminView.js", function() {
+      //    loadAdmin();
+      //  });
 
-}
+        $.getScript("./adminView.js").then(function () {
+          $('#main-bar').empty();
+        }, function(err){
+          alert('ERROR:' + JSON.stringify(err));
+        });
+
+    });
+
+} // end script
