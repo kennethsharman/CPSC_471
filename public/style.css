@@ -16,7 +16,7 @@ footer {
   color: #ffffff;
 }
 
-/* Cook station dropdown */
+/* Cook station dropdown in adminView.js */
 <style>
   .dropbtn {
     background-color: ##ffffff;
@@ -54,12 +54,18 @@ footer {
 .dropdown:hover .dropbtn {background-color: #800000;}
 </style>
 
-
+/* My Account popup in adminView.js  */
 .modal-header {
      color: white:
  }
-
- /* The Modal (background) */
 .modal {
   background-color: rgba(128,128,128,0.5); /* 4th arg is opacity */
 }
+
+/* Open/Completed Orders Table in serverDashboard.js */
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
