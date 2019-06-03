@@ -9,7 +9,7 @@
 
     $('#header-row').html(`
   <h3 class="header-title">
-    <img id="header-logo" src="logo1.png" alt="Company Logo"> 
+    <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
     Staff Dashboard
   </h3>
 

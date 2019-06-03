@@ -8,7 +8,7 @@
     function loadLogin() {
       $('#header-row').html(`
         <div style="padding:24px;margin:12px;">
-          <img id="login_img" src="The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
+          <img id="login_img" src="pics/The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
         </div>
       `)
       $('#main-bar').html(`
@@ -39,7 +39,7 @@
 
     auth.onAuthStateChanged(user => {
       if(user) {
-        $.getScript("./adminView.js").then(function () {
+        $.getScript("./js/adminView.js").then(function () {
         }, function(err){
           alert('ERROR:' + JSON.stringify(err));
         }); // end getScript
