@@ -4,40 +4,51 @@
 
 
 { // local scope
-    const GREETING = "Welcome"
-
     loadLogin() // landing page is login
 
     // Load Login Page
     function loadLogin() {
-
+      $('#header-row').html(`
+        <div style="padding:24px;margin:12px;">
+          <img id="login_img" src="The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
+        </div>
+      `)
       $('#main-bar').html(`
-          <br>
-          <img id="login_img" src="The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="500">
-          <br><h1>${GREETING}</h1><br>
-          <p>Username <textarea rows="1" cols="20"> </textarea></p>
-          <p>Password <textarea rows="1" cols="20"> </textarea></p>
-          <button type="btn btn-primary" id='login-btn'>
-              Login
-          </button>
+        <div id="firebaseui-auth-container"></div>
       `)
 
     } // end loadLogin
 
-    // login button
-    $(document).on('click', '#login-btn', event => {
-        event.preventDefault
 
-      //$.getScript("./adminView.js", function() {
-      //    loadAdmin();
-      //  });
+    $(document).on('click', '.logout', e => {
+      e.preventDefault()
+      firebase.auth().signOut().then( () => {
+        location.reload()
+      })
+    })
 
+    const auth = firebase.auth()
+    let ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
+    ui.start('#firebaseui-auth-container', {
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => false,
+      },
+      signInFlow: 'popup',
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],
+    })
+
+    auth.onAuthStateChanged(user => {
+      if(user) {
         $.getScript("./adminView.js").then(function () {
-          $('#main-bar').empty();
         }, function(err){
           alert('ERROR:' + JSON.stringify(err));
         });
 
-    });
+      } else {
+          loadLogin()
+        }
+    })
 
 } // end script
