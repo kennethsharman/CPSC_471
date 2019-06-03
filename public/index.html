@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <!-- Google font Ubuntu Mono -->
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300i,400,400i,500,500i,700,700i" rel="stylesheet">
-    <!-- Google font Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <!-- Google font Lato -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
@@ -49,20 +49,28 @@
   </head>
   <body>
     <!-- structure of the index.html view -->
-    <div class='container'>
-      <div class="row" id="header-row">
-
-      </div> <!-- header row -->
+    <div class='container-fluid'>
       <div class="row">
-        <div class="col-3" id="left-bar">
+        <div class="col-md-2"></div> <!-- empty -->
+        <div class="col-md-8">
+          <div class="card" id="header-card">
+              <div class="card-body" id="header-card-body">
+                <div id="header-row"></div>
+              </div><!-- card body-->
+            </div><!-- header card-->
+        </div><!--col-->
+      </div><!-- row -->
+      <div class="row main-row">
+        <br><br>
+        <div class="col-md-3" id="left-bar">
 
         </div><!-- left bar -->
-
-        <div class="col-6" id="main-bar">
+        <br><br>
+        <div class="col-md-6" id="main-bar">
 
         </div><!-- main bar -->
-
-        <div class="col-3" id="right-bar">
+        <br><br>
+        <div class="col-md-3" id="right-bar">
 
         </div><!-- right bar -->
       </div><!-- main row -->
@@ -70,7 +78,7 @@
 
     <div class="modal fade" id="modal-container">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="main-modal">
 
           <!-- Modal Header -->
           <div class="modal-header">
@@ -90,26 +98,18 @@
       </div>
     </div><!-- modal container -->
 
-    <!-- Modal Pop - My Account (Admin View) -->
-        <div id="myAccount" class="modal fade">
-          <font color="black">
+    <!-- Modal -->
+        <div class="modal fade">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title">
-                    <font color="black">FName LName</font>
-                  </h3>
-                </div> <!-- end .modal-header -->
+                <div class="modal-header"></div> <!-- end .modal-header -->
                 <div class="modal-body" style="text-align: left">
-                  Phone Number<br>Address<br><br><br>
-                  <b>Shift Log</b>
-                  <div style="width:400px;height:100px;border:1px solid #000;text-align: left">
-                    May 27 2019 8:15
-                  </div>
                 </div> <!-- end .modal-body -->
               </div> <!-- end .modal-content -->
             </div> <!-- end .modal-dialog -->
-          </font>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div> <!-- end .modal -->
 
         <!-- Modal Pop - My Account (Admin View) -->
