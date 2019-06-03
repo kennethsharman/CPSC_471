@@ -1,7 +1,5 @@
-/**
- *  Project front end ideas
- */
 
+// Login View
 
 { // local scope
     loadLogin() // landing page is login
@@ -44,11 +42,11 @@
         $.getScript("./adminView.js").then(function () {
         }, function(err){
           alert('ERROR:' + JSON.stringify(err));
-        });
+        }); // end getScript
 
       } else {
           loadLogin()
         }
     })
 
-} // end script
+} // end script.js

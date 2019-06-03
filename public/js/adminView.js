@@ -1,6 +1,9 @@
 
+// Employee Access Screen View
+
 {
   loadAdmin();
+
   // Load Admin View Page
   function loadAdmin() {
 
@@ -100,7 +103,8 @@
       </div>
     </div>
 
-    `)
+    `) // end left-bar
+
     $('#right-bar').html(`
     
     <div class="card">
@@ -124,9 +128,9 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </div>
+        </div><!--card text -->
+      </div><!-- card body -->
+    </div><!-- card -->
     `)
   } // end loadAdmin
 
@@ -201,5 +205,49 @@
       `)
       $('#modal-container').modal();
   }) // end button action
+
+  // Server Dashboard button
+  $(document).on('click', '#s-dash-btn', event => {
+      event.preventDefault
+
+      $.getScript("./js/serverDashboard.js").then(function () {
+      }, function(err){
+        alert('ERROR:' + JSON.stringify(err));
+      });
+
+  }); // end Server Dashboard button actions
+
+  // Cook Dashboard button
+  $(document).on('click', '#c-dash-btn', event => {
+      event.preventDefault
+
+      $.getScript("./js/cookDashboard.js").then(function () {
+      }, function(err){
+        alert('ERROR:' + JSON.stringify(err));
+      });
+
+  }); // end Cook Dashboard button actions
+
+  // Manager Dashboard button
+  $(document).on('click', '#m-dash-btn', event => {
+      event.preventDefault
+
+      $.getScript("./js/managerDashboard.js").then(function () {
+      }, function(err){
+        alert('ERROR:' + JSON.stringify(err));
+      });
+
+  }); // end Manager Dashboard button actions
+
+  // New Order button
+  $(document).on('click', '#neworder-btn', event => {
+      event.preventDefault
+
+      $.getScript("./js/customer.js").then(function () {
+      }, function(err){
+        alert('ERROR:' + JSON.stringify(err));
+      });
+
+  }); // end New Order button actions
 
 } // end adminView.js

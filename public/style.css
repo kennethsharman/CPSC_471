@@ -181,8 +181,6 @@ a.glyph:hover {
     background-color: #0d0d12;
     padding: 16px 32px;
  }
-
- /* The Modal (background) */
 .modal {
   background-color: rgba(128,128,128,0.5); /* 4th arg is opacity */
 }
@@ -196,3 +194,8 @@ a.glyph:hover {
   margin-bottom: 6px;
   margin-top: 6px;
 }
+/* Open/Completed Orders Table in serverDashboard.js */
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
