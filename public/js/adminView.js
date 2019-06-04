@@ -44,7 +44,10 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="dropdown">
-                    <a class="btn dropbtn btn-primary ">Station</a>
+                    <a class="btn dropbtn btn-primary ">
+                      Station
+                      <i class="fas fa-sort-down"></i>
+                    </a>
                     <div class="dropdown-content">
                       <a href="#">Build</a>
                       <a href="#">Fry</a>
@@ -67,13 +70,9 @@
 
             <div class="container-fluid lighter">
               <div class="row">
-                <div class="col-md-6">
-
-                  <!--a href="#" id='manage-btn' class="btn btn-primary">Manage Employees</a-->
-                </div><!-- L col -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <a href="#" id='m-dash-btn' class="btn btn-primary">Dashboard</a>
-                </div><!-- R col -->
+                </div><!-- col -->
               </div><!-- row -->
             </div> <!-- container-->
           </div><!-- card body -->
@@ -89,7 +88,7 @@
       <div class="card-body">
         <h5 class="card-title">Logged in as</h5>
         <p class="card-text">${username}</p>
-        <a href="#" id='myaccount-btn' class="btn btn-primary">My Account</a>
+        <a href="#" id='self' class="btn btn-primary edit-emp">My Account</a>
       </div>
     </div>
     

@@ -268,7 +268,7 @@
     $(document).on('click', '.food-action', event => {
       event.preventDefault()
 
-
+      
       $('.modal-header').html(`
         <h4>Add to order</h4>
       `)

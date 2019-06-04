@@ -51,6 +51,10 @@ body {
   max-height: 200px!important;
 }
 
+.table-div#employee-table{
+  max-height:400px!important;
+}
+
 .card {
   background-color: #0d0d12;
 }
@@ -132,6 +136,9 @@ a.glyph:hover {
     padding: 6px 12px;
     font-size: 16px;
     border: none;
+    margin: auto;
+    display: block;
+    width: 80%;
   }
 
   .dropdown {
@@ -260,4 +267,8 @@ p.food-desc {
 hr {
   color: #454d55 !important;
   background-color: #454d55 !important;
+}
+
+.pad {
+  padding: 0px 6px;
 }
