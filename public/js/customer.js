@@ -183,16 +183,6 @@
 
   } // end loadOrder
 
-  // Switch Views button
-  $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-    }); // end switch views button actions
-
     $(document).on('click', '#employee-modal', event => {
       event.preventDefault()
   

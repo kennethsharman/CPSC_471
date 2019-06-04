@@ -16,11 +16,40 @@
     `) // end header-row
 
     $('#main-bar').html(`
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Inventory</h4>
+          <div class="container-fluid lighter">
+            <div class="row">
+              <div class="col-md-6">
+                <a href="#" id='manage-btn' class="btn btn-primary">New Inventory</a>
+              </div><!-- L col -->
+              <div class="col-md-6">
+                <a href="#" id='m-dash-btn' class="btn btn-primary">History</a>
+              </div><!-- R col -->
+            </div><!-- row -->
+          </div> <!-- container-->
+        </div><!-- body -->
+      </div><!-- card -->
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Employees</h4>
+          <div class="container-fluid lighter">
+            <div class="row">
+              <div class="col-md-6">
+                <a href="#" id='manage-btn' class="btn btn-primary">New Employee</a>
+              </div><!-- L col -->
+              <div class="col-md-6">
+                <a href="#" id='m-dash-btn' class="btn btn-primary">Edit Existing</a>
+              </div><!-- R col -->
+            </div><!-- row -->
+          </div> <!-- container-->
+        </div><!-- body -->
+      </div><!-- card -->
+
       <div> <!-- Inventory Section -->
 
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>INVENTORY</u>
-        </h4>
 
         <button style="width: 150px" type="btn btn-primary" id='inventory-btn'>
             New Inventory
@@ -112,17 +141,6 @@
 
     $('#right-bar').html(``)
   } // end loadManagerDB
-
-  // Switch Views button
-  $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end switch views button actions
 
   // Edit Employee Button
   $(document).on('click', '#editEmp-btn', event => {

@@ -220,17 +220,6 @@
     `)
   } // end loadServerDB
 
-  // Switch Views button
-  $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end login-btn actions
-
   // Open Order button
   $(document).on('click', '#openOrder1-btn', event => {
       event.preventDefault()
