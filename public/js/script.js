@@ -26,6 +26,8 @@
     })
 
     const auth = firebase.auth()
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
     let ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
     ui.start('#firebaseui-auth-container', {
       callbacks: {

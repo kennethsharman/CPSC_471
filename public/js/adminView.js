@@ -241,13 +241,12 @@
 
   // New Order button
   $(document).on('click', '#neworder-btn', event => {
-      event.preventDefault
+    event.preventDefault()
 
-      $.getScript("./js/customer.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end New Order button actions
+    $.getScript("./js/customer.js").then(function () {
+    }, function(err){
+      alert('ERROR:' + JSON.stringify(err));
+    })
+  }) // end New Order button actions
 
 } // end adminView.js

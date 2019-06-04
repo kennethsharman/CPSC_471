@@ -199,3 +199,44 @@ a.glyph:hover {
 .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-0lax{text-align:left;vertical-align:top}
+
+#employee-modal {
+  color: white;
+  text-decoration: underline;
+  padding-top: 6px;
+  padding-bottom:6px;
+}
+
+#employee-modal:hover {
+  background-color: #c63737;
+}
+
+.card-footer {
+  padding: 12px 0;
+}
+
+.food-name {
+  text-align: left;
+  vertical-align: center;
+}
+
+.food-action {
+  min-width: 0!important;
+  float: right;
+}
+
+.headerlogo {
+  max-width: 80%;
+  height: auto;
+  width: 250px;
+}
+
+p.food-desc {
+  font-weight: normal!important;
+  text-align: left;
+}
+
+.spinner {
+  text-align: center;
+  max-width: 25%;
+}
