@@ -8,113 +8,110 @@
   function loadCookDB() {
 
     $('#header-row').html(`
-
-      <h1 >Cook Dashboard</h1>
-      <pre>
-        <img id="headerlogo" src="/pics/logo1.png" alt="Company Logo" height="75">
-      </pre>
+    <h3 class="header-title">
+      <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+      Cook Dashboard
+    </h3>
 
     `) // end header-row
 
     $('#main-bar').html(`
 
-      <div> <!-- FRY Food Items Section -->
+    <div> <!-- Open Orders Section -->
 
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>FRY Food Items</u>
-        </h4>
+    <div class="card">
+      <div class="card-body">
+      <h4 class="card-title order-heading">
+        FRY Station
+      </h4>
 
-        <table class="tg">
-          <tr>
-            <th class="tg-s268">Item_no</th>
-            <th class="tg-0lax" colspan="2">Food_Name</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='openOrder1-btn'>
-                Bump Order
-              </button>
-            </th>
-          </tr>
-          <tr>
-            <td class="tg-s268">Spc_Req</td>
-            <td class="tg-0lax">Allergy</td>
-            <td class="tg-0lax">Tkt_time</td>
-          </tr>
-        </table>
 
-        <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h5 style="text-align:left"> Food Food name </h5>
+        </div>
+      </div><!-- top row -->
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-dark">
+            <tr>
+              <th class="tg-0lax">
+                <p>Item Number: <span>Item no</span></p>
+              </th>
+              <th class="tg-s268">
+                <p>Ticket time: <span>tkt_time</span></p>
+              </th>
+            </tr>
+            <tr>
+              <p style="font-weight: bold!important">NOTE: <span>Hey guys, if you have a veggie toppings available it would be great. Otherwise, chicken is okay. Also I'm allergic to shellfish. Have a nice day!</span></p> 
+            </tr>
+          </table>
+        </div><!-- col L -->
+        <div class="col-4">
+        <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+          BUMP
+        </a>
+        </div><!-- col R -->
+      </div><!-- row main -->
+      <hr>
+    </div><!-- container -->
 
-        <table class="tg">
-          <tr>
-            <th class="tg-s268">Item_no</th>
-            <th class="tg-0lax" colspan="2">Food_Name</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='openOrder1-btn'>
-                Bump Order
-              </button>
-            </th>
-          </tr>
-          <tr>
-            <td class="tg-s268">Spc_Req</td>
-            <td class="tg-0lax">Allergy</td>
-            <td class="tg-0lax">Tkt_time</td>
-          </tr>
-        </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h5 style="text-align:left"> Food Food name </h5>
+        </div>
+      </div><!-- top row -->
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-dark">
+            <tr>
+              <th class="tg-0lax">
+                <p>Item Number: <span>Item no</span></p>
+              </th>
+              <th class="tg-s268">
+                <p>Ticket time: <span>tkt_time</span></p>
+              </th>
+            </tr>
+            <tr>
+            <!-- no note left -->
+            </tr>
+          </table>
+        </div><!-- col L -->
+        <div class="col-4">
+        <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+          BUMP
+        </a>
+        </div><!-- col R -->
+      </div><!-- row main -->
+      <hr>
+    </div><!-- container -->
 
-      </div> <!-- end FRY Food Items Section -->
+      </div><!-- card body -->
+    </div><!-- card -->
 
-      <br><br><br>
-
-      <div> <!-- CUT Food Items Section -->
-
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>FRY Food Items</u>
-        </h4>
-
-        <table class="tg">
-          <tr>
-            <th class="tg-s268">Item_no</th>
-            <th class="tg-0lax" colspan="2">Food_Name</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='openOrder1-btn'>
-                Bump Order
-              </button>
-            </th>
-          </tr>
-          <tr>
-            <td class="tg-s268">Spc_Req</td>
-            <td class="tg-0lax">Allergy</td>
-            <td class="tg-0lax">Tkt_time</td>
-          </tr>
-        </table>
-
-        <br>
-
-      </div> <!-- end CUT Food Items Section -->
-
+  </div> <!-- end Fry Section -->
     `) // end main-bar
 
     $('#left-bar').html(`
 
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid lighter">
+        <div class="row">
+            <div class="col-lg-12">
+              <a href="#" class="btn btn-primary" id="switchviews-btn">
+                Switch Views
+              </a>
+            </div><!-- col -->
+          </div><!-- row 1 -->
+          </div> <!-- container-->
+      </div><!-- card body-->
+    </div><!-- card -->
     `) // end left-bar
 
-    $('#right-bar').html(`
-
-      <button style="width: 150px" type="btn btn-primary" id='switchviews-btn'>
-          Switch Views
-      </button>
-
-    `)
+    $('#right-bar').html(``)
   } // end loadCookDB
-
-  // Switch Views button
-  $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault
-
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end login-btn actions
 
 } // end serverDashboard.js

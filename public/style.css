@@ -51,6 +51,10 @@ body {
   max-height: 200px!important;
 }
 
+.table-div#employee-table{
+  max-height:400px!important;
+}
+
 .card {
   background-color: #0d0d12;
 }
@@ -132,6 +136,9 @@ a.glyph:hover {
     padding: 6px 12px;
     font-size: 16px;
     border: none;
+    margin: auto;
+    display: block;
+    width: 80%;
   }
 
   .dropdown {
@@ -199,3 +206,69 @@ a.glyph:hover {
 .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-0lax{text-align:left;vertical-align:top}
+th > p {
+  font-weight: normal;
+}
+th > h6 {
+  font-weight: bold;
+}
+
+.order-btn {
+  width: 100%;
+  height: 75px;
+  padding-top:1em;
+}
+
+#employee-modal {
+  color: white;
+  text-decoration: underline;
+  padding-top: 6px;
+  padding-bottom:6px;
+}
+
+#employee-modal:hover {
+  background-color: #c63737;
+}
+
+.card-footer {
+  padding: 12px 0;
+}
+
+.food-name {
+  text-align: left;
+  vertical-align: center;
+}
+
+.food-action {
+  min-width: 0!important;
+  float: right;
+}
+
+.headerlogo {
+  max-width: 80%;
+  height: auto;
+  width: 250px;
+}
+
+p.food-desc {
+  font-weight: normal!important;
+  text-align: left;
+}
+
+.spinner {
+  text-align: center;
+  max-width: 25%;
+}
+
+.order-heading {
+  padding: 18px;
+}
+
+hr {
+  color: #454d55 !important;
+  background-color: #454d55 !important;
+}
+
+.pad {
+  padding: 0px 6px;
+}

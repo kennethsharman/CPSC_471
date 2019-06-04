@@ -8,145 +8,221 @@
   function loadServerDB() {
 
     $('#header-row').html(`
-
-      <h1 >Server Dashboard</h1>
-      <pre>
-        <img id="headerlogo" src="/pics/logo1.png" alt="Company Logo" height="75">
-      </pre>
-
+      <h3 class="header-title">
+        <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+        Server Dashboard
+      </h3>
+  
     `) // end header-row
 
     $('#main-bar').html(`
 
-      <div> <!-- Open Orders Section -->
+      <div> <!-- Open orders Section -->
 
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>Open Orders of Employee_ID</u>
+      <div class="card">
+        <div class="card-body">
+        <h4 class="card-title order-heading">
+          Open Orders for Employee ID
         </h4>
 
-        <table class="tg">
-          <tr>
-            <th class="tg-0lax">Order_No</th>
-            <th class="tg-0lax">Cust_no</th>
-            <th class="tg-0lax">Start_time</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='openOrder1-btn'>
-                  Open Order
-              </button>
-            </th>
-          </tr>
-          <tr>
-            <td class="tg-0lax">Tkt_time</td>
-            <td class="tg-0lax">Price</td>
-            <td class="tg-0lax">Ttl_pay</td>
-          </tr>
-        </table>
+        <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h5 style="text-align:left"> Order Ord_num </h5>
+          </div>
+        </div><!-- top row -->
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-dark">
+              <tr>
+                <th class="tg-0lax">
+                <p>Customer: <span>Cust_no</span></p>
+                <p>Ticket Time: <span>Tkt_time</span></p>
+                </th>
+                <th class="tg-s268">
+                  <p>Price: <span>price</span></p> 
+                  <p>Total Pay: <span>TTL_pay</span></p>
+                </th>
+              </tr>
+            </table>
+          </div><!-- col L -->
+          <div class="col-4">
+          <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+            Open Order
+          </a>
+          </div><!-- col R -->
+        </div><!-- row main -->
+        <hr>
+      </div><!-- container -->
 
-        <table class="tg">
-          <tr>
-            <th class="tg-0lax">Order_No</th>
-            <th class="tg-0lax">Cust_no</th>
-            <th class="tg-0lax">Start_time</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='openOrder2-btn'>
-                  Open Order
-              </button>
-            </th>
-          </tr>
-          <br>
-          <tr>
-            <td class="tg-0lax">Tkt_time</td>
-            <td class="tg-0lax">Price</td>
-            <td class="tg-0lax">Ttl_pay</td>
-          </tr>
-        </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h5 style="text-align:left"> Order Ord_num </h5>
+          </div>
+        </div><!-- top row -->
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-dark">
+              <tr>
+                <th class="tg-0lax">
+                <p>Customer: <span>Cust_no</span></p>
+                <p>Ticket Time: <span>Tkt_time</span></p>
+                </th>
+                <th class="tg-s268">
+                  <p>Price: <span>price</span></p> 
+                  <p>Total Pay: <span>TTL_pay</span></p>
+                </th>
+              </tr>
+            </table>
+          </div><!-- col L -->
+          <div class="col-4">
+          <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+            Open Order
+          </a>
+          </div><!-- col R -->
+        </div><!-- row main -->
+        <hr>
+      </div><!-- container -->
 
-      </div> <!-- end Open Orders Section -->
+        </div><!-- card body -->
+      </div><!-- card -->
 
-      <br><br><br>
-
+    </div> <!-- Open orders Section -->
+    <br>
       <div> <!-- Completed Orders Section -->
 
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>Completed Orders of Employee_ID</u>
+      <div class="card">
+        <div class="card-body">
+        <h4 class="card-title order-heading">
+          Completed Orders of Employee_ID
         </h4>
+        <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h5 style="text-align:left"> Order Ord_num </h5>
+          </div>
+        </div><!-- top row -->
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-dark">
+              <tr>
+                <th class="tg-0lax">
+                <p>Customer: <span>Cust_no</span></p>
+                <p>Ticket Time: <span>Tkt_time</span></p>
+                </th>
+                <th class="tg-s268">
+                  <p>Price: <span>price</span></p> 
+                  <p>Total Pay: <span>TTL_pay</span></p>
+                </th>
+              </tr>
+            </table>
+          </div><!-- col L -->
+          <div class="col-4">
+          <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+            Open Order
+          </a>
+          </div><!-- col R -->
+        </div><!-- row main -->
+        <hr>
+      </div><!-- container -->
 
-        <table class="tg">
-          <tr>
-            <th class="tg-0lax">Order_No</th>
-            <th class="tg-0lax">Cust_no</th>
-            <th class="tg-0lax">Start_time</th>
-            <th class="tg-0lax" rowspan="2">
-              <button style="width: 150px;height: 75px" type="btn btn-primary" id='completedOrder1-btn'>
-                  Open Order
-              </button>
-            </th>
-          </tr>
-          <tr>
-            <td class="tg-0lax">Tkt_time</td>
-            <td class="tg-0lax">Price</td>
-            <td class="tg-0lax">Ttl_pay</td>
-          </tr>
-        </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h5 style="text-align:left"> Order Ord_num </h5>
+          </div>
+        </div><!-- top row -->
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-dark">
+              <tr>
+                <th class="tg-0lax">
+                <p>Customer: <span>Cust_no</span></p>
+                <p>Ticket Time: <span>Tkt_time</span></p>
+                </th>
+                <th class="tg-s268">
+                  <p>Price: <span>price</span></p> 
+                  <p>Total Pay: <span>TTL_pay</span></p>
+                </th>
+              </tr>
+            </table>
+          </div><!-- col L -->
+          <div class="col-4">
+          <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+            Open Order
+          </a>
+          </div><!-- col R -->
+        </div><!-- row main -->
+        <hr>
+      </div><!-- container -->
+
+        </div><!-- card body -->
+      </div><!-- card -->
+
 
       </div> <!-- end Completed Orders Section -->
 
     `) // end main-bar
 
     $('#left-bar').html(`
-
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid lighter">
+        <div class="row">
+            <div class="col-lg-12">
+              <a href="#" class="btn btn-primary" id="switchviews-btn">
+                Switch Views
+              </a>
+            </div><!-- col -->
+          </div><!-- row 1 -->
+          <br>
+          <div class="row">
+            <div class="col-lg-12">
+              <a href="#" class="btn btn-primary" id='neworder-btn'>
+                Take Order
+              </a>
+            </div><!-- col -->
+          </div><!-- row 2 -->
+        </div> <!-- container-->
+      </div><!-- card body-->
+    </div><!-- card -->
     `) // end left-bar
 
     $('#right-bar').html(`
+      <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Cash Out</h5>
+        <div class="container-fluid lighter">
+          <div class="row">
+              <div class="col-lg-12">
+                Cash Out Value
+              </div><!-- col -->
+            </div><!-- row 1 -->
+          </div> <!-- container-->
+        </div><!-- card body-->
+      </div><!-- card -->
 
-      <button style="width: 150px" type="btn btn-primary" id='switchviews-btn'>
-          Switch Views
-      </button>
+      <br>
 
-      <br><br><br>
-
-      <div> <!-- Shift Info Section -->
-
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          <u>Shift Info</u>
-        </h4>
-
-        <table class="tg" align="center">
-          <tr>
-            <th class="tg-s268">Cash_out</th>
-          </tr>
-          <tr>
-            <td class="tg-s268">Tip_out</td>
-          </tr>
-        </table>
-
-      </div> <!-- end Shift Info Section -->
-
-      <br><br><br><br><br>
-
-      <div>
-        <button style="width: 150px;height: 100px" type="btn btn-primary" id='newOrder-btn'>
-          New Order
-        </button>
-      <div>
-
+      <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Tip Out</h5>
+        <div class="container-fluid lighter">
+          <div class="row">
+              <div class="col-lg-12">
+                Tip Out Value
+              </div><!-- col -->
+            </div><!-- row 1 -->
+          </div> <!-- container-->
+        </div><!-- card body-->
+      </div><!-- card -->
     `)
   } // end loadServerDB
 
-  // Switch Views button
-  $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault
-
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end login-btn actions
-
   // Open Order button
   $(document).on('click', '#openOrder1-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/customer.js").then(function () {
       }, function(err){
@@ -157,7 +233,7 @@
 
   // Open Order button
   $(document).on('click', '#openOrder2-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/customer.js").then(function () {
       }, function(err){
@@ -168,7 +244,7 @@
 
   // Open Order button
   $(document).on('click', '#completedOrder1-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/customer.js").then(function () {
       }, function(err){
@@ -178,8 +254,8 @@
   }); // end Open Order button actions
 
   // New Order button
-  $(document).on('click', '#newOrder-btn', event => {
-      event.preventDefault
+  $(document).on('click', '#neworder-btn', event => {
+      event.preventDefault()
 
       $.getScript("./js/customer.js").then(function () {
       }, function(err){
