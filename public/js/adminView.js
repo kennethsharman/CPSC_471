@@ -20,8 +20,8 @@
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Server</h5>
-            <div class="container-fluid lighter">
+          <h5 class="card-title">Server</h5>
+          <div class="container-fluid lighter">
               <div class="row">
                 <div class="col-md-6">
                   <a href="#" id='neworder-btn' class="btn btn-primary">Take Order</a>
@@ -69,7 +69,7 @@
               <div class="row">
                 <div class="col-md-6">
 
-                  <a href="#" id='manage-btn' class="btn btn-primary">Manage Employees</a>
+                  <!--a href="#" id='manage-btn' class="btn btn-primary">Manage Employees</a-->
                 </div><!-- L col -->
                 <div class="col-md-6">
                   <a href="#" id='m-dash-btn' class="btn btn-primary">Dashboard</a>
@@ -208,7 +208,7 @@
 
   // Server Dashboard button
   $(document).on('click', '#s-dash-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/serverDashboard.js").then(function () {
       }, function(err){
@@ -219,7 +219,7 @@
 
   // Cook Dashboard button
   $(document).on('click', '#c-dash-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/cookDashboard.js").then(function () {
       }, function(err){
@@ -230,7 +230,7 @@
 
   // Manager Dashboard button
   $(document).on('click', '#m-dash-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/managerDashboard.js").then(function () {
       }, function(err){

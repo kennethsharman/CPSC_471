@@ -8,16 +8,14 @@
   function loadManagerDB() {
 
     $('#header-row').html(`
-
-      <h1 >Manager Dashboard</h1>
-      <pre>
-        <img id="headerlogo" src="/pics/logo1.png" alt="Company Logo" height="75">
-      </pre>
+    <h3 class="header-title">
+      <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+      Manager Dashboard
+    </h3>
 
     `) // end header-row
 
     $('#main-bar').html(`
-
       <div> <!-- Inventory Section -->
 
         <h4 style="display: inline-block; text-align: left; width: 100%">
@@ -97,21 +95,27 @@
     `) // end main-bar
 
     $('#left-bar').html(`
-
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid lighter">
+        <div class="row">
+            <div class="col-lg-12">
+              <a href="#" class="btn btn-primary" id="switchviews-btn">
+                Switch Views
+              </a>
+            </div><!-- col -->
+          </div><!-- row 1 -->
+          </div> <!-- container-->
+      </div><!-- card body-->
+    </div><!-- card -->
     `) // end left-bar
 
-    $('#right-bar').html(`
-
-      <button style="width: 150px" type="btn btn-primary" id='switchviews-btn'>
-          Switch Views
-      </button>
-
-    `)
+    $('#right-bar').html(``)
   } // end loadManagerDB
 
   // Switch Views button
   $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault
+      event.preventDefault()
 
       $.getScript("./js/adminView.js").then(function () {
       }, function(err){
@@ -122,13 +126,13 @@
 
   // Edit Employee Button
   $(document).on('click', '#editEmp-btn', event => {
-      event.preventDefault
+      event.preventDefault()
       $('#editEmp').modal();
   }) // end add/edit employee button actions
 
   // Add/Edit Employee Button
   $(document).on('click', '#newEmp-btn', event => {
-      event.preventDefault
+      event.preventDefault()
       $('#editEmp').modal();
   }) // end add/edit employee button actions
 

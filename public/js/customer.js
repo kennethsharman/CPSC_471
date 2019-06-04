@@ -235,7 +235,7 @@
           Ask for a server
         </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">Continue</button>
+        <button type="button" class="btn btn-primary" id="paid-btn">Continue</button>
       `)
       $('#modal-container').modal() 
     })
@@ -253,10 +253,27 @@
         <h5>${employeeFNAME} will be at your table shortly.</h5>
       `)
       $('.modal-footer').html(`
-        <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       `)
       $('#modal-container').modal() 
     })
+
+    $(document).on('click', '#paid-btn', event => {
+      event.preventDefault()
+
+      $('.modal-header').html(`
+        <h4>Payment complete</h4>
+      `)
+
+      $('.modal-body').html(`
+        <h5>Thank you for visiting the Fantasy Street Kitchen.</h5>
+      `)
+      $('.modal-footer').html(`
+        <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
+      `)
+      $('#modal-container').modal() 
+    })
+
 
     $(document).on('click', '.food-action', event => {
       event.preventDefault()
@@ -298,6 +315,7 @@
 
       // number spinner
       const num = $("#spinner-num")
+      num.val(1)
       $(document).on('click', '.spin-btn', e => {
         
         switch(e.target.id.substring(8,10)) {
