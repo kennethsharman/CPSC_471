@@ -16,7 +16,7 @@ CREATE TABLE employee (
 );
 
 CREATE TABLE shift_log (
-	employee_id serial REFERENCES employee(employee_id) NOT NULL,
+	employee_id int REFERENCES employee(employee_id) NOT NULL,
 	shift_date date NOT NULL,
 	time_in timestamp NOT NULL,
 	time_out timestamp CHECK (time_out > time_in),
@@ -47,7 +47,7 @@ CREATE TABLE allergy (
 
 CREATE TABLE ingredient (
 	ingredient_number int NOT NULL,
-	Supplier text NOT NULL,
+	supplier text NOT NULL,
 	name text NOT NULL,
 	recommended_count int CHECK (recommended_count > 0),
 	critical_count int CHECK (critical_count > 0),
@@ -75,7 +75,7 @@ CREATE TABLE payment (
 );
 
 CREATE TABLE item (
-	item_number int PRIMARY KEY,
+	item_number serial PRIMARY KEY,
 	price numeric,
 	completed_flag boolean
 );
@@ -92,7 +92,7 @@ CREATE TABLE food (
 	station text,
 	special_request text,
 	allergy_info text,
-	out_of_stockflag boolean
+	out_of_stock_flag boolean
 );
 
 CREATE TABLE wings (
@@ -103,7 +103,7 @@ CREATE TABLE wings (
 
 CREATE TABLE pasta (
 	item_number int REFERENCES food(item_number) PRIMARY KEY,
-	bakedflag boolean
+	baked_flag boolean
 );
 
 CREATE TABLE menu_pizza (
