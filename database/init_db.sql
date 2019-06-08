@@ -1,4 +1,6 @@
--- to clear entire database: drop owned by cpsc471;
+-- to clear entire database: drop schema public cascade;
+-- to see path: show search_path;
+-- to set path: set search_path to public;
 
 CREATE TABLE employee (
 	employee_id serial PRIMARY KEY,
@@ -60,7 +62,7 @@ CREATE TABLE takes_inventory (
 	ingredient_number int NOT NULL,
 	supplier text NOT NULL,
 	inventory_date date NOT NULL,
-	inventory_time timestamp,
+	count int,
 	FOREIGN KEY (ingredient_number, Supplier) REFERENCES ingredient(ingredient_number, supplier),
 	PRIMARY KEY (manager_id, ingredient_number, supplier, inventory_date)
 );
