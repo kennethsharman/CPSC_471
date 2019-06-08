@@ -1,6 +1,6 @@
--- to clear entire database: drop schema public cascade;
--- to see path: show search_path;
--- to set path: set search_path to public;
+ 
+--drop schema public cascade;
+--create schema public;
 
 CREATE TABLE employee (
 	employee_id serial PRIMARY KEY,
@@ -38,7 +38,8 @@ CREATE TABLE customer_order (
 	order_date date,
 	price numeric,
 	ticket_time interval,
-	completed_flag boolean
+	completed_flag boolean,
+	special_request text
 );
 
 CREATE TABLE allergy (
@@ -78,8 +79,7 @@ CREATE TABLE payment (
 
 CREATE TABLE item (
 	item_number serial PRIMARY KEY,
-	price numeric,
-	completed_flag boolean
+	price numeric
 );
 
 CREATE TABLE drink (
@@ -92,8 +92,6 @@ CREATE TABLE food (
 	food_name text,
 	cook_id int REFERENCES employee(employee_id),
 	station text,
-	special_request text,
-	allergy_info text,
 	out_of_stock_flag boolean
 );
 
@@ -136,5 +134,6 @@ CREATE TABLE made_from (
 CREATE TABLE order_consists_of (
 	order_number int REFERENCES customer_order(order_number),
 	item_number int REFERENCES item(item_number),
+	completed_flag boolean,
 	PRIMARY KEY (order_number, item_number)
 );
