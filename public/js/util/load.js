@@ -39,12 +39,20 @@ const loginService = () => {
   })
 
   auth.onAuthStateChanged(user => {
-    $('.loader-container').show()
+    $('.loader').show()
     if(user) {
+      $('#main-bar').html(`
+      <div class="card">
+        <div class="card-body">
+          <h2>Welcome to Fantasy Street Kitchen</h2>
+          <h5> Logging in as <strong>${user.displayName}</strong></h5>
+        </div>
+      </div>`)
       requestService("/user/byEmail", "POST", user, res => {
-        console.log("SUCCESS")
-        $('.loader-container').hide()
-        console.log(res.msg)
+        state('user', res.msg[0])
+        
+        console.log("user state service", state('user'))
+        $('.loader').hide()
         loadService("./js/adminView.js")
       },() => {
         console.log("ERRROR")
@@ -53,7 +61,7 @@ const loginService = () => {
   })
 
   function loadLogin() {
-    $('.loader-container').hide()
+    $('.loader').hide()
     $('#header-row').html(`
       <div style="padding:24px;margin:12px;">
         <img id="login_img" src="pics/The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
