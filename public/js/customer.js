@@ -183,132 +183,83 @@
 
   } // end loadOrder
 
-    $(document).on('click', '#employee-modal', event => {
-      event.preventDefault()
-  
-      $('.modal-header').html(`
-      <h4 class="modal-title" style="text-align: center" color="black">
-        Access Employee View
-      </h4>`)
-
-      $('.modal-body').html(`
-        <h5> To continue, please enter your password:</h5>
-      <div class="form-group">
-        <input type="password" class="form-control" id="pwd">
-      </div>
-      `)
-      $('.modal-footer').html(`
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">Continue</button>
-      `)
-
-      $('#modal-container').modal() 
-    })
-
-    $(document).on('click', '#payment-modal', event => {
-      event.preventDefault()
-  
-      $('.modal-header').html(`
-      <h4 class="modal-title" style="text-align: center" color="black">
-        Make Payment
-      </h4>`)
-
-      $('.modal-body').html(`
-        <h5  style="text-align: center"> To continue, please enter your Paypal account:</h5>
+    clickService('#employee-modal', () => modalService(
+        `<h4 class="modal-title" style="text-align: center" color="black">
+          Access Employee View
+        </h4>`,
+        `<h5> To continue, please enter your password:</h5>
           <div class="form-group">
-            <input type="email" class="form-control" id="email">
-          </div>
-        <h5  style="text-align: center"> Or ask for a server to pay in cash or credit.</h5>
-      `)
-      $('.modal-footer').html(`
-        <button type="button" class="btn btn-primary mr-auto request-btn" style="color: white">
-          Ask for a server
-        </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="paid-btn">Continue</button>
-      `)
-      $('#modal-container').modal() 
-    })
+            <input type="password" class="form-control" id="pwd">
+          </div>`,
+          `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">Continue</button>`
+    ))
+
+    clickService('#payment-modal', () => modalService(
+      `<h4 class="modal-title" style="text-align: center" color="black">
+        Make Payment
+      </h4>`,`
+      <h5  style="text-align: center"> To continue, please enter your Paypal account:</h5>
+      <div class="form-group">
+        <input type="email" class="form-control" id="email">
+      </div>
+      <h5  style="text-align: center"> Or ask for a server to pay in cash or credit.</h5>`,
+      `<button type="button" class="btn btn-primary mr-auto request-btn" style="color: white">
+        Ask for a server
+      </button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" id="paid-btn">Continue</button>`
+  ))
 
     const employeeFNAME = 'KEN'
 
-    $(document).on('click', '.request-btn', event => {
-      event.preventDefault()
+    clickService('.request-btn', () => modalService(
+      `<h4>Server requested</h4>`,`
+      <h5>${employeeFNAME} will be at your table shortly.</h5>`,`
+      <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+    `))
 
-      $('.modal-header').html(`
-        <h4>Server requested</h4>
-      `)
-
-      $('.modal-body').html(`
-        <h5>${employeeFNAME} will be at your table shortly.</h5>
-      `)
-      $('.modal-footer').html(`
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-      `)
-      $('#modal-container').modal() 
-    })
-
-    $(document).on('click', '#paid-btn', event => {
-      event.preventDefault()
-
-      $('.modal-header').html(`
-        <h4>Payment complete</h4>
-      `)
-
-      $('.modal-body').html(`
-        <h5>Thank you for visiting the Fantasy Street Kitchen.</h5>
-      `)
-      $('.modal-footer').html(`
-        <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
-      `)
-      $('#modal-container').modal() 
-    })
+    clickService('#paid-btn', () => modalService(
+      `<h4>Payment complete</h4>`,
+      `<h5>Thank you for visiting the Fantasy Street Kitchen.</h5>`,`
+      <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
+    `))
 
 
-    $(document).on('click', '.food-action', event => {
-      event.preventDefault()
-
+    clickService('.food-action', () => {
+      modalService(`
+      <h4>Add to order</h4>`,`
+      <h5 style="text-align: center">${event.target.id}</h5>
+      <br>
       
-      $('.modal-header').html(`
-        <h4>Add to order</h4>
-      `)
-
-      $('.modal-body').html(`
-        <h5 style="text-align: center">${event.target.id}</h5>
-        <br>
-        
-        <br>
-        <div class="input-group" style="width:100%">
-          <span class="input-group-btn">
-          <a href="#" class="btn btn-primary spin-btn" id="spinner-decrement">
-            <i id="spinner-decrement-i" class="fas fa-minus-square"></i>
+      <br>
+      <div class="input-group" style="width:100%">
+        <span class="input-group-btn">
+        <a href="#" class="btn btn-primary spin-btn" id="spinner-decrement">
+          <i id="spinner-decrement-i" class="fas fa-minus-square"></i>
+        </a>
+        </span><!-- first button -->
+        <input class="form-control spinner" id="spinner-num" type="text" placeholder="1" disabled>
+        <span class="input-group-btn">
+          <a href="#" class="btn btn-primary spin-btn" id="spinner-increment">
+            <i  id="spinner-increment-i" class="fas fa-plus-square"></i>
           </a>
-          </span><!-- first button -->
-          <input class="form-control spinner" id="spinner-num" type="text" placeholder="1" disabled>
-          <span class="input-group-btn">
-            <a href="#" class="btn btn-primary spin-btn" id="spinner-increment">
-              <i  id="spinner-increment-i" class="fas fa-plus-square"></i>
-            </a>
-          </span><!-- second button-->
-        </div><!-- number spinner -->
-        <br>
-        <div class="form-group">
-          <label for="comment">Note (Optional):</label>
-          <textarea class="form-control" rows="5" id="note"></textarea>
-        </div>
-      `)
-      $('.modal-footer').html(`
+        </span><!-- second button-->
+      </div><!-- number spinner -->
+      <br>
+      <div class="form-group">
+        <label for="comment">Note (Optional):</label>
+        <textarea class="form-control" rows="5" id="note"></textarea>
+      </div>`, `
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       <button type="button" class="btn btn-primary" id="Add-order-btn" data-dismiss="modal">Add</button>
       `)
-      $('#modal-container').modal() 
 
       // number spinner
       const num = $("#spinner-num")
       num.val(1)
-      $(document).on('click', '.spin-btn', e => {
-        
-        switch(e.target.id.substring(8,10)) {
+      clickService('.spin-btn', ({target: {id}}) => {
+        switch(id.substring(8,10)) {
           case 'in':
             if(num.val()<10)
               num.val(`${Number(num.val()) + 1}`)

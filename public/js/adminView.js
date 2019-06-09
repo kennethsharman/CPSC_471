@@ -134,13 +134,5 @@
   } // end loadAdmin
 
 
-  $(document).on('click', '#neworder-btn', event => {
-    event.preventDefault()
-
-    $.getScript("./js/customer.js").then(function () {
-    }, function(err){
-      alert('ERROR:' + JSON.stringify(err));
-    });
-
-});
+  clickService('#neworder-btn', () => loadService("./js/customer.js"))
 } // end adminView.js

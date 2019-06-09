@@ -17,51 +17,10 @@
 
     } // end loadLogin
 
-
-    $(document).on('click', '.logout', e => {
-      e.preventDefault()
-      firebase.auth().signOut().then( () => {
-        location.reload()
-      })
-    })
-
-    const auth = firebase.auth()
-    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-
-    let ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
-    ui.start('#firebaseui-auth-container', {
-      callbacks: {
-        signInSuccessWithAuthResult: (authResult, redirectUrl) => false,
-      },
-      signInFlow: 'popup',
-      signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      ],
-    })
-
-    auth.onAuthStateChanged(user => {
-      if(user) {
-        $.getScript("./js/adminView.js").then(function () {
-        }, function(err){
-          alert('ERROR:' + JSON.stringify(err));
-        }); // end getScript
-
-      } else {
-          loadLogin()
-        }
-    })
-
-    $(document).on('click', '#switchviews-btn', event => {
-      event.preventDefault()
-  
-      $.getScript("./js/adminView.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-    })
+    loginService()
 
       // MyAccount button
-  $(document).on('click', '.edit-emp', event => {
+  clickService('.edit-emp', event => {
     //ENUM
     const MANAGER_EDIT = 0
     const MANAGER_NEW = 1
@@ -172,45 +131,9 @@
     $('#modal-container').modal();
 }) // end button action
 
-// Server Dashboard button
-$(document).on('click', '#s-dash-btn', event => {
-    event.preventDefault()
-
-    $.getScript("./js/serverDashboard.js").then(function () {
-    }, function(err){
-      alert('ERROR:' + JSON.stringify(err));
-    });
-
-}); // end Server Dashboard button actions
-
-// Cook Dashboard button
-$(document).on('click', '#c-dash-btn', event => {
-    event.preventDefault()
-
-    $.getScript("./js/cookDashboard.js").then(function () {
-    }, function(err){
-      alert('ERROR:' + JSON.stringify(err));
-    });
-
-}); // end Cook Dashboard button actions
-
-  // Manager Dashboard button
-  $(document).on('click', '#m-dash-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/managerDashboard.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  // New Order button
-  $(document).on('click', '#neworder-btn', event => {
-    event.preventDefault()
-
-    $.getScript("./js/customer.js").then(function () {
-    }, function(err){
-      alert('ERROR:' + JSON.stringify(err));
-      })
-    }) // end New Order button actions
-  })
+clickService('#switchviews-btn', () => loadService("./js/adminView.js"))
+clickService('#s-dash-btn', () => loadService("./js/serverDashboard.js"))
+clickService('#c-dash-btn',  () => loadService("./js/cookDashboard.js"))
+clickService('#m-dash-btn', () => loadService("./js/managerDashboard.js"))
+clickService('#neworder-btn', () => loadService("./js/customer.js"))
 } // end script.js
