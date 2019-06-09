@@ -13,8 +13,7 @@ const made_from_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(ingredient_number, supplier, item_number) {
@@ -23,8 +22,7 @@ const made_from_db = {
       values: [ingredient_number, supplier, item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(made_from_json) {
@@ -39,8 +37,7 @@ const made_from_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(ingredient_number, supplier, item_number) {
@@ -49,8 +46,7 @@ const made_from_db = {
       values: [ingredient_number, supplier, item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

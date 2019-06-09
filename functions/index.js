@@ -24,6 +24,15 @@
  // defined in API folder
  const echoAPI = require('./API/echoAPI')
  const validator = require('./API/validatorMW')
+ const employee = require('./db/employee')
+
+ const API = db  => (req, res, next) => {
+    try {
+        res.send({msg: db(req.body), status: 200})
+    } catch(e) {
+        res.send(e)
+    }
+ }
 
  // Initialize default app with the project configuration
  // functions.config returns config info object
@@ -40,10 +49,14 @@
  app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))
 
 // recieves back end post/get/put/delete
- app.post('/echo', validator.echoMW, echoAPI.testEP)
+app.post('/echo', validator.echoMW, echoAPI.testEP)
 
- // more endpoints go here
-
+// employee
+app.post('/user', API(employee.create))
+app.get('/user', API(employee.find))
+app.put('/user', API(employee.update))
+app.delete('/user', API(employee.delete))
+app.post('/user/byEmail', employee.findEmail)
 
 
  exports.app = functions.https.onRequest(app)

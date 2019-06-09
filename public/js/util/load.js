@@ -6,7 +6,7 @@ const loadService = url => {
 }
 
 const clickService = (query, callback) => {
-    clickService(query, callback)
+    $(document).on('click', query, callback)
 }
 
 const modalService = (head, body, foot) => {
@@ -39,9 +39,29 @@ const loginService = () => {
   })
 
   auth.onAuthStateChanged(user => {
+    $('.loader-container').show()
     if(user) {
-      loadService("./js/adminView.js")
-
+      requestService("/user/byEmail", "POST", user, res => {
+        console.log("SUCCESS")
+        $('.loader-container').hide()
+        console.log(res.msg)
+        loadService("./js/adminView.js")
+      },() => {
+        console.log("ERRROR")
+      })
     } else loadLogin()
   })
+
+  function loadLogin() {
+    $('.loader-container').hide()
+    $('#header-row').html(`
+      <div style="padding:24px;margin:12px;">
+        <img id="login_img" src="pics/The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
+      </div>
+    `)
+    $('#main-bar').html(`
+      <div id="firebaseui-auth-container"></div>
+    `)
+
+  }
 }

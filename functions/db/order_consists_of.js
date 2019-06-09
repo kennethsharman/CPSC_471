@@ -7,8 +7,7 @@ const order_consists_of_db = {
       values: [order_consists_of_json.order_number, order_consists_of_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(order_number, item_number) {
@@ -17,8 +16,7 @@ const order_consists_of_db = {
       values: [order_number, item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   // No update, entire table is the primary key.
@@ -38,8 +36,7 @@ const order_consists_of_db = {
       values: [order_number, item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

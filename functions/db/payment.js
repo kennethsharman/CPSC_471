@@ -14,8 +14,7 @@ const payment_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(order_number) {
@@ -24,8 +23,7 @@ const payment_db = {
       values: [order_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(payment_json) {
@@ -41,8 +39,7 @@ const payment_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(order_number) {
@@ -51,8 +48,7 @@ const payment_db = {
       values: [order_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

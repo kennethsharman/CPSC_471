@@ -7,8 +7,7 @@ const item_db = {
       values: [item_json.price, item_json.completed_flag]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(item_number) {
@@ -17,8 +16,7 @@ const item_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(item_json) {
@@ -27,8 +25,7 @@ const item_db = {
       values: [item_json.price, item_json.completed_flag, item_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(item_number) {
@@ -37,8 +34,7 @@ const item_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

@@ -7,8 +7,7 @@ const menu_pizza_db = {
       values: [menu_pizza_json.item_number, menu_pizza_json.crust, menu_pizza_json.dip]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(item_number) {
@@ -17,8 +16,7 @@ const menu_pizza_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(menu_pizza_json) {
@@ -27,8 +25,7 @@ const menu_pizza_db = {
       values: [menu_pizza_json.crust, menu_pizza_json.dip, menu_pizza_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(item_number) {
@@ -37,8 +34,7 @@ const menu_pizza_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

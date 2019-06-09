@@ -18,7 +18,7 @@ const requestService = (url, method, params, success, error) => {
     req.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
             console.log('success!')
-            success(this)
+            success(this.response)
         }
         else if(this.readyState==4) {
             console.log("ERROR")

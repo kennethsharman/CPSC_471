@@ -7,8 +7,7 @@ const customer_db = {
       values: [customer_json.group_size]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(customer_number) {
@@ -17,8 +16,7 @@ const customer_db = {
       values: [customer_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(customer_json) {
@@ -27,8 +25,7 @@ const customer_db = {
       values: [customer_json.group_size, customer_json.customer_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(customer_number) {
@@ -37,8 +34,7 @@ const customer_db = {
       values: [customer_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

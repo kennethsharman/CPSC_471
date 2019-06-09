@@ -14,8 +14,7 @@ const ingredient_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(ingredient_number, supplier) {
@@ -24,8 +23,7 @@ const ingredient_db = {
       values: [ingredient_number, supplier]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(ingredient_json) {
@@ -41,8 +39,7 @@ const ingredient_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(ingredient_number, supplier) {
@@ -51,8 +48,7 @@ const ingredient_db = {
       values: [ingredient_number, supplier]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 

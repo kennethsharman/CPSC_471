@@ -7,7 +7,7 @@ const employee_db = {
   // No need to provide an employee_id, that is created by the database.
   create(employee_json) {
     const query_string = {
-      text: "INSERT INTO employee (f_name, l_name, phone_number, address, cook_flag, station, server_flag, cash_out, tip_out, manager_flag, mgr_start_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;",
+      text: "INSERT INTO employee (f_name, l_name, phone_number, address, cook_flag, station, server_flag, cash_out, tip_out, manager_flag, mgr_start_date, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *;",
       values: [
         employee_json.f_name,
         employee_json.l_name,
@@ -19,12 +19,12 @@ const employee_db = {
         employee_json.cash_out,
         employee_json.tip_out,
         employee_json.manager_flag,
-        employee_json.mgr_start_date
+        employee_json.mgr_start_date,
+        employee_json.email
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   // Find an employee record in the database that corresponds to the given id.
@@ -34,8 +34,7 @@ const employee_db = {
       values: [employee_id]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   // Updates an employee record in the database with values specified in employee_json.
@@ -59,8 +58,7 @@ const employee_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   // Deletes an employee record from the database that corresponds
@@ -70,8 +68,11 @@ const employee_db = {
       values: [employee_id]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
+  },
+
+  findEmail(req, res, next) {
+    res.send({msg: req.body.email, status: 200})
   }
 }
 

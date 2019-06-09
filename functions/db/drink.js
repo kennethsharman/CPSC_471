@@ -7,8 +7,7 @@ const drink_db = {
       values: [drink_json.item_number, drink_json.description]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   find(item_number) {
@@ -17,8 +16,7 @@ const drink_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   update(drink_json) {
@@ -27,8 +25,7 @@ const drink_db = {
       values: [drink_json.description, drink_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   },
 
   delete(item_number) {
@@ -37,8 +34,7 @@ const drink_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return db.query(query_string)
   }
 }
 
