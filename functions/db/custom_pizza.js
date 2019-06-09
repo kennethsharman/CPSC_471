@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const custom_pizza_db = {
   create(custom_pizza_json) {
     const query_string = {
@@ -14,7 +12,7 @@ const custom_pizza_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   find(item_number) {
@@ -23,7 +21,7 @@ const custom_pizza_db = {
       values: [item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   update(custom_pizza_json) {
@@ -39,7 +37,7 @@ const custom_pizza_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   delete(item_number) {
@@ -48,7 +46,7 @@ const custom_pizza_db = {
       values: [item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   }
 }
 

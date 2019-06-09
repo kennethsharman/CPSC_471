@@ -24,7 +24,7 @@ const employee_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   // Find an employee record in the database that corresponds to the given id.
@@ -34,7 +34,7 @@ const employee_db = {
       values: [employee_id]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   // Updates an employee record in the database with values specified in employee_json.
@@ -58,7 +58,7 @@ const employee_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   // Deletes an employee record from the database that corresponds
@@ -68,11 +68,52 @@ const employee_db = {
       values: [employee_id]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   findEmail(req, res, next) {
-    res.send({msg: req.body.email, status: 200})
+    db.query({
+        text: "SELECT * FROM employee WHERE email = $1;",
+        values: [req.body.email]
+      }).then(success => {
+        console.log("SUCCESS", success)
+        console.log(success.length)
+        switch(success.length) {
+            // you need a new person
+          case 0:
+              console.log("NEW PERSON")
+              db.query(employee_db.create({
+                f_name: req.body.displayName,
+                l_name: null,
+                phone_number: null,
+                address: null,
+                cook_flag: true,
+                station: null,
+                server_flag: true,
+                cash_out: null,
+                tip_out: null,
+                manager_flag: false,
+                mgr_start_date: null,
+                email: req.body.email
+            })).then(success => {
+              console.log("MADE NEW PERSON")
+              res.send({msg: success, status: 200})
+            }).catch(err => {
+              res.send({msg: err, status: 404})
+            })
+          break
+          
+            // you're good
+          case 1:
+            console.log("OLD PERSON")
+            res.send({msg: success, status: 200})
+            // this should never happen
+          // default:
+        }
+    }).catch(err => {
+        res.send({msg: err, status: 404})
+    })
+
   }
 }
 

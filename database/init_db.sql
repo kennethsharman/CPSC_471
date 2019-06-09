@@ -15,7 +15,7 @@ CREATE TABLE employee (
 	tip_out numeric,
 	manager_flag boolean,
 	mgr_start_date date,
-	email text NOT NULL UNIQUE,
+	email text NOT NULL UNIQUE
 );
 
 CREATE TABLE shift_log (

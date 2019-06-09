@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const made_from_db = {
   create(made_from_json) {
     const query_string = {
@@ -13,7 +11,7 @@ const made_from_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   find(ingredient_number, supplier, item_number) {
@@ -22,7 +20,7 @@ const made_from_db = {
       values: [ingredient_number, supplier, item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   update(made_from_json) {
@@ -37,7 +35,7 @@ const made_from_db = {
       ]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   delete(ingredient_number, supplier, item_number) {
@@ -46,7 +44,7 @@ const made_from_db = {
       values: [ingredient_number, supplier, item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   }
 }
 

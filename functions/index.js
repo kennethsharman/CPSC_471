@@ -24,15 +24,17 @@
  // defined in API folder
  const echoAPI = require('./API/echoAPI')
  const validator = require('./API/validatorMW')
+
+ const db = require('./db/db')
  const employee = require('./db/employee')
 
- const API = db  => (req, res, next) => {
-    try {
-        res.send({msg: db(req.body), status: 200})
-    } catch(e) {
-        res.send(e)
-    }
- }
+ const API = qString => (req, res, next) => new Promise((resolve, reject) => {
+    db.query(qString(req.body)).then(success => {
+        res.send({msg: success, status: 200})
+    }).catch(err => {
+        res.send({msg: err, status: 404})
+    })
+ })
 
  // Initialize default app with the project configuration
  // functions.config returns config info object

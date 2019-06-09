@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const order_consists_of_db = {
   create(order_consists_of_json) {
     const query_string = {
@@ -7,7 +5,7 @@ const order_consists_of_db = {
       values: [order_consists_of_json.order_number, order_consists_of_json.item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   find(order_number, item_number) {
@@ -16,7 +14,7 @@ const order_consists_of_db = {
       values: [order_number, item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   },
 
   // No update, entire table is the primary key.
@@ -36,7 +34,7 @@ const order_consists_of_db = {
       values: [order_number, item_number]
     }
 
-    return db.query(query_string)
+    return query_string
   }
 }
 
