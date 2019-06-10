@@ -183,7 +183,7 @@
 
   } // end loadOrder
 
-    clickService('#employee-modal', () => modalService(
+    click('#employee-modal', () => modalService(
         `<h4 class="modal-title" style="text-align: center" color="black">
           Access Employee View
         </h4>`,
@@ -195,7 +195,7 @@
             <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">Continue</button>`
     ))
 
-    clickService('#payment-modal', () => modalService(
+    click('#payment-modal', () => modalService(
       `<h4 class="modal-title" style="text-align: center" color="black">
         Make Payment
       </h4>`,`
@@ -213,20 +213,20 @@
 
     const employeeFNAME = 'KEN'
 
-    clickService('.request-btn', () => modalService(
+    click('.request-btn', () => modalService(
       `<h4>Server requested</h4>`,`
       <h5>${employeeFNAME} will be at your table shortly.</h5>`,`
       <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
     `))
 
-    clickService('#paid-btn', () => modalService(
+    click('#paid-btn', () => modalService(
       `<h4>Payment complete</h4>`,
       `<h5>Thank you for visiting the Fantasy Street Kitchen.</h5>`,`
       <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
     `))
 
 
-    clickService('.food-action', () => {
+    click('.food-action', () => {
       modalService(`
       <h4>Add to order</h4>`,`
       <h5 style="text-align: center">${event.target.id}</h5>
@@ -258,7 +258,7 @@
       // number spinner
       const num = $("#spinner-num")
       num.val(1)
-      clickService('.spin-btn', ({target: {id}}) => {
+      click('.spin-btn', ({target: {id}}) => {
         switch(id.substring(8,10)) {
           case 'in':
             if(num.val()<10)

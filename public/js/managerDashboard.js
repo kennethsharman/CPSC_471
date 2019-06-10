@@ -66,7 +66,7 @@
     $('#right-bar').html(``)
   } // end loadManagerDB
 
-  clickService('#new-inventory-btn', () => modalService(`
+  click('#new-inventory-btn', () => modalService(`
     <h4>New Inventory</h4>`,`
     <div class="dropdown">
       <a href="#" class="btn btn-primary dropbtn">Supplier<i class="fas fa-sort-down"></i></a>
@@ -79,7 +79,7 @@
     <button type="button" class="btn btn-primary" id="new-inventory-btn" data-dismiss="modal">Add</button>
   `))
 
-  clickService('#inventory-history-btn',() => modalService(`
+  click('#inventory-history-btn',() => modalService(`
   <h4>Inventory History</h4>`,`
   <h6>Date</h6>
   <input type="date" name="history-date">
@@ -161,9 +161,9 @@
   }
 
   // Add/Edit Employee Button
-  clickService('#manage-emp-btn', empModal) // end add/edit employee button actions
+  click('#manage-emp-btn', empModal) // end add/edit employee button actions
 
-  clickService('.remove-emp', () => modalService(`
+  click('.remove-emp', () => modalService(`
     <h4>Confirm Remove</h4>`,`
     <h6>Permanently remove ${event.target.id.substring(0,12)}?</h6>
     `,`
@@ -171,7 +171,7 @@
     <button type="button" class="btn btn-primary" id="confirm-remove">Confirm</button>
     `))
 
-  clickService('#confirm-remove', event => {
+  click('#confirm-remove', event => {
     event.preventDefault()
 
     // logic
