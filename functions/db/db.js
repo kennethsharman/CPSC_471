@@ -12,27 +12,28 @@ const db = {
             ssl: true
         })
 
-        console.log(JSON.stringify(query_string))
-
         client.connect()
 
-        let result
-        client.query(query_string)
-            .then((res) => {
-                result = res.rows
-                client.end()
-                return result
-            })
-            .then(f => {
-                console.log(f)
-            })
-            .catch(e => {
-                if (err) {
-                    return console.error(err)
-                }
-            })
-
-        return result
+        return new Promise((resolve, reject) => {
+            let result
+            client.query(query_string)
+                .then(res => {
+                    result = res.rows
+                    client.end()
+                    console.log("HRE", result)
+                    return result
+                })
+                .then(f => {
+                    console.log("RESOLVEING", f)
+                    resolve(f)
+                })
+                .catch(err => {
+                    if (err) {
+                        console.log("ERROR", err)
+                        reject(err)
+                    }
+                })
+        })
     }
 }
 

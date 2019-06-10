@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const allergy_db = {
   create(allergy_json) {
     const query_string = {
@@ -7,8 +5,7 @@ const allergy_db = {
       values: [allergy_json.order_number, allergy_json.allergy]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(order_number, allergy) {
@@ -17,8 +14,7 @@ const allergy_db = {
       values: [order_number, allergy]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   // No update, entire table is primary key.
@@ -38,8 +34,7 @@ const allergy_db = {
       values: [order_number, allergy]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   allergies_for_oder(order_number) {
@@ -48,8 +43,7 @@ const allergy_db = {
       values: [order_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

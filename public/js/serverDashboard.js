@@ -220,48 +220,7 @@
     `)
   } // end loadServerDB
 
-  // Open Order button
-  $(document).on('click', '#openOrder1-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/customer.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end Open Order button actions
-
-  // Open Order button
-  $(document).on('click', '#openOrder2-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/customer.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end Open Order button actions
-
-  // Open Order button
-  $(document).on('click', '#completedOrder1-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/customer.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end Open Order button actions
-
-  // New Order button
-  $(document).on('click', '#neworder-btn', event => {
-      event.preventDefault()
-
-      $.getScript("./js/customer.js").then(function () {
-      }, function(err){
-        alert('ERROR:' + JSON.stringify(err));
-      });
-
-  }); // end New Order button actions
-
+  click('#openOrder1-btn',  () => loadService("./js/customer.js"))
+  click('#openOrder2-btn', () => loadService("./js/customer.js"))
+  click('#completedOrder1-btn', () => loadService("./js/customer.js"))
 } // end serverDashboard.js

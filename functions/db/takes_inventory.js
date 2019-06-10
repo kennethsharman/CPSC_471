@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const takes_inventory_db = {
   create(takes_inventory_json) {
     const query_string = {
@@ -13,8 +11,7 @@ const takes_inventory_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(manager_id, ingredient_number, supplier, inventory_date) {
@@ -23,8 +20,7 @@ const takes_inventory_db = {
       values: [manager_id, ingredient_number, supplier, inventory_date]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update(takes_inventory_json) {
@@ -39,8 +35,7 @@ const takes_inventory_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete(manager_id, ingredient_number, supplier, inventory_date) {
@@ -49,8 +44,7 @@ const takes_inventory_db = {
       values: [manager_id, ingredient_number, supplier, inventory_date]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

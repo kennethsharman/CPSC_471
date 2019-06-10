@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const pasta_db = {
   create(pasta_json) {
     const query_string = {
@@ -7,8 +5,7 @@ const pasta_db = {
       values: [pasta_json.item_number, pasta_json.baked_flag]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(item_number) {
@@ -17,8 +14,7 @@ const pasta_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update(pasta_json) {
@@ -27,8 +23,7 @@ const pasta_db = {
       values: [pasta_json.baked_flag, pasta_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete(item_number) {
@@ -37,8 +32,7 @@ const pasta_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

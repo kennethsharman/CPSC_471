@@ -1,4 +1,3 @@
-
 // Employee Access Screen View
 
 {
@@ -18,7 +17,7 @@
 
         <div text-align="left">
 
-        <div class="card">
+        <div class="card" id="server-card">
           <div class="card-body">
           <h5 class="card-title">Server</h5>
           <div class="container-fluid lighter">
@@ -36,7 +35,7 @@
 
         <br>
 
-        <div class="card">
+        <div class="card" id="cook-card">
           <div class="card-body">
             <h5 class="card-title">Cook</h5>
 
@@ -64,7 +63,7 @@
           </div><!-- card body -->
         </div><!-- card -->
         <br>
-        <div class="card">
+        <div class="card" id="manager-card">
           <div class="card-body">
             <h5 class="card-title">Manager</h5>
 
@@ -79,15 +78,20 @@
         </div><!-- card -->
     `)
 
-    const username = "KEN SHARMAN"
-    const clocktime = "08:34"
+    const user = state('user')
+
+    if(!user.server_flag) $('#server-card').hide()
+    if(!user.manager_flag) $('#manager-card').hide()
+    if(!user.cook_flag) $('#cook-card').hide()
+
+    const clocktime = '10:34'
 
     $('#left-bar').html(`
 
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Logged in as</h5>
-        <p class="card-text">${username}</p>
+        <p class="card-text">${user.f_name}</p>
         <a href="#" id='self' class="btn btn-primary edit-emp">My Account</a>
       </div>
     </div>
@@ -133,4 +137,6 @@
     `)
   } // end loadAdmin
 
+
+  click('#neworder-btn', () => loadService("./js/customer.js"))
 } // end adminView.js

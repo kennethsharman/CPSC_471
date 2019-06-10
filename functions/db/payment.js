@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const payment_db = {
   create(payment_json) {
     const query_string = {
@@ -14,8 +12,7 @@ const payment_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(order_number) {
@@ -24,8 +21,7 @@ const payment_db = {
       values: [order_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update(payment_json) {
@@ -41,8 +37,7 @@ const payment_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete(order_number) {
@@ -51,8 +46,7 @@ const payment_db = {
       values: [order_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

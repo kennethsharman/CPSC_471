@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const _db = {
   create() {
     const query_string = {
@@ -7,8 +5,7 @@ const _db = {
       values: []
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find() {
@@ -17,8 +14,7 @@ const _db = {
       values: []
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update() {
@@ -27,8 +23,7 @@ const _db = {
       values: []
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete() {
@@ -37,8 +32,7 @@ const _db = {
       values: []
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

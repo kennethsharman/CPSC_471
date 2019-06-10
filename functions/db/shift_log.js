@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const shift_log_db = {
   create(shift_log_json) {
     const query_string = {
@@ -12,8 +10,7 @@ const shift_log_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(employee_id, shift_date, time_in) {
@@ -22,8 +19,7 @@ const shift_log_db = {
       values: [employee_id, shift_date, time_in]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update(shift_log_json) {
@@ -37,8 +33,7 @@ const shift_log_db = {
       ]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete(employee_id, shift_date, time_in) {
@@ -47,8 +42,7 @@ const shift_log_db = {
       values: [employee_id, shift_date,time_in]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 

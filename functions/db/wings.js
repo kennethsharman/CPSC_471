@@ -1,5 +1,3 @@
-const db = require('./db')
-
 const wings_db = {
   create(wings_json) {
     const query_string = {
@@ -7,8 +5,7 @@ const wings_db = {
       values: [wings_json.item_number, wings_json.sauce, wings_json.dip]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   find(item_number) {
@@ -17,8 +14,7 @@ const wings_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   update(wings_json) {
@@ -27,8 +23,7 @@ const wings_db = {
       values: [wings_json.sauce, wings_json.dip, wings_json.item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   },
 
   delete(item_number) {
@@ -37,8 +32,7 @@ const wings_db = {
       values: [item_number]
     }
 
-    result = db.query(query_string)
-    return result
+    return query_string
   }
 }
 
