@@ -1,16 +1,16 @@
-const loadService = url => {
+const view = url => {
     $.getScript(url).then(function () {
     }, function(err){
       alert('ERROR:' + JSON.stringify(err));
     });
 }
 
-const clickService = (query, callback) => {
+const click = (query, callback) => {
   if(callback==undefined) $(document).off('click', query)
-  $(document).on('click', query, callback)
+  $(document).off('click', query).on('click', query, callback)
 }
 
-const modalService = (head, body, foot) => {
+const modal = (head, body, foot) => {
   $('.modal-header').html(head)
   $('.modal-body').html(body)
   $('.modal-footer').html(foot)
@@ -18,7 +18,7 @@ const modalService = (head, body, foot) => {
 }
 
 const loginService = () => {
-  clickService('.logout', e => {
+  click('.logout', e => {
     e.preventDefault()
     firebase.auth().signOut().then( () => {
       location.reload()
@@ -52,9 +52,8 @@ const loginService = () => {
       requestService("/user/byEmail", "POST", user, res => {
         state('user', res.msg[0])
         
-        console.log("user state service", state('user'))
         $('.loader').hide()
-        loadService("./js/adminView.js")
+        view("./js/adminView.js")
       },() => {
         console.log("ERRROR")
       })

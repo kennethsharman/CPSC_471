@@ -54,7 +54,8 @@ const employee_db = {
         employee_json.tip_out,
         employee_json.manager_flag,
         employee_json.mgr_start_date,
-        employee_json.employee_id
+        employee_json.employee_id,
+        employee_json.email
       ]
     }
 
