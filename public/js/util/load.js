@@ -41,7 +41,9 @@ const loginService = () => {
 
   auth.onAuthStateChanged(user => {
     $('.loader').show()
+    $('#firebaseui-auth-container').hide()
     if(user) {
+      $('#header-row').html('')
       $('#main-bar').html(`
       <div class="card">
         <div class="card-body">
@@ -67,9 +69,6 @@ const loginService = () => {
         <img id="login_img" src="pics/The_Fantasy_Street_Kitchen.png" alt="Company Logo" height="200px">
       </div>
     `)
-    $('#main-bar').html(`
-      <div id="firebaseui-auth-container"></div>
-    `)
-
+    $('#firebaseui-auth-container').show()
   }
 }
