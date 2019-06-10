@@ -1,4 +1,3 @@
-
 // Employee Access Screen View
 
 {
@@ -18,7 +17,7 @@
 
         <div text-align="left">
 
-        <div class="card">
+        <div class="card" id="server-card">
           <div class="card-body">
           <h5 class="card-title">Server</h5>
           <div class="container-fluid lighter">
@@ -36,7 +35,7 @@
 
         <br>
 
-        <div class="card">
+        <div class="card" id="cook-card">
           <div class="card-body">
             <h5 class="card-title">Cook</h5>
 
@@ -64,7 +63,7 @@
           </div><!-- card body -->
         </div><!-- card -->
         <br>
-        <div class="card">
+        <div class="card" id="manager-card">
           <div class="card-body">
             <h5 class="card-title">Manager</h5>
 
@@ -78,6 +77,10 @@
           </div><!-- card body -->
         </div><!-- card -->
     `)
+
+    if(!user.server_flag) $('#server-card').hide()
+    if(!user.manager_flag) $('#manager-card').hide()
+    if(!user.cook_flag) $('#cook-card').hide()
 
     const username = state('user').f_name
     const clocktime = '10:34'
