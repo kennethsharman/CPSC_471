@@ -41,7 +41,7 @@ const employee_db = {
   // If a value is null or not provided in employee_json, it will be set to null in the database.
   update(employee_json) {
     const query_string = {
-      text: "UPDATE employee SET f_name = $1, l_name = $2, phone_number = $3, address = $4, cook_flag = $5, station = $6, server_flag = $7, cash_out = $8, tip_out = $9, manager_flag = $10, mgr_start_date = $11 WHERE employee_id = $12 RETURNING *;",
+      text: "UPDATE employee SET f_name = $1, l_name = $2, phone_number = $3, address = $4, cook_flag = $5, station = $6, server_flag = $7, cash_out = $8, tip_out = $9, manager_flag = $10, mgr_start_date = $11, email = $13 WHERE employee_id = $12 RETURNING *;",
       values: [
         employee_json.f_name,
         employee_json.l_name,
