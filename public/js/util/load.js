@@ -6,7 +6,8 @@ const loadService = url => {
 }
 
 const clickService = (query, callback) => {
-    $(document).on('click', query, callback)
+  if(callback==undefined) $(document).off('click', query)
+  $(document).on('click', query, callback)
 }
 
 const modalService = (head, body, foot) => {

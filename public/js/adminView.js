@@ -79,8 +79,8 @@
         </div><!-- card -->
     `)
 
-    const username = "KEN SHARMAN"
-    const clocktime = "08:34"
+    const username = state('user').f_name
+    const clocktime = '10:34'
 
     $('#left-bar').html(`
 

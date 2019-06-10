@@ -201,7 +201,7 @@
       </h4>`,`
       <h5  style="text-align: center"> To continue, please enter your Paypal account:</h5>
       <div class="form-group">
-        <input type="email" class="form-control" id="email">
+      <input type="email" class="form-control" id="email">
       </div>
       <h5  style="text-align: center"> Or ask for a server to pay in cash or credit.</h5>`,
       `<button type="button" class="btn btn-primary mr-auto request-btn" style="color: white">
