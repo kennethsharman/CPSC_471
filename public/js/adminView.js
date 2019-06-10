@@ -78,11 +78,12 @@
         </div><!-- card -->
     `)
 
+    const user = state('user')
+
     if(!user.server_flag) $('#server-card').hide()
     if(!user.manager_flag) $('#manager-card').hide()
     if(!user.cook_flag) $('#cook-card').hide()
 
-    const username = state('user').f_name
     const clocktime = '10:34'
 
     $('#left-bar').html(`
@@ -90,7 +91,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Logged in as</h5>
-        <p class="card-text">${username}</p>
+        <p class="card-text">${user.f_name}</p>
         <a href="#" id='self' class="btn btn-primary edit-emp">My Account</a>
       </div>
     </div>
