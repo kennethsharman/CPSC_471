@@ -1,6 +1,6 @@
 /**
  * The back end code goes here.
- * 
+ *
  * Mostly, this is the API chains go here
  * It passes through middleware (MW) and endpoint (EP)
  * functions and sends a resonse back to the front end
@@ -27,6 +27,7 @@
 
  const db = require('./db/db')
  const employee = require('./db/employee')
+ const customer = require('./db/customer')
 
  const API = qString => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
@@ -60,5 +61,7 @@ app.put('/user', API(employee.update))
 app.delete('/user', API(employee.delete))
 app.post('/user/byEmail', employee.findEmail)
 
+// customer
+app.post('/customer', API(customer.create))
 
- exports.app = functions.https.onRequest(app)
+exports.app = functions.https.onRequest(app)

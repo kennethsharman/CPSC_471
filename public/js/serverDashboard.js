@@ -9,10 +9,10 @@
 
     $('#header-row').html(`
       <h3 class="header-title">
-        <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+        <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
         Server Dashboard
       </h3>
-  
+
     `) // end header-row
 
     $('#main-bar').html(`
@@ -40,7 +40,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -70,7 +70,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -112,7 +112,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -142,7 +142,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -179,7 +179,7 @@
           <br>
           <div class="row">
             <div class="col-lg-12">
-              <a href="#" class="btn btn-primary" id='neworder-btn'>
+              <a href="#" id='self' class="btn btn-primary serverNewOrder-btn">
                 Take Order
               </a>
             </div><!-- col -->
@@ -223,4 +223,50 @@
   click('#openOrder1-btn',  () => view("./js/customer.js"))
   click('#openOrder2-btn', () => view("./js/customer.js"))
   click('#completedOrder1-btn', () => view("./js/customer.js"))
+
+
+  click('.serverNewOrder-btn', event => {
+
+      const group = {
+        group_size: 2 // default group size
+      }
+      const spinner = new Spinner("#groupSize", 2, 1, 20) // making a new spinner for input. Data can be accessed on the element param
+
+      modal(
+        `<h4 class="modal-title" style="text-align: center" color="black">
+          Group Size
+        </h4>`,
+        `<h5> How big is this group?</h5>
+          ${spinner.getHTML()}`,
+          `<button type="button" class="btn btn-secondary" id="cancel-group" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary save-group">Start Order</button>`
+      )
+      spinner.loadCtrl()
+
+      group.group_size = $('#groupSize').val()
+
+      click('.save-group', () => {
+
+        // modal loading
+        $('.modal-body').html(`
+        <h4>
+          Creating a group of ${group.group_size}...
+        </h4>`)
+        $('.modal-footer').hide()
+
+         // call backend to make a new group. res is the created group on db
+        requestService('/customer', 'post', group, res => {
+          $('.modal-footer').show() // shows the close button
+          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
+
+          state('currentGroup', res.msg) // saves the group for later use
+          // res.msg = {customer_number: Number, group_size: Number}
+
+          view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+
+        })
+      })
+
+  }) // end click serverNewOrder-btn
+
 } // end serverDashboard.js
