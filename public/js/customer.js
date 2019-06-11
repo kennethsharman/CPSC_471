@@ -183,7 +183,7 @@
 
   } // end loadOrder
 
-    click('#employee-modal', () => modalService(
+    click('#employee-modal', () => modal(
         `<h4 class="modal-title" style="text-align: center" color="black">
           Access Employee View
         </h4>`,
@@ -195,7 +195,7 @@
             <button type="button" class="btn btn-primary" id="switchviews-btn" data-dismiss="modal">Continue</button>`
     ))
 
-    click('#payment-modal', () => modalService(
+    click('#payment-modal', () => modal(
       `<h4 class="modal-title" style="text-align: center" color="black">
         Make Payment
       </h4>`,`
@@ -213,13 +213,13 @@
 
     const employeeFNAME = 'KEN'
 
-    click('.request-btn', () => modalService(
+    click('.request-btn', () => modal(
       `<h4>Server requested</h4>`,`
       <h5>${employeeFNAME} will be at your table shortly.</h5>`,`
       <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
     `))
 
-    click('#paid-btn', () => modalService(
+    click('#paid-btn', () => modal(
       `<h4>Payment complete</h4>`,
       `<h5>Thank you for visiting the Fantasy Street Kitchen.</h5>`,`
       <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
@@ -227,7 +227,7 @@
 
 
     click('.food-action', () => {
-      modalService(`
+      modal(`
       <h4>Add to order</h4>`,`
       <h5 style="text-align: center">${event.target.id}</h5>
       <br>
@@ -252,7 +252,10 @@
         <textarea class="form-control" rows="5" id="note"></textarea>
       </div>`, `
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-primary" id="Add-order-btn" data-dismiss="modal">Add</button>
+      <button type="button" class="btn btn-primary" id="Add-order-btn" data-dismiss="modal">
+        <i class="fas fa-plus-square"></i> 
+        Add
+      </button>
       `)
 
       // number spinner

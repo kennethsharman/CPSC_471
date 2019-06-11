@@ -220,7 +220,7 @@
     `)
   } // end loadServerDB
 
-  click('#openOrder1-btn',  () => loadService("./js/customer.js"))
-  click('#openOrder2-btn', () => loadService("./js/customer.js"))
-  click('#completedOrder1-btn', () => loadService("./js/customer.js"))
+  click('#openOrder1-btn',  () => view("./js/customer.js"))
+  click('#openOrder2-btn', () => view("./js/customer.js"))
+  click('#completedOrder1-btn', () => view("./js/customer.js"))
 } // end serverDashboard.js

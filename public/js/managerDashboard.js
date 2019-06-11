@@ -66,11 +66,7 @@
     $('#right-bar').html(``)
   } // end loadManagerDB
 
-  click('#new-inventory-btn', () => modalService(`
-    <h4>New Inventory</h4>`,`
-    <div class="dropdown">
       <a href="#" class="btn btn-primary dropbtn">Supplier<i class="fas fa-sort-down"></i></a>
-        <div class="dropdown-content">
           <a href="#">GFS</a>
           <a href="#">Sysco</a>
         </div><!-- dd content -->
@@ -79,7 +75,7 @@
     <button type="button" class="btn btn-primary" id="new-inventory-btn" data-dismiss="modal">Add</button>
   `))
 
-  click('#inventory-history-btn',() => modalService(`
+  click('#inventory-history-btn',() => modal(`
   <h4>Inventory History</h4>`,`
   <h6>Date</h6>
   <input type="date" name="history-date">
@@ -99,7 +95,7 @@
   const empModal = (event = ({preventDefault:()=>null})) => { // js magic
       event.preventDefault()
 
-    modalService(`
+    modal(`
     <h4>Mange Employees</h4>
     `,`
     <br>
@@ -163,7 +159,7 @@
   // Add/Edit Employee Button
   click('#manage-emp-btn', empModal) // end add/edit employee button actions
 
-  click('.remove-emp', () => modalService(`
+  click('.remove-emp', () => modal(`
     <h4>Confirm Remove</h4>`,`
     <h6>Permanently remove ${event.target.id.substring(0,12)}?</h6>
     `,`

@@ -138,5 +138,5 @@
   } // end loadAdmin
 
 
-  click('#neworder-btn', () => loadService("./js/customer.js"))
+  click('#neworder-btn', () => view("./js/customer.js"))
 } // end adminView.js
