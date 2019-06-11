@@ -9,10 +9,10 @@
 
     $('#header-row').html(`
       <h3 class="header-title">
-        <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+        <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
         Server Dashboard
       </h3>
-  
+
     `) // end header-row
 
     $('#main-bar').html(`
@@ -40,7 +40,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -70,7 +70,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -112,7 +112,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -142,7 +142,7 @@
                 <p>Ticket Time: <span>Tkt_time</span></p>
                 </th>
                 <th class="tg-s268">
-                  <p>Price: <span>price</span></p> 
+                  <p>Price: <span>price</span></p>
                   <p>Total Pay: <span>TTL_pay</span></p>
                 </th>
               </tr>
@@ -179,7 +179,7 @@
           <br>
           <div class="row">
             <div class="col-lg-12">
-              <a href="#" class="btn btn-primary" id='neworder-btn'>
+              <a href="#" id='self' class="btn btn-primary serverNewOrder-btn">
                 Take Order
               </a>
             </div><!-- col -->
@@ -223,4 +223,72 @@
   click('#openOrder1-btn',  () => view("./js/customer.js"))
   click('#openOrder2-btn', () => view("./js/customer.js"))
   click('#completedOrder1-btn', () => view("./js/customer.js"))
+
+
+  click('.serverNewOrder-btn', event => {
+
+      event.preventDefault()
+      let user = state('user')
+
+      $('.modal-header').html(`
+      <div id="group-size-container">
+        <h4 class="modal-title" style="text-align: center" color="black">
+          Group Size
+        </h4>
+      </div>`)
+
+      // Modal Body
+      const groupSize = groupSize => `
+      <p id="group-edit-container">
+          <span>${groupSize || "2"}</span>
+          <a class="glyph" href="#" id="groupSize-edit"><i class="fas fa-pencil-alt pad"></i></a>
+      </p>`
+
+      $('.modal-body').html(`
+        <h6>Address </h6>
+        ${groupSize(user.group_size)}
+      `)
+
+      click("#groupSize-edit", function(event) {
+        $("#group-edit-container").html(`
+          <div class="row">
+            <div class="col-10">
+              <input class="form-control" id="groupsize-input">
+            </div>
+            <div class="col-2">
+              <h3>
+                <a class="glyph" href="#" id="groupsize-edit-save">
+                  <i class="fas fa-save" id="groupsize-save-inner">
+                  </i>
+                </a>
+              </h3>
+            </div>
+          </div><!-- row -->`)
+        $('#groupsize-input').val(user.group_size)
+
+        const save = function(event) {
+          user.group_size = $('#groupsize-input').val()
+          $("#group-edit-container").html(groupSize(user.group_size))
+          $(this).off(event)
+        }
+        click('#groupsize-edit-save', save)
+
+      })
+
+      // Modal footer
+      $('.modal-footer').html(`
+        <button type="button" class="btn btn-secondary cancel-group" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary save-group" data-dismiss="modal">Start Order</button>
+      `)
+
+      $('#modal-container').modal()
+
+      click('.cancel-group', () => {}) // do nothing
+      click('.save-group', () => {
+        state('user', user)
+        requestService('/customer', 'post', user)
+      })
+
+  }) // end click serverNewOrder-btn
+
 } // end serverDashboard.js
