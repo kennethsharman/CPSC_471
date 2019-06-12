@@ -2,13 +2,14 @@
 
 {
   loadAdmin();
+  set_shift_clock();
 
   // Load Admin View Page
   function loadAdmin() {
 
     $('#header-row').html(`
   <h3 class="header-title">
-    <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+    <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
     Staff Dashboard
   </h3>
 
@@ -84,8 +85,6 @@
     if(!user.manager_flag) $('#manager-card').hide()
     if(!user.cook_flag) $('#cook-card').hide()
 
-    const clocktime = '10:34'
-
     $('#left-bar').html(`
 
     <div class="card">
@@ -95,21 +94,21 @@
         <a href="#" id='self' class="btn btn-primary edit-emp">My Account</a>
       </div>
     </div>
-    
+
     <br>
-    
-    <div class="card">
+
+    <div id="shift-clock" class="card">
       <div class="card-body">
-        <h5 class="card-title">Clocked in at</h5>
-        <p class="time-color" style="font-size:25px;">${clocktime}</p>
-        <a href="#" id='clockout-btn' class="btn btn-primary">Clock Out</a>
+        <h5 class="card-title"></h5>
+        <p id="clock-in-time" class="time-color" style="font-size:25px;"></p>
+        <button href="#" id='shift-btn' class="btn btn-primary"></button>
       </div>
     </div>
 
     `) // end left-bar
 
     $('#right-bar').html(`
-    
+
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">86ed ITEMS</h5>
@@ -139,4 +138,54 @@
 
 
   click('#neworder-btn', () => view("./js/customer.js"))
+
+  function set_shift_clock() {
+    const user = state('user')
+
+    requestService(`/shift/${user.employee_id}/current`, "GET", null, res_success => {
+      // The employee has no current shift and thus is not clocked in
+      console.log(res_success)
+      console.log("BLAH")
+      if ($.isEmptyObject(res_success)) {
+        $('#shift-clock .card-title').html("Not Clocked In")
+        $('#clock-in-time').html("")
+        $('#shift-btn').html("Clock In")
+        $('#shift-btn').unbind("click")
+        $('#shift-btn').click(clock_in)
+        $("#shift-btn").attr("disabled", false)
+      } else {
+        $('#shift-clock .card-title').html("Clocked In")
+        $('#clock-in-time').html(new Date().toLocaleString())
+        $('#shift-btn').html("Clock Out")
+        $('#shift-btn').unbind("click")
+        $('#shift-btn').click(clock_out)
+        $("#shift-btn").attr("disabled", false)
+      }
+    }, res_error => {
+        console.log(res_error)
+        $("#shift-btn").attr("disabled", false)
+    })
+  }
+
+  function clock_in() {
+    const user = state('user')
+    $("#shift-btn").attr("disabled", true)
+    requestService(`/shift`, "POST", user, res_success => {
+      set_shift_clock()
+    }, res_error => {
+      console.log(res_error)
+    })
+  }
+
+  function clock_out() {
+    const user = state('user')
+    // Prevent users from spamming clock in / clock out to generate many shifts
+    $("#shift-btn").attr("disabled", true)
+    requestService(`/shift/end`, "POST", user, res_success => {
+      set_shift_clock()
+    }, res_error => {
+      console.log(res_error)
+      $("#shift-btn").attr("disabled", false)
+    })
+  }
 } // end adminView.js
