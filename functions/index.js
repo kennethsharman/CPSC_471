@@ -1,6 +1,6 @@
 /**
  * The back end code goes here.
- * 
+ *
  * Mostly, this is the API chains go here
  * It passes through middleware (MW) and endpoint (EP)
  * functions and sends a resonse back to the front end
@@ -27,6 +27,8 @@
 
  const db = require('./db/db')
  const employee = require('./db/employee')
+
+ const shift_log_api = require('./API/shift_log')
 
  const API = qString => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
@@ -60,5 +62,8 @@ app.put('/user', API(employee.update))
 app.delete('/user', API(employee.delete))
 app.post('/user/byEmail', employee.findEmail)
 
+app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
+app.post('/shift/', (req, res) => shift_log_api.clock_in(req, res))
+app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 
  exports.app = functions.https.onRequest(app)
