@@ -101,7 +101,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
           </div><!-- row -->`)
         $('#phone-input').val(employee.phone_number)
 
-        const save = function(event) {
+        const save = () => {
           employee.phone_number = $('#phone-input').val()
           $("#contact-edit-container").html(contactNumber(employee.phone_number))
         }
@@ -125,23 +125,73 @@ click('#neworder-btn', () => view("./js/customer.js"))
           </div><!-- row -->`)
         $('#address-input').val(employee.address)
 
-        const save = function(event) {
+        const save = () => {
           employee.address = $('#address-input').val()
           $("#address-edit-container").html(address(employee.address))
         }
         click('#address-edit-save', save)
       })
-  
-      if(mode!==SELF_EDIT) $(`.modal-body`).append(`
-        <br>
-        <h6> Roles </h6>
-        <p>
-          <span>
-            COOK | SERVER | MANAGER 
-            <a class="glyph" href="#" id="role-edit"><i class="fas fa-pencil-alt pad"></i></a>
-          </span>
-        </p>
-      `)
+
+      const roles = (s,c,m) => {
+        return `
+          <br>
+          <h6>
+          Roles
+          <a class="glyph" href="#" id="role-edit"><i class="fas fa-pencil-alt pad"></i></a>
+          </h6>
+          <p>
+            <span>
+            <td>${s? "SERVER" : ""} ${c? "COOK" : ""} <br> ${m? "MANAGER" : ""}</td>
+           </span>
+          </p>`
+      }
+
+      if(mode!==SELF_EDIT) $(`.modal-body`).append(
+        `<div id="roles">
+          ${roles(employee.server_flag, employee.cook_flag, employee.manager_flag)}
+        </div>`)
+
+      click('#role-edit', () => {
+        $('#roles').html(`
+          <br>
+          <h6>
+          Roles
+          <a class="glyph" href="#" id="role-edit-save">
+            <i class="fas fa-save" id="role-edit-save-inner"></i>
+          </a>
+          </h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="server-role">
+            <label class="form-check-label" for="server-role">
+              SERVER
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cook-role">
+            <label class="form-check-label" for="cook-role">
+              COOK
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="manager-role">
+            <label class="form-check-label" for="manager-role">
+              MANAGER
+            </label>
+          </div>
+        `)
+
+          $('#server-role').prop("checked", employee.server_flag)
+          $('#cook-role').prop("checked", employee.cook_flag )
+          $('#manager-role').prop("checked", employee.manager_flag)
+
+        const save = () => {
+          employee.server_flag = $('#server-role').is(":checked")
+          employee.cook_flag = $('#cook-role').is(":checked")
+          employee.manager_flag = $('#manager-role').is(":checked")
+          $("#roles").html(roles(employee.server_flag, employee.cook_flag, employee.manager_flag))
+        }
+        click('#role-edit-save', save)
+      })
   
       if(mode!==MANAGER_NEW) $(`.modal-body`).append(`
       <h6>Shift Log</h6>
