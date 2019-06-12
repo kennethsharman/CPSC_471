@@ -3,6 +3,7 @@
 {
   loadAdmin();
   set_shift_clock();
+  set_out_of_stock_items();
 
   // Load Admin View Page
   function loadAdmin() {
@@ -112,24 +113,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">86ed ITEMS</h5>
-        <div class="card-text">
-
-          <div class="card subcard">
-            <div class="card-body">
-              <h5 class="card-title subcard-t">Ingredient</h5>
-              <p class="card-text subcard-t">Food</p>
-              <p class="card-text subcard-t">Food</p>
-            </div>
-          </div>
-
-          <div class="card subcard">
-            <div class="card-body">
-              <h5 class="card-title subcard-t">Ingredient</h5>
-              <p class="card-text subcard-t">Food</p>
-              <p class="card-text subcard-t">Food</p>
-            </div>
-          </div>
-
+        <div id="out-of-stock-items-list-card" class="card-text">
         </div><!--card text -->
       </div><!-- card body -->
     </div><!-- card -->
@@ -159,7 +143,7 @@
         $('#shift-btn').html("Clock Out")
         $('#shift-btn').unbind("click")
         $('#shift-btn').click(clock_out)
-        $("#shift-btn").attr("disabled", false)
+        $("#shift-btn").attr("disabled", falseingr)
       }
     }, res_error => {
         console.log(res_error)
@@ -186,6 +170,41 @@
     }, res_error => {
       console.log(res_error)
       $("#shift-btn").attr("disabled", false)
+    })
+  }
+
+  function set_out_of_stock_items() {
+    out_of_stock_items = {}
+    requestService(`/item/outofstock`, "GET", null, res_success => {
+      for (const row of res_success) {
+        console.log(row)
+        if (out_of_stock_items[row.food_name] == null) {
+          out_of_stock_items[row.food_name] = []
+        }
+        out_of_stock_items[row.food_name].push(row.name)
+      }
+
+      console.log(out_of_stock_items)
+      count = 0
+      for(const item of Object.keys(out_of_stock_items)) {
+        count += 1
+        $('#out-of-stock-items-list-card').append(`
+          <div class="card subcard">
+            <div id="item-card-${count}" class="card-body">
+              <h5 class="card-title subcard-t">${item}</h5>
+            </div>
+          </div>`)
+        console.log(out_of_stock_items[item])
+        for(const ingredient of out_of_stock_items[item]) {
+          console.log(ingredient)
+          $(`#item-card-${count}`).append(`<p class="card-text subcard-t">${ingredient}</p>`)
+        }
+      }
+      console.log("Out of stock items:")
+      console.log(out_of_stock_items)
+    }, res_error => {
+      console.log("I failed")
+      console.log(res_error)
     })
   }
 } // end adminView.js
