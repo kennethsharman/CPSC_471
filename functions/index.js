@@ -34,7 +34,7 @@
     db.query(qString(req.body)).then(success => {
         res.send({msg: success, status: 200})
     }).catch(err => {
-        res.send({msg: err, status: 404})
+        res.send({msg: err, status: 500})
     })
  })
 
