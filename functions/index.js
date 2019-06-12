@@ -29,13 +29,23 @@
  const employee = require('./db/employee')
  const customer = require('./db/customer')
 
- const API = qString => (req, res, next) => new Promise((resolve, reject) => {
+// argument in body - use when passing a JSON
+const bodyAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
         res.send({msg: success, status: 200})
     }).catch(err => {
         res.send({msg: err, status: 404})
     })
  })
+
+// argument right on the URL- use when passing just a string or a number
+const paramsAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
+   db.query(qString(req.params.id)).then(success => {
+       res.send({msg: success, status: 200})
+   }).catch(err => {
+       res.send({msg: err, status: 404})
+   })
+})
 
  // Initialize default app with the project configuration
  // functions.config returns config info object
@@ -55,13 +65,15 @@
 app.post('/echo', validator.echoMW, echoAPI.testEP)
 
 // employee
-app.post('/user', API(employee.create))
-app.get('/user', API(employee.find))
-app.put('/user', API(employee.update))
-app.delete('/user', API(employee.delete))
+app.post('/user', bodyAPI(employee.create))
+app.get('/user/:id', paramsAPI(employee.find))
+app.put('/user', bodyAPI(employee.update))
+app.delete('/user/:id', paramsAPI(employee.delete))
+
 app.post('/user/byEmail', employee.findEmail)
+app.get('/user', bodyAPI(employee.findAll))
 
 // customer
-app.post('/customer', API(customer.create))
+app.post('/customer', bodyAPI(customer.create))
 
 exports.app = functions.https.onRequest(app)

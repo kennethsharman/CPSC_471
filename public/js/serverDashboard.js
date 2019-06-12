@@ -256,8 +256,7 @@
 
          // call backend to make a new group. res is the created group on db
         requestService('/customer', 'post', group, res => {
-          $('.modal-footer').show() // shows the close button
-          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
+          modal().toggle()
 
           state('currentGroup', res.msg) // saves the group for later use
           // res.msg = {customer_number: Number, group_size: Number}

@@ -11,6 +11,14 @@ const click = (query, callback) => {
 }
 
 const modal = (head, body, foot) => {
+  if(head===undefined&&body===undefined&&foot===undefined) {
+    return ({
+      head: head => {$('.modal-header').html(head); return modal()},
+      body: body => {$('.modal-body').html(body); return modal()},
+      foot: foot => {$('.modal-footer').html(foot); return modal()},
+      toggle: () => {$('#modal-container').modal('toggle'); return modal()}
+    })
+  }
   $('.modal-header').html(head)
   $('.modal-body').html(body)
   $('.modal-footer').html(foot)
