@@ -27,6 +27,7 @@
 
  const db = require('./db/db')
  const employee = require('./db/employee')
+ const customer = require('./db/customer')
 
  const shift_log_api = require('./API/shift_log')
 
@@ -62,8 +63,12 @@ app.put('/user', API(employee.update))
 app.delete('/user', API(employee.delete))
 app.post('/user/byEmail', employee.findEmail)
 
+// shift log
 app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
 app.post('/shift/', (req, res) => shift_log_api.clock_in(req, res))
 app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 
- exports.app = functions.https.onRequest(app)
+// customer
+app.post('/customer', API(customer.create))
+
+exports.app = functions.https.onRequest(app)

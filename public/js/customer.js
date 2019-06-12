@@ -225,7 +225,7 @@
       <button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>
     `))
 
-
+    const spinner = new Spinner("#orderQuantity")
     click('.food-action', () => {
       modal(`
       <h4>Add to order</h4>`,`
@@ -233,19 +233,7 @@
       <br>
       
       <br>
-      <div class="input-group" style="width:100%">
-        <span class="input-group-btn">
-        <a href="#" class="btn btn-primary spin-btn" id="spinner-decrement">
-          <i id="spinner-decrement-i" class="fas fa-minus-square"></i>
-        </a>
-        </span><!-- first button -->
-        <input class="form-control spinner" id="spinner-num" type="text" placeholder="1" disabled>
-        <span class="input-group-btn">
-          <a href="#" class="btn btn-primary spin-btn" id="spinner-increment">
-            <i  id="spinner-increment-i" class="fas fa-plus-square"></i>
-          </a>
-        </span><!-- second button-->
-      </div><!-- number spinner -->
+      ${spinner.html()}
       <br>
       <div class="form-group">
         <label for="comment">Note (Optional):</label>
@@ -257,22 +245,8 @@
         Add
       </button>
       `)
+    spinner.loadCtrl()
 
-      // number spinner
-      const num = $("#spinner-num")
-      num.val(1)
-      click('.spin-btn', ({target: {id}}) => {
-        switch(id.substring(8,10)) {
-          case 'in':
-            if(num.val()<10)
-              num.val(`${Number(num.val()) + 1}`)
-          break;
-          case 'de':
-            if(num.val()>1)
-              num.val(`${Number(num.val()) - 1}`)
-          break;
-        }
-      })
-    }); // end switch views button actions
+    })
 
 } // end customer.js
