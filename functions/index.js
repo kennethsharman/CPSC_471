@@ -30,6 +30,7 @@
  const customer = require('./db/customer')
 
  const shift_log_api = require('./API/shift_log')
+ const item_api = require('./API/item')
 
  const API = qString => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
@@ -67,6 +68,9 @@ app.post('/user/byEmail', employee.findEmail)
 app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
 app.post('/shift/', (req, res) => shift_log_api.clock_in(req, res))
 app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
+
+// item
+app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
 app.post('/customer', API(customer.create))
