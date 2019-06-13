@@ -199,7 +199,6 @@
       spinner.loadCtrl()
 
       group.group_size = $('#groupSize').val()
-<<<<<<< HEAD
 
       click('.save-group', () => {
 
@@ -219,7 +218,7 @@
           // res.msg = {customer_number: Number, group_size: Number}
 
         //  view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
-=======
+
 
       click('.save-group', () => {
 
