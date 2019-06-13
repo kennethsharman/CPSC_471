@@ -66,6 +66,7 @@ app.post('/user/byEmail', employee.findEmail)
 
 // shift log
 app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
+app.get('/shift/:employee_id/completed', (req, res) => shift_log_api.completed_shifts_for_employee(req, res))
 app.post('/shift/', (req, res) => shift_log_api.clock_in(req, res))
 app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 

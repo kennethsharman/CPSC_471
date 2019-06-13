@@ -60,6 +60,15 @@ const shift_log_db = {
     }
 
     return query_string
+  },
+
+  employee_completed_shifts(employee_id) {
+    const query_string = {
+      text: "SELECT * FROM shift_log WHERE employee_id = $1 AND time_out IS NOT NULL;",
+      values: [employee_id]
+    }
+
+    return query_string
   }
 }
 

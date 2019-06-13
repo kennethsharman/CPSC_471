@@ -4,6 +4,7 @@
   loadAdmin();
   set_shift_clock();
   set_out_of_stock_items();
+  set_completed_shifts();
 
   // Load Admin View Page
   function loadAdmin() {
@@ -106,6 +107,23 @@
       </div>
     </div>
 
+    <br>
+
+    <div id="shift-list" class="card">
+    <div class="card-body">
+      <h5 class="card-title">My Shifts</h5>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody id="shift-table">
+        </tbody>
+    </table>
+    </div>
+  </div>
     `) // end left-bar
 
     $('#right-bar').html(`
@@ -129,7 +147,6 @@
     requestService(`/shift/${user.employee_id}/current`, "GET", null, res_success => {
       // The employee has no current shift and thus is not clocked in
       console.log(res_success)
-      console.log("BLAH")
       if ($.isEmptyObject(res_success)) {
         $('#shift-clock .card-title').html("Not Clocked In")
         $('#clock-in-time').html("")
@@ -143,7 +160,7 @@
         $('#shift-btn').html("Clock Out")
         $('#shift-btn').unbind("click")
         $('#shift-btn').click(clock_out)
-        $("#shift-btn").attr("disabled", falseingr)
+        $("#shift-btn").attr("disabled", false)
       }
     }, res_error => {
         console.log(res_error)
@@ -167,9 +184,30 @@
     $("#shift-btn").attr("disabled", true)
     requestService(`/shift/end`, "POST", user, res_success => {
       set_shift_clock()
+      set_completed_shifts()
     }, res_error => {
       console.log(res_error)
       $("#shift-btn").attr("disabled", false)
+    })
+  }
+
+  function set_completed_shifts() {
+    const user = state('user')
+    requestService(`/shift/${user.employee_id}/completed`, "GET", null, res_success => {
+      console.log("in set_completed_shifts")
+      console.log(res_success)
+      $('#shift-table').children('tr').remove()
+      for(const shift of res_success) {
+        shift_date = new Date(shift.shift_date).toLocaleDateString();
+        shift_duration = (Math.abs(new Date(shift.time_out) - new Date(shift.time_in)) / 36e5).toFixed(2)
+        $('#shift-table').append(`
+        <tr>
+          <td>${shift_date}</td>
+          <td>${shift_duration}</td>
+        </tr>`)
+      }
+    }, res_error => {
+      console.log(res_error)
     })
   }
 
@@ -200,10 +238,7 @@
           $(`#item-card-${count}`).append(`<p class="card-text subcard-t">${ingredient}</p>`)
         }
       }
-      console.log("Out of stock items:")
-      console.log(out_of_stock_items)
     }, res_error => {
-      console.log("I failed")
       console.log(res_error)
     })
   }
