@@ -21,7 +21,7 @@
           <div class="container-fluid lighter">
             <div class="row">
               <div class="col-md-6">
-                <a href="#" id='new-inventory-btn' class="btn btn-primary">New Inventory</a>
+                <a href="#" id='new-inventory-btn' class="btn btn-primary">Take Inventory</a>
               </div><!-- L col -->
               <div class="col-md-6">
                 <a href="#" id='inventory-history-btn' class="btn btn-primary">History</a>
@@ -65,15 +65,50 @@
     $('#right-bar').html(``)
   } // end loadManagerDB
 
-  click('#new-inventory-btn',() => modal(`
-      <a href="#" class="btn btn-primary dropbtn">Supplier<i class="fas fa-sort-down"></i></a>
-          <a href="#">GFS</a>
-          <a href="#">Sysco</a>
+  click('#new-inventory-btn', () => {
+    modal(`<h4>Take inventory</h4>`,`
+      <div>
+        <p><span style="color:#e14b4b" id="invalid-file-warning">This inventory file is invalid. </span>Paste inventory file here:</p><br>
+        <textarea class="form-control" rows="5" id="inventory-file"></textarea>
+      </div>
+      <br>
+      <div class="dropdown">
+        <a href="#" class="btn btn-primary dropbtn"><span id='current-supplier'>Select Supplier</span> <i class="fas fa-sort-down"></i></a>
+        <div class="dropdown-content">
+          <a href="#" id="supplier-gfs">GFS</a>
+          <a href="#" id="supplier-sysco">Sysco</a>
         </div><!-- dd content -->
-    </div><!-- dd -->`,`
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-    <button type="button" class="btn btn-primary" id="new-inventory-btn" data-dismiss="modal">Add</button>
-  `))
+      </div><!-- dd -->
+      `,`
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-primary" id="new-inventory-add">Add</button>
+    `)
+    $('#invalid-file-warning').hide()
+
+    click('#new-inventory-add', () => {
+      try {
+        const inventory = JSON.parse($("#inventory-file").html())
+        
+        modal().body(`
+        <div>
+          <h4>Posting new inventory...</h4>
+        </div>
+      `).foot(``)
+  
+        requestService('/inventory', 'post', {
+          manager_id: state('user').employee_id,
+          inventory_file: JSON.stringify(inventory),
+          supplier: state('supplier').supplier,
+          inventory_date: new Date(),
+        }, res => {
+          modal().toggle()
+        })
+      } catch(e) {
+        $('#invalid-file-warning').show('fast')
+      }
+  
+    })
+  })
 
   click('#inventory-history-btn',() => modal(`
   <h4>Inventory History</h4>`,`
@@ -81,16 +116,25 @@
   <input type="date" name="history-date">
   <br><br>
   <div class="dropdown">
-    <a href="#" class="btn btn-primary dropbtn">Supplier <i class="fas fa-sort-down"></i></a>
+    <a href="#" class="btn btn-primary dropbtn"><span class='current-supplier'>Select Supplier</span><i class="fas fa-sort-down"></i></a>
     <div class="dropdown-content">
-      <a href="#">GFS</a>
-      <a href="#">Sysco</a>
+      <a href="#" id="supplier-gfs">GFS</a>
+      <a href="#" id="supplier-sysco">Sysco</a>
     </div>
   </div>
   <br>`,`
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
   <button type="button" class="btn btn-primary" id='pullReport-btn' data-dismiss="modal">Pull Report</button>
   `))
+
+  click('#supplier-gfs', () => {
+    $('#current-supplier').html('GFS')
+    state('supplier', {supplier: 'GFS'})
+  })
+  click('#supplier-sysco', () => {
+    $('#current-supplier').html('Sysco')
+    state('supplier', {supplier: 'Sysco'})
+  })
 
   const empModal = (e = ({preventDefault:()=>null})) => { // js magic
       e.preventDefault()

@@ -120,7 +120,7 @@ const employee_db = {
           // default:
         }
     }).catch(err => {
-        res.send({msg: err, status: 404})
+      res.send({msg: err, status: 404})
     })
 
   }

@@ -28,11 +28,14 @@
  const db = require('./db/db')
  const employee = require('./db/employee')
  const customer = require('./db/customer')
+ const inventory = require('./db/takes_inventory')
 
 // argument in body - use when passing a JSON
-const bodyAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
+const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
-        res.send({msg: success, status: 200})
+        req.body = success
+        if(pass) next()
+        else res.send({msg: success, status: 200})
     }).catch(err => {
         res.send({msg: err, status: 404})
     })
@@ -41,7 +44,8 @@ const bodyAPI = qString => (req, res, next) => new Promise((resolve, reject) => 
 // argument right on the URL- use when passing just a string or a number
 const paramsAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
    db.query(qString(req.params.id)).then(success => {
-       res.send({msg: success, status: 200})
+        if(pass) next()
+        else res.send({msg: success, status: 200})
    }).catch(err => {
        res.send({msg: err, status: 404})
    })
@@ -75,5 +79,8 @@ app.get('/user', bodyAPI(employee.findAll))
 
 // customer
 app.post('/customer', bodyAPI(customer.create))
+
+// inventory
+app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
 
 exports.app = functions.https.onRequest(app)
