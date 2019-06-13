@@ -28,6 +28,7 @@
  const db = require('./db/db')
  const employee = require('./db/employee')
  const customer = require('./db/customer')
+ const customer_order = require('./db/customer_order')
 
  const API = qString => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
@@ -63,5 +64,8 @@ app.post('/user/byEmail', employee.findEmail)
 
 // customer
 app.post('/customer', API(customer.create))
+
+// customer_order
+app.get('/empOrders', API(customer_order.findOpenOrdersEmp))
 
 exports.app = functions.https.onRequest(app)
