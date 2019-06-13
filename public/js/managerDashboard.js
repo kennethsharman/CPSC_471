@@ -66,6 +66,7 @@
     $('#right-bar').html(``)
   } // end loadManagerDB
 
+  click('#inventory-history-btn',() => modal(`
       <a href="#" class="btn btn-primary dropbtn">Supplier<i class="fas fa-sort-down"></i></a>
           <a href="#">GFS</a>
           <a href="#">Sysco</a>

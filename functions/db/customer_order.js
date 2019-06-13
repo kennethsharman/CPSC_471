@@ -29,21 +29,9 @@ const customer_order_db = {
 
   findOpenOrdersEmp(employee_json) {
     const query_string = {
-      text: "SELECT * FROM customer_order WHERE employee_id = $1;",
+      text: "SELECT * FROM customer_order WHERE employee_id = $1 AND completed_flag = false;",
       values: [
         employee_json.employee_id,
-        employee_json.f_name,
-        employee_json.l_name,
-        employee_json.phone_number,
-        employee_json.address,
-        employee_json.cook_flag,
-        employee_json.station,
-        employee_json.server_flag,
-        employee_json.cash_out,
-        employee_json.tip_out,
-        employee_json.manager_flag,
-        employee_json.mgr_start_date,
-        employee_json.email
       ]
     }
 

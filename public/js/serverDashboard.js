@@ -2,7 +2,6 @@
 // Server Dashboard View
 
 {
-  loadServerDB();
   set_open_orders_list();
 
 
@@ -247,13 +246,15 @@
   }) // end click serverNewOrder-btn
 
   function set_open_orders_list() {
-
+    $('.loader').show()
+    
     const user = state('user');
     requestService('/empOrders', 'post', user, res => {
-
+      console.log(res)
       console.log('res.msg[0]', res.msg[0]);
       let openOrders;
       state('openOrders', res.msg)
+      loadServerDB();
 
     }) // end reuqestService
 
