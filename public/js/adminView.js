@@ -146,7 +146,6 @@
 
     requestService(`/shift/${user.employee_id}/current`, "GET", null, res_success => {
       // The employee has no current shift and thus is not clocked in
-      console.log(res_success)
       if ($.isEmptyObject(res_success)) {
         $('#shift-clock .card-title').html("Not Clocked In")
         $('#clock-in-time').html("")
@@ -194,8 +193,6 @@
   function set_completed_shifts() {
     const user = state('user')
     requestService(`/shift/${user.employee_id}/completed`, "GET", null, res_success => {
-      console.log("in set_completed_shifts")
-      console.log(res_success)
       $('#shift-table').children('tr').remove()
       for(const shift of res_success) {
         shift_date = new Date(shift.shift_date).toLocaleDateString();
@@ -215,14 +212,12 @@
     out_of_stock_items = {}
     requestService(`/item/outofstock`, "GET", null, res_success => {
       for (const row of res_success) {
-        console.log(row)
         if (out_of_stock_items[row.food_name] == null) {
           out_of_stock_items[row.food_name] = []
         }
         out_of_stock_items[row.food_name].push(row.name)
       }
 
-      console.log(out_of_stock_items)
       count = 0
       for(const item of Object.keys(out_of_stock_items)) {
         count += 1
@@ -232,9 +227,7 @@
               <h5 class="card-title subcard-t">${item}</h5>
             </div>
           </div>`)
-        console.log(out_of_stock_items[item])
         for(const ingredient of out_of_stock_items[item]) {
-          console.log(ingredient)
           $(`#item-card-${count}`).append(`<p class="card-text subcard-t">${ingredient}</p>`)
         }
       }
