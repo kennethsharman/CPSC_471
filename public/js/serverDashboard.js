@@ -249,7 +249,7 @@
   function set_open_orders_list() {
 
     const user = state('user');
-    requestService('/empOrders', 'get', user, res => {
+    requestService('/empOrders', 'post', user, res => {
 
       console.log('res.msg[0]', res.msg[0]);
       let openOrders;
