@@ -3,7 +3,7 @@
 
 {
   loadServerDB();
-  set_open_orders_list(); // hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  set_open_orders_list();
 
 
   // Load Server Dashboard
@@ -242,7 +242,6 @@
 
         })
       })
->>>>>>> 9eca18d6836cf2c9267bee0f924c38938d82a7eb
 
         })
       })
