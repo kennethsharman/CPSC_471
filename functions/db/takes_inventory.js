@@ -9,17 +9,17 @@ const takes_inventory_db = {
         takes_inventory_json.manager_id,
         takes_inventory_json.inventory_file,
         takes_inventory_json.supplier,
-        takes_inventory_json.inventory_date
+        new Date(takes_inventory_json.inventory_date)
       ]
     }
 
     return query_string
   },
 
-  find(manager_id, ingredient_number, supplier, inventory_date) {
+  find({manager_id, supplier, inventory_date}) {
     const query_string = {
-      text: "SELECT * FROM takes_inventory WHERE manager_id = $1 AND ingredient_number = $2 AND supplier = $3 AND inventory_date = $4;",
-      values: [manager_id, ingredient_number, supplier, inventory_date]
+      text: "SELECT * FROM takes_inventory WHERE manager_id = $1 AND supplier = $2 AND inventory_date = $3;",
+      values: [manager_id, supplier, new Date(inventory_date)]
     }
 
     return query_string

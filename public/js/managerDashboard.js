@@ -1,6 +1,41 @@
 // Manager Dashboard View
 
 {
+  const sampleInventory = [[
+    {
+      "name": "dough",
+      "quantity": 10
+    },
+    {
+      "name": "tomato sauce",
+      "quantity": 10
+    },
+    {
+      "name": "spaghetti noodles",
+      "quantity": 4
+    },
+    {
+      "name": "mozzarella",
+      "quantity": 4
+    },
+    {
+      "name": "white bread",
+      "quantity": 5
+    },
+    {
+      "name": "spinach",
+      "quantity": 1
+    }],
+    [{
+      "name": "ham",
+      "quantity": 5
+    },
+    {
+      "name": "bacon",
+      "quantity": 4
+    }
+  ]]
+  
   loadManagerDB();
 
   // Load Manager Dashboard
@@ -73,7 +108,7 @@
       </div>
       <br>
       <div class="dropdown">
-        <a href="#" class="btn btn-primary dropbtn"><span id='current-supplier'>Select Supplier</span> <i class="fas fa-sort-down"></i></a>
+        <a href="#" class="btn btn-primary dropbtn"><span class='current-supplier'>Select Supplier</span> <i class="fas fa-sort-down"></i></a>
         <div class="dropdown-content">
           <a href="#" id="supplier-gfs">GFS</a>
           <a href="#" id="supplier-sysco">Sysco</a>
@@ -110,29 +145,49 @@
     })
   })
 
-  click('#inventory-history-btn',() => modal(`
-  <h4>Inventory History</h4>`,`
-  <h6>Date</h6>
-  <input type="date" name="history-date">
-  <br><br>
-  <div class="dropdown">
-    <a href="#" class="btn btn-primary dropbtn"><span class='current-supplier'>Select Supplier</span><i class="fas fa-sort-down"></i></a>
-    <div class="dropdown-content">
-      <a href="#" id="supplier-gfs">GFS</a>
-      <a href="#" id="supplier-sysco">Sysco</a>
+  click('#inventory-history-btn',() => {
+    modal(`
+    <h4>Inventory History</h4>`,`
+    <h6>Date</h6>
+    <input type="date" name="history-date" id="history-date">
+    <br><br>
+    <div class="dropdown">
+      <a href="#" class="btn btn-primary dropbtn"><span class='current-supplier'>Select Supplier</span><i class="fas fa-sort-down"></i></a>
+      <div class="dropdown-content">
+        <a href="#" id="supplier-gfs">GFS</a>
+        <a href="#" id="supplier-sysco">Sysco</a>
+      </div>
     </div>
-  </div>
-  <br>`,`
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-  <button type="button" class="btn btn-primary" id='pullReport-btn' data-dismiss="modal">Pull Report</button>
-  `))
+    <br>`,`
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-primary" id='pullReport-btn'>Pull Report</button>
+    `)
+
+    click('#pullReport-btn', () => {
+      const inventory_date = $('#history-date').val()
+      modal().foot(``).body(`<h4>Pulling report</h4>`)
+
+      requestService('/inventory/history', 'POST', {
+        manager_id: state('user').employee_id,
+        supplier: state('supplier').supplier,
+        inventory_date
+      }, inventory => {
+          modal().foot(`
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+          `).body(`
+            <textarea class="form-control" rows="5" id="inventory-file"></textarea>
+          `)
+          $('#inventory-file').html(inventory.msg[0].inventory_file)
+        })
+    })
+  })
 
   click('#supplier-gfs', () => {
-    $('#current-supplier').html('GFS')
+    $('.current-supplier').html('GFS')
     state('supplier', {supplier: 'GFS'})
   })
   click('#supplier-sysco', () => {
-    $('#current-supplier').html('Sysco')
+    $('.current-supplier').html('Sysco')
     state('supplier', {supplier: 'Sysco'})
   })
 

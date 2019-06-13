@@ -80,7 +80,8 @@ app.get('/user', bodyAPI(employee.findAll))
 // customer
 app.post('/customer', bodyAPI(customer.create))
 
-// inventory
+// inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
+app.post('/inventory/history', bodyAPI(inventory.find))
 
 exports.app = functions.https.onRequest(app)
