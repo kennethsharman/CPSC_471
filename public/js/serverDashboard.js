@@ -199,6 +199,7 @@
       spinner.loadCtrl()
 
       group.group_size = $('#groupSize').val()
+<<<<<<< HEAD
 
       click('.save-group', () => {
 
@@ -218,6 +219,30 @@
           // res.msg = {customer_number: Number, group_size: Number}
 
         //  view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+=======
+
+      click('.save-group', () => {
+
+        // modal loading
+        $('.modal-body').html(`
+        <h4>
+          Creating a group of ${group.group_size}...
+        </h4>`)
+        $('.modal-footer').hide()
+
+         // call backend to make a new group. res is the created group on db
+        requestService('/customer', 'post', group, res => {
+          $('.modal-footer').show() // shows the close button
+          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
+
+          state('currentGroup', res.msg) // saves the group for later use
+          // res.msg = {customer_number: Number, group_size: Number}
+
+          view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+
+        })
+      })
+>>>>>>> 9eca18d6836cf2c9267bee0f924c38938d82a7eb
 
         })
       })

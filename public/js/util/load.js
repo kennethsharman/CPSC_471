@@ -72,3 +72,45 @@ const loginService = () => {
     $('#firebaseui-auth-container').show()
   }
 }
+
+class Spinner {
+  constructor(element, defaultNum = 1, lowBound = 1, highBound = 10) {
+    this.element = element
+    this.defaultNum = defaultNum
+    this.lowBound = lowBound
+    this.highBound = highBound
+  }
+
+  loadCtrl() {
+    const num = $(this.element)
+    num.val(this.defaultNum)
+    click('.spin-btn', ({target: {id}}) => {
+      switch(id.substring(8,10)) {
+        case 'in':
+          if(num.val()<this.highBound)
+            num.val(`${Number(num.val()) + 1}`)
+        break;
+        case 'de':
+          if(num.val()>this.lowBound)
+            num.val(`${Number(num.val()) - 1}`)
+        break;
+      }
+    })
+  }
+
+  getHTML() {
+    return `<div class="input-group" style="width:100%">
+    <span class="input-group-btn">
+    <a href="#" class="btn btn-primary spin-btn" id="spinner-decrement">
+      <i id="spinner-decrement-i" class="fas fa-minus-square"></i>
+    </a>
+    </span><!-- first button -->
+    <input class="form-control spinner" id="${this.element.substring(1)}" type="text" placeholder="${this.defaultNum}" disabled>
+    <span class="input-group-btn">
+      <a href="#" class="btn btn-primary spin-btn" id="spinner-increment">
+        <i  id="spinner-increment-i" class="fas fa-plus-square"></i>
+      </a>
+    </span><!-- second button-->
+  </div><!-- number spinner -->`
+  }
+}
