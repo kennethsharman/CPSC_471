@@ -155,7 +155,14 @@
         $("#shift-btn").attr("disabled", false)
       } else {
         $('#shift-clock .card-title').html("Clocked In")
-        $('#clock-in-time').html(new Date().toLocaleString())
+        $('#clock-in-time').html(new Date().toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+        }))
         $('#shift-btn').html("Clock Out")
         $('#shift-btn').unbind("click")
         $('#shift-btn').click(clock_out)
