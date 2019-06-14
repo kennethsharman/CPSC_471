@@ -2,11 +2,18 @@
 // Server Dashboard View
 
 {
-  set_open_orders_list();
+  const user = state('user');
+  let openOrders;
+  let closedOrders;
+  var order_num;
+  set_orders_list();
 
 
   // Load Server Dashboard
   function loadServerDB() {
+    openOrders= state('openOrders')
+    closedOrders= state('closedOrders')
+
 
     $('#header-row').html(`
       <h3 class="header-title">
@@ -16,49 +23,53 @@
 
     `) // end header-row
 
-    const user = state('user')
-
     $('#main-bar').html(`
 
       <div> <!-- Open orders Section -->
         <div class="card">
           <div class="card-body">
             <h4 class="card-title order-heading">
-              Open Orders for Employee ID #${user.employee_id} - ${user.f_name}
+              Open Orders for ${user.f_name}
             </h4>
-
+            <hr>
             <div id="open-orders-card" class="card-text">
+<!-- HELOO -->
 
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <h5 style="text-align:left"> Order Ord_num </h5>
-                </div>
-              </div><!-- top row -->
-              <div class="row">
-                <div class="col-8">
-                  <table class="table table-dark">
-                    <tr>
-                      <th class="tg-0lax">
-                        <p>Customer: <span>Cust_no</span></p>
-                        <p>Ticket Time: <span>Tkt_time</span></p>
-                      </th>
-                      <th class="tg-s268">
-                        <p>Price: <span>price</span></p>
-                        <p>Total Pay: <span>TTL_pay</span></p>
-                      </th>
-                    </tr>
-                  </table>
-                </div><!-- col L -->
-                <div class="col-4">
-                  <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
-                    Open Order
-                  </a>
-                </div><!-- col R -->
-              </div><!-- row main -->
-              <hr>
-            </div><!-- container -->
+            <div class="inner">
 
+            </div>
+
+            <script>setOrder()</script>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12">
+                    <h5 class="order1" style="text-align:left"> Order #${openOrders[0].order_number} </h5>
+                  </div>
+                </div><!-- top row -->
+                <div class="row">
+                  <div class="col-8">
+                    <table class="table table-dark">
+                      <tr>
+                        <th class="tg-0lax">
+                          <p>Customer #<span>${openOrders[0].customer_number}</span></p>
+                          <p><span>${new Date(openOrders[0].order_date).toDateString()}</span></p>
+                        </th>
+                        <th class="tg-s268">
+                          <p>Total:  $<span>${openOrders[0].price}</span></p>
+                          <p>Ticket Time: <span>${openOrders[0].ticket_time}</span></p>
+                        </th>
+                      </tr>
+                    </table>
+                  </div><!-- col L -->
+                  <div class="col-4">
+                    <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
+                      Open Order
+                    </a>
+                  </div><!-- col R -->
+                </div><!-- row main -->
+                <hr>
+              </div><!-- container -->
+<!-- END -->
           </div><!-- card body -->
         </div><!-- card -->
       </div> <!-- Open orders Section -->
@@ -69,36 +80,37 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title order-heading">
-              Completed Orders of Employee_ID
+              Completed Orders for ${user.f_name}
             </h4>
-
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
-                <h5 style="text-align:left"> Order Ord_num </h5>
-              </div>
-            </div><!-- top row -->
-            <div class="row">
-              <div class="col-8">
-                <table class="table table-dark">
-                  <tr>
-                    <th class="tg-0lax">
-                      <p>Customer: <span>Cust_no</span></p>
-                      <p>Ticket Time: <span>Tkt_time</span></p>
-                    </th>
-                    <th class="tg-s268">
-                      <p>Price: <span>price</span></p>
-                      <p>Total Pay: <span>TTL_pay</span></p>
-                    </th>
-                  </tr>
-                </table>
-              </div><!-- col L -->
-              <div class="col-4">
-                <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
-                  Open Order
-                </a>
-              </div><!-- col R -->
-            </div><!-- row main -->
+            <hr>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+                  <h5 style="text-align:left"> Order #${closedOrders[0].order_number} </h5>
+                </div>
+              </div><!-- top row -->
+              <div class="row">
+                <div class="col-8">
+                  <table class="table table-dark">
+                    <tr>
+                      <th class="tg-0lax">
+                        <p>Customer #<span>${closedOrders[0].customer_number}</span></p>
+                      </th>
+                      <th class="tg-s268">
+                        <p><span>${new Date(closedOrders[0].order_date).toDateString()}</span></p>
+                      </th>
+                      <th class="tg-s268">
+                        <p>Total $<span>${closedOrders[0].price}</span></p>
+                      </th>
+                    </tr>
+                  </table>
+                </div><!-- col L -->
+                <div class="col-4">
+                  <a href="#" class="btn btn-primary order-btn2" id='openOrder1-btn'>
+                    Open Order
+                  </a>
+                </div><!-- col R -->
+              </div><!-- row main -->
             <hr>
           </div><!-- container -->
 
@@ -150,7 +162,7 @@
           <div class="container-fluid lighter">
             <div class="row">
               <div class="col-lg-12">
-                Cash Out Value
+                $${user.cash_out}
               </div><!-- col -->
             </div><!-- row 1 -->
           </div> <!-- container-->
@@ -165,19 +177,28 @@
         <div class="container-fluid lighter">
           <div class="row">
               <div class="col-lg-12">
-                Tip Out Value
+                $${user.tip_out}
               </div><!-- col -->
             </div><!-- row 1 -->
           </div> <!-- container-->
         </div><!-- card body-->
       </div><!-- card -->
     `)
+
   } // end loadServerDB
 
-  click('#openOrder1-btn',  () => view("./js/customer.js"))
-  click('#openOrder2-btn', () => view("./js/customer.js"))
-  click('#completedOrder1-btn', () => view("./js/customer.js"))
+  click('#openOrder1-btn', event => {
+    const order_obj = {
+      order_number: order_num
+    }
 
+    requestService('/order', 'post', order_obj, res => {
+      state('currentOrder', res.msg)
+      console.log('HERE', res.msg[0]);
+      view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+
+    })
+  })
 
   click('.serverNewOrder-btn', event => {
 
@@ -199,64 +220,49 @@
 
       group.group_size = $('#groupSize').val()
 
-      click('.save-group', () => {
 
-        // modal loading
-        $('.modal-body').html(`
-        <h4>
-          Creating a group of ${group.group_size}...
-        </h4>`)
-        $('.modal-footer').hide()
+            click('.save-group', () => {
 
-         // call backend to make a new group. res is the created group on db
-        requestService('/customer', 'post', group, res => {
-          $('.modal-footer').show() // shows the close button
-          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
+              // modal loading
+              $('.modal-body').html(`
+              <h4>
+                Creating a group of ${group.group_size}...
+              </h4>`)
+              $('.modal-footer').hide()
 
-          state('currentGroup', res.msg) // saves the group for later use)
-          // res.msg = {customer_number: Number, group_size: Number}
+               // call backend to make a new group. res is the created group on db
+              requestService('/customer', 'post', group, res => {
+                $('.modal-footer').show() // shows the close button
+                $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
 
-        //  view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+                state('currentGroup', res.msg) // saves the group for later use
+                // res.msg = {customer_number: Number, group_size: Number}
+
+                view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+
+              })
+            })
 
 
-      click('.save-group', () => {
-
-        // modal loading
-        $('.modal-body').html(`
-        <h4>
-          Creating a group of ${group.group_size}...
-        </h4>`)
-        $('.modal-footer').hide()
-
-         // call backend to make a new group. res is the created group on db
-        requestService('/customer', 'post', group, res => {
-          $('.modal-footer').show() // shows the close button
-          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
-
-          state('currentGroup', res.msg) // saves the group for later use
-          // res.msg = {customer_number: Number, group_size: Number}
-
-          view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
-
-        })
-      })
-
-        })
-      })
   }) // end click serverNewOrder-btn
 
-  function set_open_orders_list() {
+  function set_orders_list() {
     $('.loader').show()
-    
-    const user = state('user');
-    requestService('/empOrders', 'post', user, res => {
-      console.log(res)
-      console.log('res.msg[0]', res.msg[0]);
-      let openOrders;
+
+    requestService('/closedOrders', 'post', user, res => {
+      state('closedOrders', res.msg)
+    })
+
+    requestService('/openOrders', 'post', user, res => {
       state('openOrders', res.msg)
+      $('.loader').hide()
       loadServerDB();
+    })
 
-    }) // end reuqestService
+  } // end set_orders_list
 
-  } // end set_open_orders_list
+  function setOrder() {
+    order_num = openOrders[0].order_number
+  }
+
 } // end serverDashboard.js

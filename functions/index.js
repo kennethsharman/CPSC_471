@@ -66,6 +66,8 @@ app.post('/user/byEmail', employee.findEmail)
 app.post('/customer', API(customer.create))
 
 // customer_order
-app.post('/empOrders', API(customer_order.findOpenOrdersEmp))
+app.post('/order', API(customer_order.find))
+app.post('/openOrders', API(customer_order.findOpenOrdersEmp))
+app.post('/closedOrders', API(customer_order.findClosedOrdersEmp))
 
 exports.app = functions.https.onRequest(app)
