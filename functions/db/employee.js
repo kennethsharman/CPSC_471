@@ -37,6 +37,14 @@ const employee_db = {
     return query_string
   },
 
+  findAll() {
+    const query_string = {
+      text: "SELECT * FROM employee;",
+    }
+
+    return query_string
+  },
+
   // Updates an employee record in the database with values specified in employee_json.
   // If a value is null or not provided in employee_json, it will be set to null in the database.
   update(employee_json) {
@@ -112,7 +120,7 @@ const employee_db = {
           // default:
         }
     }).catch(err => {
-        res.send({msg: err, status: 404})
+      res.send({msg: err, status: 404})
     })
 
   }

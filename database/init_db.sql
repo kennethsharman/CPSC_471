@@ -1,6 +1,7 @@
- 
+
 --drop schema public cascade;
 --create schema public;
+--UPDATE employee SET manager_flag=true WHERE email='' RETURNING *;
 
 CREATE TABLE employee (
 	employee_id serial PRIMARY KEY,
@@ -50,23 +51,20 @@ CREATE TABLE allergy (
 );
 
 CREATE TABLE ingredient (
-	ingredient_number int NOT NULL,
 	supplier text NOT NULL,
 	name text NOT NULL,
 	recommended_count int CHECK (recommended_count > 0),
 	critical_count int CHECK (critical_count > 0),
 	on_hand_count int CHECK (on_hand_count > 0),
-	PRIMARY KEY (ingredient_number, supplier)
+	PRIMARY KEY (name, supplier)
 );
 
 CREATE TABLE takes_inventory (
 	manager_id int REFERENCES employee(employee_id) NOT NULL,
-	ingredient_number int NOT NULL,
 	supplier text NOT NULL,
 	inventory_date date NOT NULL,
-	count int,
-	FOREIGN KEY (ingredient_number, Supplier) REFERENCES ingredient(ingredient_number, supplier),
-	PRIMARY KEY (manager_id, ingredient_number, supplier, inventory_date)
+	inventory_file text NOT NULL,
+	PRIMARY KEY (manager_id, supplier, inventory_date)
 );
 
 CREATE TABLE payment (
