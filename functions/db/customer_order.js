@@ -45,6 +45,15 @@ const customer_order_db = {
     return query_string
   },
 
+  cashout(employee_json) {
+    const query_string = {
+      text: "UPDATE employee as e SET cash_out = (SELECT SUM(price) FROM customer_order as cust WHERE e.employee_id = cust.employee_id );",
+      values: []
+    }
+
+    return query_string
+  },
+
   update(customer_order_json) {
     const query_string = {
       text: "UPDATE customer_order SET customer_number = $1, employee_id = $2, start_time = $3, order_date = $4, price = $5, ticket_time = $6, completed_flag = $7 WHERE order_number = $8 RETURNING *;",

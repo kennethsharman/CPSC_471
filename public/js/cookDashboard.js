@@ -9,7 +9,7 @@
 
     $('#header-row').html(`
     <h3 class="header-title">
-      <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+      <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
       Cook Dashboard
     </h3>
 
@@ -17,12 +17,12 @@
 
     $('#main-bar').html(`
 
-    <div> <!-- Open Orders Section -->
+    <div> <!-- Open Items Section -->
 
     <div class="card">
       <div class="card-body">
       <h4 class="card-title order-heading">
-        FRY Station
+        Open Food Items
       </h4>
 
 
@@ -44,7 +44,7 @@
               </th>
             </tr>
             <tr>
-              <p style="font-weight: bold!important">NOTE: <span>Hey guys, if you have a veggie toppings available it would be great. Otherwise, chicken is okay. Also I'm allergic to shellfish. Have a nice day!</span></p> 
+              <p style="font-weight: bold!important">NOTE: <span>Hey guys, if you have a veggie toppings available it would be great. Otherwise, chicken is okay. Also I'm allergic to shellfish. Have a nice day!</span></p>
             </tr>
           </table>
         </div><!-- col L -->
@@ -91,7 +91,7 @@
       </div><!-- card body -->
     </div><!-- card -->
 
-  </div> <!-- end Fry Section -->
+  </div> <!-- end Open Items Section -->
     `) // end main-bar
 
     $('#left-bar').html(`

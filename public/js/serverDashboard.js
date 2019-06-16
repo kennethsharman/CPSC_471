@@ -2,7 +2,14 @@
 // Server Dashboard View
 
 {
-  const user = state('user');
+  const user = state('user')
+
+  requestService('/cashout', 'post', user, res => {
+    state('updatedCashout', res.msg)
+    $(`.loader-container`).hide()
+  });
+
+
   let openOrders;
   let closedOrders;
   var order_num;
@@ -22,105 +29,6 @@
       </h3>
 
     `) // end header-row
-
-    $('#main-bar').html(`
-
-      <div> <!-- Open orders Section -->
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title order-heading">
-              Open Orders for ${user.f_name}
-            </h4>
-            <hr>
-            <div id="open-orders-card" class="card-text">
-<!-- HELOO -->
-
-            <div class="inner">
-
-            </div>
-
-            <script>setOrder()</script>
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-12">
-                    <h5 class="order1" style="text-align:left"> Order #${openOrders[0].order_number} </h5>
-                  </div>
-                </div><!-- top row -->
-                <div class="row">
-                  <div class="col-8">
-                    <table class="table table-dark">
-                      <tr>
-                        <th class="tg-0lax">
-                          <p>Customer #<span>${openOrders[0].customer_number}</span></p>
-                          <p><span>${new Date(openOrders[0].order_date).toDateString()}</span></p>
-                        </th>
-                        <th class="tg-s268">
-                          <p>Total:  $<span>${openOrders[0].price}</span></p>
-                          <p>Ticket Time: <span>${openOrders[0].ticket_time}</span></p>
-                        </th>
-                      </tr>
-                    </table>
-                  </div><!-- col L -->
-                  <div class="col-4">
-                    <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'>
-                      Open Order
-                    </a>
-                  </div><!-- col R -->
-                </div><!-- row main -->
-                <hr>
-              </div><!-- container -->
-<!-- END -->
-          </div><!-- card body -->
-        </div><!-- card -->
-      </div> <!-- Open orders Section -->
-
-      <br>
-
-      <div> <!-- Completed Orders Section -->
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title order-heading">
-              Completed Orders for ${user.f_name}
-            </h4>
-            <hr>
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <h5 style="text-align:left"> Order #${closedOrders[0].order_number} </h5>
-                </div>
-              </div><!-- top row -->
-              <div class="row">
-                <div class="col-8">
-                  <table class="table table-dark">
-                    <tr>
-                      <th class="tg-0lax">
-                        <p>Customer #<span>${closedOrders[0].customer_number}</span></p>
-                      </th>
-                      <th class="tg-s268">
-                        <p><span>${new Date(closedOrders[0].order_date).toDateString()}</span></p>
-                      </th>
-                      <th class="tg-s268">
-                        <p>Total $<span>${closedOrders[0].price}</span></p>
-                      </th>
-                    </tr>
-                  </table>
-                </div><!-- col L -->
-                <div class="col-4">
-                  <a href="#" class="btn btn-primary order-btn2" id='openOrder1-btn'>
-                    Open Order
-                  </a>
-                </div><!-- col R -->
-              </div><!-- row main -->
-            <hr>
-          </div><!-- container -->
-
-        </div><!-- card body -->
-      </div><!-- card -->
-
-
-      </div> <!-- end Completed Orders Section -->
-
-    `) // end main-bar
 
     $('#left-bar').html(`
     <div class="card">
@@ -187,19 +95,6 @@
 
   } // end loadServerDB
 
-  click('#openOrder1-btn', event => {
-    const order_obj = {
-      order_number: order_num
-    }
-
-    requestService('/order', 'post', order_obj, res => {
-      state('currentOrder', res.msg)
-      console.log('HERE', res.msg[0]);
-      view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
-
-    })
-  })
-
   click('.serverNewOrder-btn', event => {
 
       const group = {
@@ -249,16 +144,80 @@
   function set_orders_list() {
     $('.loader').show()
 
-    requestService('/closedOrders', 'post', user, res => {
-      state('closedOrders', res.msg)
-    })
-
     requestService('/openOrders', 'post', user, res => {
       state('openOrders', res.msg)
       $('.loader').hide()
-      loadServerDB();
-    })
+      //loadServerDB();
+      $('#main-bar').html(`
+        <div> <!-- Open orders Section -->
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title order-heading">
+                Open Orders for ${user.f_name}
+              </h4>
+              <hr>
+            </div>
+          </div>
+        ${
+          res.msg.reduce((prev, {order_number, customer_number, employee_id, start_time, order_date, price, ticket_time, completed_flag, special_request}) => `
+          ${prev}
+            <div class="card">
+              <div class="card-body">
+                <div id="open-orders-card" class="card-text">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="order1" style="text-align:left"> Order #${order_number} </h5>
+                      </div>
+                    </div><!-- top row -->
+                    <div class="row">
+                      <div class="col-8">
+                        <table class="table table-dark">
+                          <tr>
+                            <th class="tg-0lax">
+                              <p>Customer #<span>${customer_number}</span></p>
+                              <p><span>${new Date(order_date).toDateString()}</span></p>
+                            </th>
+                            <th class="tg-s268">
+                              <p>Total:  $<span>${price}</span></p>
+                              <p>Ticket Time: <span>${ticket_time}</span></p>
+                            </th>
+                          </tr>
+                        </table>
+                      </div><!-- col L -->
+                      <div class="col-4">
+                  <!--  <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'> -->
+                        <a href="#" class="btn btn-primary order-btn" onclick="selectOrder(${order_number})">
+                          Open Order
+                        </a>
+                        <script>
+                          function selectOrder(ordNum) {
+                            const order_obj = {
+                              order_number: ordNum
+                            }
 
+                            requestService('/order', 'post', order_obj, res => {
+                              state('currentOrder', res.msg)
+                              console.log('HERE', res.msg[0]);
+                              view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+                            })
+                          }
+                        </script>
+                      </div><!-- col R -->
+                    </div><!-- row main -->
+                    <hr>
+                    </div><!-- container -->
+                </div><!-- card body -->
+              </div><!-- card -->
+            </div> <!-- Open orders Section -->
+
+            `,``)
+          }
+      `) // end main-bar
+
+    }) // end requestService
+
+      loadServerDB();
   } // end set_orders_list
 
   function setOrder() {

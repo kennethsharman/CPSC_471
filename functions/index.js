@@ -78,6 +78,7 @@ app.get('/user/:id', paramsAPI(employee.find))
 app.put('/user', bodyAPI(employee.update))
 app.delete('/user/:id', paramsAPI(employee.delete))
 
+
 app.post('/user/byEmail', employee.findEmail)
 app.get('/user', bodyAPI(employee.findAll))
 
@@ -98,8 +99,9 @@ app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredient
 app.post('/inventory/history', bodyAPI(inventory.find))
 
 // customer_order
-app.post('/order', API(customer_order.find))
-app.post('/openOrders', API(customer_order.findOpenOrdersEmp))
-app.post('/closedOrders', API(customer_order.findClosedOrdersEmp))
+app.post('/order', bodyAPI(customer_order.find))
+app.post('/openOrders', bodyAPI(customer_order.findOpenOrdersEmp))
+app.post('/closedOrders', bodyAPI(customer_order.findClosedOrdersEmp))
+app.post('/cashout', bodyAPI(customer_order.cashout))
 
 exports.app = functions.https.onRequest(app)
