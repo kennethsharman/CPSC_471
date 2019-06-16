@@ -28,17 +28,31 @@
  const db = require('./db/db')
  const employee = require('./db/employee')
  const customer = require('./db/customer')
+ const inventory = require('./db/takes_inventory')
 
  const shift_log_api = require('./API/shift_log')
  const item_api = require('./API/item')
 
- const API = qString => (req, res, next) => new Promise((resolve, reject) => {
+// argument in body - use when passing a JSON
+const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
-        res.send({msg: success, status: 200})
+        req.body = success
+        if(pass) next()
+        else res.send({msg: success, status: 200})
     }).catch(err => {
         res.send({msg: err, status: 500})
     })
  })
+
+// argument right on the URL- use when passing just a string or a number
+const paramsAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
+   db.query(qString(req.params.id)).then(success => {
+        if(pass) next()
+        else res.send({msg: success, status: 200})
+   }).catch(err => {
+       res.send({msg: err, status: 404})
+   })
+})
 
  // Initialize default app with the project configuration
  // functions.config returns config info object
@@ -58,11 +72,13 @@
 app.post('/echo', validator.echoMW, echoAPI.testEP)
 
 // employee
-app.post('/user', API(employee.create))
-app.get('/user', API(employee.find))
-app.put('/user', API(employee.update))
-app.delete('/user', API(employee.delete))
+app.post('/user', bodyAPI(employee.create))
+app.get('/user/:id', paramsAPI(employee.find))
+app.put('/user', bodyAPI(employee.update))
+app.delete('/user/:id', paramsAPI(employee.delete))
+
 app.post('/user/byEmail', employee.findEmail)
+app.get('/user', bodyAPI(employee.findAll))
 
 // shift log
 app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
@@ -74,6 +90,10 @@ app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
-app.post('/customer', API(customer.create))
+app.post('/customer', bodyAPI(customer.create))
+
+// inventory - check managerDashboard.js
+app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
+app.post('/inventory/history', bodyAPI(inventory.find))
 
 exports.app = functions.https.onRequest(app)
