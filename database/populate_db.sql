@@ -77,41 +77,41 @@ INSERT INTO food
 INSERT INTO food
   VALUES(4, 'Toast', null, 'BREAKFAST', false);
 INSERT INTO food
-  VALUES(5, 'Lightly Cocained Caviar', null, 'BREAKFAST', false);
+  VALUES(5, 'Lightly (Not) Cocained Caviar', null, 'BREAKFAST', false);
 
 -- INGREDIENT table
 insert into ingredient
-values(1, 'GFS', 'Pound Wings', 72, 1, 3);
+values('GFS', 'Pound Wings', 72, 1, 3);
 insert into ingredient
-values(1, 'Sysco', 'Hot Sauce', 100, 1, 2);
+values('Sysco', 'Hot Sauce', 100, 1, 2);
 INSERT INTO ingredient
-  VALUES(1, 'Petes Mystery Meats', 'Soylent Green', 10, 5, 1);
+  VALUES('Petes Mystery Meats', 'Soylent Green', 10, 5, 1);
 INSERT INTO ingredient
-  VALUES(2, 'GFS', 'White Bread', 100, 20, 30);
+  VALUES('GFS', 'White Bread', 100, 20, 30);
 INSERT INTO ingredient
-  VALUES(3, 'GFS', 'Strawberry Jam', 50, 10, 15);
+  VALUES('GFS', 'Strawberry Jam', 50, 10, 15);
 INSERT INTO ingredient
-  VALUES(2, 'Petes Mystery Meats', 'Caviar', 3, 2, 1);
+  VALUES('Petes Mystery Meats', 'Caviar', 3, 2, 1);
 INSERT INTO ingredient
-  VALUES(1, 'Sketchy Business Student', 'Not-Cocaine (that would be illegal)', 3, 2, 1);
+  VALUES('Sketchy Business Student', 'Not-Cocaine (that would be illegal)', 3, 2, 1);
 
 -- MADE_FROM table
 insert into made_from
-values(1, 'GFS', 1, 1, 1.0);
+values('Pound Wings', 'GFS', 1, 1, 1.0);
 insert into made_from
-values(1, 'GFS', 2, 1, 1.0);
+values('Pound Wings', 'GFS', 2, 1, 1.0);
 insert into made_from
-values(1, 'Sysco', 2, 1, 0.25);
+values('Hot Sauce', 'Sysco', 2, 1, 0.25);
 INSERT INTO made_from
-  VALUES(1, 'Petes Mystery Meats', 3, 3, 10.0);
+  VALUES('Soylent Green', 'Petes Mystery Meats', 3, 3, 10.0);
 INSERT INTO made_from
-  VALUES(2, 'GFS', 4, 2, 0.1);
+  VALUES('White Bread', 'GFS', 4, 2, 0.1);
 INSERT INTO made_from
-  VALUES(3, 'GFS', 4, 1, 0.1);
+  VALUES('Strawberry Jam', 'GFS', 4, 1, 0.1);
 INSERT INTO made_from
-  VALUES(2, 'Petes Mystery Meats', 5, 1, 0.1);
+  VALUES('Caviar', 'Petes Mystery Meats', 5, 1, 0.1);
 INSERT INTO made_from
-  VALUES(1, 'Sketchy Business Student', 5, 1, 0.0625);
+  VALUES('Not-Cocaine (that would be illegal)', 'Sketchy Business Student', 5, 1, 0.0625);
 
 ALTER SEQUENCE customer_order_order_number_seq RESTART WITH 1;
 -- An open order for employee 1

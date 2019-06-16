@@ -121,13 +121,13 @@ CREATE TABLE custom_pizza (
 );
 
 CREATE TABLE made_from (
-	ingredient_number int NOT NULL,
+	name text NOT NULL,
 	supplier text NOT NULL,
 	item_number int REFERENCES food(item_number),
 	amount int,
 	weight numeric,
-	FOREIGN KEY (ingredient_number, supplier) REFERENCES ingredient(ingredient_number, supplier),
-	PRIMARY KEY (ingredient_number, supplier, item_number)
+	FOREIGN KEY (name, supplier) REFERENCES ingredient(name, supplier),
+	PRIMARY KEY (name, supplier, item_number)
 );
 
 CREATE TABLE order_consists_of (
