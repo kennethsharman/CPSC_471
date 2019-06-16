@@ -2,6 +2,7 @@
 // Customer Order View
 
 {
+  const currentOrder = state('currentOrder')[0]
   loadOrder();
 
   // Load Customer Order View Page
@@ -9,7 +10,7 @@
 
     $('#header-row').html(`
   <h3 class="header-title">
-    <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+    <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
     Fantasy Street Kitchen
   </h3>
 
@@ -78,14 +79,14 @@
         </div><!-- card body-->
           <a href="#" id="employee-modal">Employee Access Mode</a>
         </div><!-- card -->
-        
+
     `) // end left-bar
 
     $('#right-bar').html(`
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
-          Order Contents
+          Order ${currentOrder.order_number} Contents
         </h5>
         <div class="container-fluid lighter">
           <div class="row">

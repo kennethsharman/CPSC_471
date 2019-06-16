@@ -43,6 +43,32 @@ const shift_log_db = {
     }
 
     return query_string
+  },
+
+  employee_current_shift(employee_id) {
+    const query_string = {
+      text: "SELECT * FROM shift_log WHERE employee_id = $1 AND time_out IS NULL;",
+      values: [employee_id]
+    }
+    return query_string
+  },
+
+  end_employee_current_shift(employee_id, clock_out_time) {
+    const query_string = {
+      text: "UPDATE shift_log SET time_out = $1 WHERE employee_id = $2 AND time_out IS NULL RETURNING *;",
+      values: [clock_out_time, employee_id]
+    }
+
+    return query_string
+  },
+
+  employee_completed_shifts(employee_id) {
+    const query_string = {
+      text: "SELECT * FROM shift_log WHERE employee_id = $1 AND time_out IS NOT NULL;",
+      values: [employee_id]
+    }
+
+    return query_string
   }
 }
 

@@ -67,6 +67,19 @@ const item_db = {
     const orders = req.body.map(({food, quantity, note, orderNum}) => {
         // place the order logic here
     })
+  },
+
+  out_of_stock_items() {
+    const query_string = {
+      text: `SELECT *
+              FROM item, food, ingredient, made_from
+              WHERE item.item_number = made_from.item_number
+                AND food.item_number = item.item_number
+                AND made_from.ingredient_number = ingredient.ingredient_number
+                AND made_from.supplier = ingredient.supplier
+                AND ingredient.on_hand_count < made_from.amount;`
+    }
+    return query_string
   }
 }
 

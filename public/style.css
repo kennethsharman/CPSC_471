@@ -10,7 +10,7 @@ body {
 
 .btn-primary {
   background-color: #963232!important;
-  border-color:#421919; 
+  border-color:#421919;
 }
 
 .btn-warning {
@@ -219,6 +219,12 @@ th > h6 {
   padding-top:1em;
 }
 
+.order-btn2 {
+  width: 100%;
+  height: 60px;
+  padding-top:1em;
+}
+
 #employee-modal {
   color: white;
   text-decoration: underline;
@@ -290,7 +296,7 @@ hr {
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
-  
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
