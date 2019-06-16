@@ -29,6 +29,7 @@
  const employee = require('./db/employee')
  const customer = require('./db/customer')
  const inventory = require('./db/takes_inventory')
+ const item = require('./db/item')
 
 // argument in body - use when passing a JSON
 const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, reject) => {
@@ -83,5 +84,11 @@ app.post('/customer', bodyAPI(customer.create))
 // inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
 app.post('/inventory/history', bodyAPI(inventory.find))
+
+// get foods
+app.get('/menu', item.menu)
+app.get('/menu/:id', item.menuItem)
+
+app.post('/order', item.placeOrder)
 
 exports.app = functions.https.onRequest(app)
