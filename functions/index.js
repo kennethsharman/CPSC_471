@@ -28,6 +28,7 @@
  const db = require('./db/db')
  const employee = require('./db/employee')
  const customer = require('./db/customer')
+ const customer_order = require('./db/customer_order')
  const inventory = require('./db/takes_inventory')
 
  const shift_log_api = require('./API/shift_log')
@@ -95,5 +96,10 @@ app.post('/customer', bodyAPI(customer.create))
 // inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
 app.post('/inventory/history', bodyAPI(inventory.find))
+
+// customer_order
+app.post('/order', API(customer_order.find))
+app.post('/openOrders', API(customer_order.findOpenOrdersEmp))
+app.post('/closedOrders', API(customer_order.findClosedOrdersEmp))
 
 exports.app = functions.https.onRequest(app)

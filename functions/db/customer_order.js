@@ -1,3 +1,5 @@
+const db = require('./db')
+
 const customer_order_db = {
   create(customer_order_json) {
     const query_string = {
@@ -16,10 +18,28 @@ const customer_order_db = {
     return query_string
   },
 
-  find(order_number) {
+  find(order_obj) {
     const query_string = {
       text: "SELECT * FROM customer_order WHERE order_number = $1;",
-      values: [order_number]
+      values: [order_obj.order_number]
+    }
+
+    return query_string
+  },
+
+  findOpenOrdersEmp(employee_json) {
+    const query_string = {
+      text: "SELECT * FROM customer_order WHERE employee_id = $1 AND completed_flag = false;",
+      values: [employee_json.employee_id]
+    }
+
+    return query_string
+  },
+
+  findClosedOrdersEmp(employee_json) {
+    const query_string = {
+      text: "SELECT * FROM customer_order WHERE employee_id = $1 AND completed_flag = true;",
+      values: [employee_json.employee_id]
     }
 
     return query_string

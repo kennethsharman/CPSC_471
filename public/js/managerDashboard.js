@@ -35,7 +35,7 @@
       "quantity": 4
     }
   ]]
-  
+
   loadManagerDB();
 
   // Load Manager Dashboard
@@ -43,7 +43,7 @@
 
     $('#header-row').html(`
     <h3 class="header-title">
-      <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+      <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
       Manager Dashboard
     </h3>
 
@@ -123,13 +123,13 @@
     click('#new-inventory-add', () => {
       try {
         const inventory = JSON.parse($("#inventory-file").html())
-        
+
         modal().body(`
         <div>
           <h4>Posting new inventory...</h4>
         </div>
       `).foot(``)
-  
+
         requestService('/inventory', 'post', {
           manager_id: state('user').employee_id,
           inventory_file: JSON.stringify(inventory),
@@ -141,7 +141,7 @@
       } catch(e) {
         $('#invalid-file-warning').show('fast')
       }
-  
+
     })
   })
 

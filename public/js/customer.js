@@ -2,6 +2,7 @@
 // Customer Order View
 
 {
+  const currentOrder = state('currentOrder')[0]
   loadOrder();
 
   // Load Customer Order View Page
@@ -9,7 +10,7 @@
 
     $('#header-row').html(`
   <h3 class="header-title">
-    <img id="header-logo" src="pics/logo1.png" alt="Company Logo"> 
+    <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
     Fantasy Street Kitchen
   </h3>
 
@@ -142,14 +143,14 @@
         </div><!-- card body-->
           <a href="#" id="employee-modal">Employee Access Mode</a>
         </div><!-- card -->
-        
+
     `) // end left-bar
 
     $('#right-bar').html(`
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
-          Order Contents
+          Order ${currentOrder.order_number} Contents
         </h5>
         <div class="container-fluid lighter">
           <div class="row">
@@ -231,7 +232,7 @@
       <h4>Add to order</h4>`,`
       <h5 style="text-align: center">${event.target.id}</h5>
       <br>
-      
+
       <br>
       ${spinner.getHTML()}
       <br>
@@ -241,7 +242,7 @@
       </div>`, `
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       <button type="button" class="btn btn-primary" id="Add-order-btn" data-dismiss="modal">
-        <i class="fas fa-plus-square"></i> 
+        <i class="fas fa-plus-square"></i>
         Add
       </button>
       `)
