@@ -181,8 +181,9 @@
 
         click('.add-order-btn', () => {
           const ordersArr = state('orders')
-          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val(), orderNum: state('customer-order')} // not sure about this orderNum thing
+          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val()} 
           ordersArr.push(order)
+          state('orders', ordersArr)
 
           // first order? display the button
           if(ordersArr.length==1) $("#place-order-container").html(`
@@ -215,7 +216,11 @@
 
     click('#placeOrder-btn', () => {
       modal(``, `Placing order...`, ``)
-      requestService(`/order`, "POST", state('order'), () => {
+      requestService(`/order`, "POST", {
+        orderArr: state('orders'),
+        employee_id: state('user').employee_id,
+        customer_number: state('currentGroup').customer_number
+      }, () => {
         modal(`
         <h4 class="modal-title" style="text-align: center" color="black">
           Order complete
