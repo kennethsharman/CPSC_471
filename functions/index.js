@@ -30,6 +30,9 @@
  const customer = require('./db/customer')
  const inventory = require('./db/takes_inventory')
 
+ const shift_log_api = require('./API/shift_log')
+ const item_api = require('./API/item')
+
 // argument in body - use when passing a JSON
 const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, reject) => {
     db.query(qString(req.body)).then(success => {
@@ -37,7 +40,7 @@ const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, rej
         if(pass) next()
         else res.send({msg: success, status: 200})
     }).catch(err => {
-        res.send({msg: err, status: 404})
+        res.send({msg: err, status: 500})
     })
  })
 
@@ -76,6 +79,15 @@ app.delete('/user/:id', paramsAPI(employee.delete))
 
 app.post('/user/byEmail', employee.findEmail)
 app.get('/user', bodyAPI(employee.findAll))
+
+// shift log
+app.get('/shift/:employee_id/current', (req, res) => shift_log_api.current_shift(req, res))
+app.get('/shift/:employee_id/completed', (req, res) => shift_log_api.completed_shifts_for_employee(req, res))
+app.post('/shift/', (req, res) => shift_log_api.clock_in(req, res))
+app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
+
+// item
+app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
 app.post('/customer', bodyAPI(customer.create))
