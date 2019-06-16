@@ -234,7 +234,7 @@
       <br>
 
       <br>
-      ${spinner.html()}
+      ${spinner.getHTML()}
       <br>
       <div class="form-group">
         <label for="comment">Note (Optional):</label>

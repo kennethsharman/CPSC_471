@@ -26,13 +26,13 @@ click('#neworder-btn', () => view("./js/customer.js"))
       const SELF_EDIT = 2
   
       let mode = MANAGER_EDIT
-      let user
-      let defaultUser
+      let employee
+      let defaultEmployee
       switch(event.target.id) {
         case 'self':
           mode = SELF_EDIT
-          user = state('user')
-          defaultUser = state('user')
+          employee = Object.assign({}, state('user'))
+          defaultEmployee = Object.assign({}, state('user'))
           // editting yourself. You shoul dbe able to logout.
           break;
         case 'anonymous-emp':
@@ -40,8 +40,12 @@ click('#neworder-btn', () => view("./js/customer.js"))
           // new employee. Load up some blanks and make sure to POST
           break;
   
-        // default:
+        default:
           // manager editting a rando. Add manager options
+          console.log(event.target.id)
+          var e = state('employeeInfo').find(({employee_id}) => employee_id== event.target.id.substring(10))
+          employee = Object.assign({}, e)
+          defaultEmployee = Object.assign({}, e) // deep copy
       }
   
       /**
@@ -51,7 +55,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
       $('.modal-header').html(`
       <div id="name-edit-container">
         <h4 class="modal-title" style="text-align: center" color="black">
-          ${user.f_name}
+          ${employee.f_name}
         </h4>
       </div>`)
 
@@ -72,10 +76,12 @@ click('#neworder-btn', () => view("./js/customer.js"))
       </p>`
   
       $('.modal-body').html(`
+        <h6>Email Address</h6>
+        <p>${employee.email}</p>
         <h6>Contact Number </h6>
-        ${contactNumber(user.phone_number)}
+        ${contactNumber(employee.phone_number)}
         <h6>Address </h6>
-        ${address(user.address)}
+        ${address(employee.address)}
       `)
 
       click("#contact-edit", function(event) {
@@ -93,12 +99,11 @@ click('#neworder-btn', () => view("./js/customer.js"))
               </h3>
             </div>
           </div><!-- row -->`)
-        $('#phone-input').val(user.phone_number)
+        $('#phone-input').val(employee.phone_number)
 
-        const save = function(event) {
-          user.phone_number = $('#phone-input').val()
-          $("#contact-edit-container").html(contactNumber(user.phone_number))
-          $(this).off(event)
+        const save = () => {
+          employee.phone_number = $('#phone-input').val()
+          $("#contact-edit-container").html(contactNumber(employee.phone_number))
         }
         click('#phone-edit-save', save)
       })
@@ -118,26 +123,75 @@ click('#neworder-btn', () => view("./js/customer.js"))
               </h3>
             </div>
           </div><!-- row -->`)
-        $('#address-input').val(user.address)
+        $('#address-input').val(employee.address)
 
-        const save = function(event) {
-          user.address = $('#address-input').val()
-          $("#address-edit-container").html(address(user.address))
-          $(this).off(event)
+        const save = () => {
+          employee.address = $('#address-input').val()
+          $("#address-edit-container").html(address(employee.address))
         }
         click('#address-edit-save', save)
       })
-  
-      if(mode!==SELF_EDIT) $(`.modal-body`).append(`
-        <br>
-        <h6> Roles </h6>
-        <p>
-          <span>
-            COOK | SERVER | MANAGER 
-            <a class="glyph" href="#" id="role-edit"><i class="fas fa-pencil-alt pad"></i></a>
-          </span>
-        </p>
-      `)
+
+      const roles = (s,c,m) => {
+        return `
+          <br>
+          <h6>
+          Roles
+          <a class="glyph" href="#" id="role-edit"><i class="fas fa-pencil-alt pad"></i></a>
+          </h6>
+          <p>
+            <span>
+            <td>${s? "SERVER" : ""} ${c? "COOK" : ""} <br> ${m? "MANAGER" : ""}</td>
+           </span>
+          </p>`
+      }
+
+      if(mode!==SELF_EDIT) $(`.modal-body`).append(
+        `<div id="roles">
+          ${roles(employee.server_flag, employee.cook_flag, employee.manager_flag)}
+        </div>`)
+
+      click('#role-edit', () => {
+        $('#roles').html(`
+          <br>
+          <h6>
+          Roles
+          <a class="glyph" href="#" id="role-edit-save">
+            <i class="fas fa-save" id="role-edit-save-inner"></i>
+          </a>
+          </h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="server-role">
+            <label class="form-check-label" for="server-role">
+              SERVER
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="cook-role">
+            <label class="form-check-label" for="cook-role">
+              COOK
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="manager-role">
+            <label class="form-check-label" for="manager-role">
+              MANAGER
+            </label>
+          </div>
+        `)
+
+          $('#server-role').prop("checked", employee.server_flag)
+          $('#cook-role').prop("checked", employee.cook_flag )
+          $('#manager-role').prop("checked", employee.manager_flag)
+
+        const save = () => {
+          employee.server_flag = $('#server-role').is(":checked")
+          employee.cook_flag = $('#cook-role').is(":checked")
+          employee.manager_flag = $('#manager-role').is(":checked")
+          $("#roles").html(roles(employee.server_flag, employee.cook_flag, employee.manager_flag))
+        }
+        click('#role-edit-save', save)
+      })
   
       if(mode!==MANAGER_NEW) $(`.modal-body`).append(`
       <h6>Shift Log</h6>
@@ -193,7 +247,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
       <button type="button" class="btn btn-warning mr-auto logout" style="color: white" data-dismiss="modal">
         <i class="fas fa-sign-out-alt"></i>Logout
       </button>
-      <button type="button" class="btn btn-secondary cancel-changes" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-secondary cancel-changes" id="cancel-changes" data-dismiss="modal">Cancel</button>
       `)
       else $(`.modal-footer`).prepend(`
       <button type="button" class="btn btn-secondary cancel-changes" id="manage-emp-btn">Back</button>
@@ -201,13 +255,13 @@ click('#neworder-btn', () => view("./js/customer.js"))
   
       $('#modal-container').modal()
 
-      click('.cancel-changes', () => {
-        state('user', defaultUser)
-
+      click('.cancel-changes', e => {
+        if(e.target.id===`cancel-changes`) state('user', defaultEmployee)
+        else state('employeeInfo')
       })
       click('.save-changes', () => {
-        state('user', user)
-        requestService('/user', 'PUT', user)
+        state('user', employee)
+        requestService('/user', 'PUT', employee)
       })
   })
 }
