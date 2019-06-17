@@ -28,11 +28,11 @@ const takes_inventory_db = {
 
   update(takes_inventory_json) {
     const query_string = {
-      text: "UPDATE takes_inventory SET inventory_time = $1 WHERE manager_id = $2 AND ingredient_number = $3 AND supplier = $4 AND inventory_date = $5 RETURNING *;",
+      text: "UPDATE takes_inventory SET inventory_time = $1 WHERE manager_id = $2 AND name = $3 AND supplier = $4 AND inventory_date = $5 RETURNING *;",
       values: [
         takes_inventory_json.inventory_time,
         takes_inventory_json.manager_id,
-        takes_inventory_json.ingredient_number,
+        takes_inventory_json.name,
         takes_inventory_json.supplier,
         takes_inventory_json.inventory_date
       ]
@@ -41,10 +41,10 @@ const takes_inventory_db = {
     return query_string
   },
 
-  delete(manager_id, ingredient_number, supplier, inventory_date) {
+  delete(manager_id, name, supplier, inventory_date) {
     const query_string = {
-      text: "DELETE FROM takes_inventory WHERE manager_id = $1 AND ingredient_number = $2 AND supplier = $3 AND inventory_date = $4 RETURNING *;",
-      values: [manager_id, ingredient_number, supplier, inventory_date]
+      text: "DELETE FROM takes_inventory WHERE manager_id = $1 AND name = $2 AND supplier = $3 AND inventory_date = $4 RETURNING *;",
+      values: [manager_id, name, supplier, inventory_date]
     }
 
     return query_string
