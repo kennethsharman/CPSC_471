@@ -54,7 +54,10 @@
 
     requestService(`/menu`, "get", null, ({msg}) => {
       $('.loader').hide()
-      $('#main-bar').html(msg.reduce((prev, curr) => {`${prev}${getTables(curr.array, curr.name)}`}), '') // end main-bar
+      $('#main-bar').html(msg.reduce((prev, curr) =>
+        curr.array.length==0? prev:
+        `${prev}${getTables(curr.array, curr.name)}`),
+      '') // end main-bar
     })
 
 

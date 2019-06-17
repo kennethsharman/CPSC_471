@@ -1,6 +1,7 @@
 const db = require('./db')
 const order_consists_of = require('./order_consists_of')
 const customer_order = require('./customer_order')
+const made_from = require('./made_from')
 
 const item_db = {
   create(item_json) {
@@ -41,14 +42,20 @@ const item_db = {
 
   menu(req, res, next) {
     const items = []
-    db.query("SELECT * FROM drink AS d, food AS f, item AS i WHERE f.item_number=d.item_number AND d.item_number=i.item_number;").then(drink => {
+    const qTemplate = category => ` SELECT *
+      FROM ${category} AS c, food AS f, item AS i
+      WHERE f.item_number=c.item_number
+        AND c.item_number=i.item_number
+        AND out_of_stock_flag = false;`
+
+    db.query(qTemplate('drink')).then(drink => {
       items.push({name: "Drinks", array: drink})
-      db.query("SELECT * FROM wings AS w, food AS f, item AS i WHERE f.item_number=w.item_number AND w.item_number=i.item_number;").then(wings => {
+      db.query(qTemplate('wings')).then(wings => {
         items.push({name: "Wings", array: wings})
-        db.query("SELECT * FROM pasta AS p, item AS i WHERE f.item_number=p.item_number AND p.item_number=i.item_number;").then(pasta => {
+        db.query(qTemplate('pasta')).then(pasta => {
           items.push({name: "Pasta", array: pasta})
-          db.query("SELECT * FROM menu_pizza AS p, item AS i WHERE f.item_number=p.item_number AND p.item_number=i.item_number;").then(pizza => {
-            items.push({name: "PIzza", array: pizza})
+          db.query(qTemplate('menu_pizza')).then(pizza => {
+            items.push({name: "Pizza", array: pizza})
             res.send({msg: items, status: 200})
           })
         })
@@ -66,8 +73,7 @@ const item_db = {
   },
 
   placeOrder(req, res, next) {
-    const qArray = []
-    const notes = []
+    const qArray = [], notes = []
     let totalPrice = 0
 
     // get queries
@@ -93,8 +99,11 @@ const item_db = {
     })).then(response => {
       // make associated orders
       const calls = qArray.map(qString => new Promise((resolve, reject) =>
-        order_consists_of.create(qString).then(resolve).catch(reject)
+        order_consists_of.create(qString).then(() => {
+          made_from.checkIfNowOutOfStock().then(resolve)
+        }).catch(reject)
         ))
+
       Promise.all(calls).then(() => {
         res.send({msg: '', status: 200})
       }).catch(err => {
