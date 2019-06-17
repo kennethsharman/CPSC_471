@@ -2,7 +2,6 @@
 // Login View
 
 { // local scopes
-  $(`.loader-container`).hide()
   loginService()
 
 click('#switchviews-btn', () => view("./js/adminView.js"))

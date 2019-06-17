@@ -153,9 +153,16 @@
 
   function set_orders_list() {
     $('.loader').show()
-    requestService('/openOrders', 'post', user, res => {
-      state('openOrders', res.msg)
-      $('.loader').hide()
+
+    requestService(`order/${user.employee_id}/closed`, 'get', null, res => {
+      state('closedOrders', res.msg)
+
+      requestService(`order/${user.employee_id}/open`, 'get', null, res => {
+        state('openOrders', res.msg)
+        $('.loader').hide()
+        loadServerDB()
+      })
+    })
 
       $('#main-bar').html(`
         <div> <!-- Open orders Section -->

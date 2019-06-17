@@ -25,6 +25,12 @@ const food_db = {
     return query_string
   },
 
+  find_out_of_stock() {
+    return {
+      text: "SELECT * FROM FOOD WHERE out_of_stock_flag = true"
+    }
+  },
+
   update(food_json) {
     const query_string = {
       text: "UPDATE food SET food_name = $1, cook_id = $2, station = $3, special_request = $4, allergy_info = $5, out_of_stock_flag = $6 WHERE item_number = $7 RETURNING *;",

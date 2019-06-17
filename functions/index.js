@@ -30,6 +30,7 @@
  const customer = require('./db/customer')
  const customer_order = require('./db/customer_order')
  const inventory = require('./db/takes_inventory')
+ const item = require('./db/item')
 
  const shift_log_api = require('./API/shift_log')
  const item_api = require('./API/item')
@@ -98,6 +99,10 @@ app.get('/customer', bodyAPI(customer.create))
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
 app.post('/inventory/history', bodyAPI(inventory.find))
 
+// get foods
+app.get('/menu', item.menu)
+app.get('/menu/:id', item.menuItem)
+
 // customer_order
 app.post('/customerOrder', bodyAPI(customer_order.create))
 app.post('/order', bodyAPI(customer_order.find))
@@ -107,5 +112,9 @@ app.post('/cashout', bodyAPI(customer_order.cashout))
 app.post('/tipout', bodyAPI(customer_order.tipout))
 app.post('/openItems', bodyAPI(customer_order.openItems))
 app.post('/bumpOrder', bodyAPI(customer_order.bumpOrder))
+app.post('/order2', item.placeOrder)
+app.get('/order/:id', paramsAPI(customer_order.find))
+app.get('/order/:id/open', paramsAPI(customer_order.findOpenOrdersEmp))
+app.get('/order/:id/closed', paramsAPI(customer_order.findClosedOrdersEmp))
 
 exports.app = functions.https.onRequest(app)
