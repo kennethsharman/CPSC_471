@@ -3,16 +3,14 @@
 
 {
   const user = state('user');
-  let openOrders;
-  let closedOrders;
   var order_num;
   set_orders_list();
 
 
   // Load Server Dashboard
   function loadServerDB() {
-    openOrders= state('openOrders')
-    closedOrders= state('closedOrders')
+    const openOrders= state('openOrders')
+    const closedOrders= state('closedOrders')
 
 
     $('#header-row').html(`
@@ -236,7 +234,6 @@
                 
                 state('currentGroup', res.msg) // saves the group for later use
                 // res.msg = {customer_number: Number, group_size: Number}
-
                 view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
 
               })
@@ -246,12 +243,13 @@
   }) // end click serverNewOrder-btn
 
   function set_orders_list() {
+    $("#main-bar").html('')
     $('.loader').show()
 
-    requestService(`order/${user.employee_id}/closed`, 'get', null, res => {
+    requestService(`/order/${user.employee_id}/closed`, 'get', null, res => {
       state('closedOrders', res.msg)
 
-      requestService(`order/${user.employee_id}/open`, 'get', null, res => {
+      requestService(`/order/${user.employee_id}/open`, 'get', null, res => {
         state('openOrders', res.msg)
         $('.loader').hide()
         loadServerDB()

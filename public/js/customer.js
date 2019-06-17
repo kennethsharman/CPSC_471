@@ -2,7 +2,7 @@
 // Customer Order View
 
 {
-  const currentOrder = state('currentOrder')[0]
+  const currentOrder = state('currentOrder')? state('currentOrder')[0]: [{order_number: null}]
   loadOrder();
 
   // Load Customer Order View Page
@@ -16,48 +16,53 @@
 
     `) // end header-row
     $('.loader').show()
+    $('#main-bar').html('<span></span>')
     state('orders', [])
 
-    const getTables = (foodArray, foodType) => foodArray.reduce((prev, {item_number, food_name, out_of_stock_flag, description}) => {
-      return out_of_stock_flag?prev:`${prev}
-      <table class="table table-dark">
-      <tr>
-        <th class="tg-s268">
-          <img class="headerlogo" src="/pics/pasta2.jpg" alt="Pasta2">
-        </th>
-        <th class="tg-0lax">
-          <div class="row">
-            <div class="col-sm-8">
-              <h4 class="food-name">${food_name}</h4>
-            </div><!-- name col -->
-            <div class="col-sm-4">
-              <a href="#" class="btn btn-primary food-action" id='food-${item_number}'>
-                <i class="fas fa-plus-square"></i> Add
-              </a>
-            </div> <!-- action col -->
-          </div><!--first row -->
-          <br>
-          <div class="row">
-            <div class="col-12">
-              <p  class="food-desc">
-                ${description}
-              </p>
-            </div> <!-- singleton col -->
-          </div><!-- second row -->
-        </th>
-      </tr>
-    </table>`, `<div> <!-- ${foodType} Section -->
+    const getTables = (foodArray, foodType) =>
+      foodArray.reduceRight ((prev, {price, item_number, food_name, out_of_stock_flag, description}) => {
+        const result = out_of_stock_flag?prev:`${prev}
+        <table class="table table-dark">
+        <tr>
+          <th class="tg-s268">
+            <img class="headerlogo" src="/pics/pasta2.jpg" alt="Pasta2">
+          </th>
+          <th class="tg-0lax">
+            <div class="row">
+              <div class="col-sm-8">
+                <h4 class="food-name">${food_name}</h4>
+              </div><!-- name col -->
+              <div class="col-sm-4">
+                <a href="#" class="btn btn-primary food-action" id='food-${item_number}'>
+                  <i class="fas fa-plus-square" id='fd-2-${item_number}'></i> Add
+                </a>
+              </div> <!-- action col -->
+            </div><!--first row -->
+            <br>
+            <div class="row">
+              <div class="col-12">
+                <p  class="food-desc">
+                  <strong>$${price}</strong> 
+                  ${description}
+                </p>
+              </div> <!-- singleton col -->
+            </div><!-- second row -->
+          </th>
+        </tr>
+      </table>`
+      return result
+    }, `<div> <!-- ${foodType} Section -->
       <h4 style="display: inline-block; text-align: left; width: 100%">
         ${foodType}
       </h4>
-    `}) + `</div> <!-- end ${foodType} Section --><br><br>`
+    `) + `</div> <!-- end ${foodType} Section --><br><br>`
 
     requestService(`/menu`, "get", null, ({msg}) => {
       $('.loader').hide()
-      $('#main-bar').html(msg.reduce((prev, curr) =>
-        curr.array.length==0? prev:
-        `${prev}${getTables(curr.array, curr.name)}`),
-      '') // end main-bar
+      
+      $('#main-bar').html(msg.reduceRight((prev, {name, array}) =>
+      curr.array.length==0? prev:  
+      `${prev}${getTables(array, name)}`, '')) // end main-bar
     })
 
 
@@ -89,7 +94,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
-          Order ${currentOrder.order_number} Contents
+          Order ${currentOrder.order_number || ""} Contents
         </h5>
         <div class="container-fluid lighter">
           <div class="row">
@@ -161,10 +166,10 @@
       modal(``,`Loading food item...`, ``)
 
       requestService(`/menu/${event.target.id.substring(5)}`, 'get', null, res => {
-        const name = res.msg[0].food_name
+        const food = res.msg[0]
         modal(`
           <h4>Add to order</h4>`,`
-          <h5 style="text-align: center">${name}</h5>
+          <h5 style="text-align: center">${food.food_name}</h5>
           <br>
 
           <br>
@@ -182,9 +187,9 @@
         `)
         spinner.loadCtrl()
 
-        click('.add-order-btn', () => {
+        click('#add-order-btn', () => {
           const ordersArr = state('orders')
-          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val()} 
+          const order = {food, quantity: $('#orderQuantity').val(), note: $('#note').val()} 
           ordersArr.push(order)
           state('orders', ordersArr)
 
@@ -196,15 +201,9 @@
 
           $("#order-table").append(`
             <tr>
-              <th>${order.food.name}</th>
+              <th>${order.food.food_name} ${order.quantity!=1? `x${order.quantity}`: ""}</th>
             </tr>
             ${
-              order.quantity!=1?
-              `<tr>
-                <td>${order.quantity}</td>
-              </tr>`
-              :""
-            } ${
               order.quantity!=''?
               `<tr>
                 <td>${order.note}</td>

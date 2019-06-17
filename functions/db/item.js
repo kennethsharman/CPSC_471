@@ -15,7 +15,7 @@ const item_db = {
 
   find(item_number) {
     const query_string = {
-      text: "SELECT * FROM item WHERE item_number = $1;",
+      text: "SELECT * FROM item, food WHERE item_number = $1;",
       values: [item_number]
     }
 
@@ -66,8 +66,8 @@ const item_db = {
   menuItem(req, res, next) {
     const id = req.params.id
     db.query(`SELECT *
-      FROM drink AS d, food AS f, item AS i
-      WHERE f.item_number=d.item_number AND d.item_number=i.item_number AND i.item_number = ${id};`).then(stuff => {
+      FROM food AS f, item AS i
+      WHERE f.item_number=i.item_number AND i.item_number = ${id};`).then(stuff => {
         res.send({msg: stuff, status: 200})
     })
   },
@@ -78,9 +78,10 @@ const item_db = {
 
     // get queries
     req.body.orderArr.forEach(({food, quantity, note, orderNum}) => {
+      console.log("FOOD", food)
       for(let i = 0; i < quantity; i++) {
         qArray.push(order_consists_of.create({order_number: orderNum, item_number: food.item_number}))
-        totalPrice += food.price
+        totalPrice += Number(food.price)
       }
 
       if(note!=='') notes.push(`${food.food_name}: ${note}`)
@@ -95,7 +96,7 @@ const item_db = {
       price: totalPrice,
       ticket_time: null,
       completed_flag: false,
-      special_request: notes.reduce((prev, curr) => `${prev} | ${curr}`)
+      special_request: notes.reduce((prev, curr) => `${prev} | ${curr}`, '')
     })).then(response => {
       // make associated orders
       const calls = qArray.map(qString => new Promise((resolve, reject) =>
