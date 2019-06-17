@@ -79,6 +79,7 @@ app.get('/user/:id', paramsAPI(employee.find))
 app.put('/user', bodyAPI(employee.update))
 app.delete('/user/:id', paramsAPI(employee.delete))
 
+
 app.post('/user/byEmail', employee.findEmail)
 app.get('/user', bodyAPI(employee.findAll))
 
@@ -92,7 +93,7 @@ app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
-app.post('/customer', bodyAPI(customer.create))
+app.get('/customer', bodyAPI(customer.create))
 
 // inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
@@ -103,7 +104,15 @@ app.get('/menu', item.menu)
 app.get('/menu/:id', item.menuItem)
 
 // customer_order
-app.post('/order', item.placeOrder)
+app.post('/customerOrder', bodyAPI(customer_order.create))
+app.post('/order', bodyAPI(customer_order.find))
+app.post('/openOrders', bodyAPI(customer_order.findOpenOrdersEmp))
+app.post('/closedOrders', bodyAPI(customer_order.findClosedOrdersEmp))
+app.post('/cashout', bodyAPI(customer_order.cashout))
+app.post('/tipout', bodyAPI(customer_order.tipout))
+app.post('/openItems', bodyAPI(customer_order.openItems))
+app.post('/bumpOrder', bodyAPI(customer_order.bumpOrder))
+app.post('/order2', item.placeOrder)
 app.get('/order/:id', paramsAPI(customer_order.find))
 app.get('/order/:id/open', paramsAPI(customer_order.findOpenOrdersEmp))
 app.get('/order/:id/closed', paramsAPI(customer_order.findClosedOrdersEmp))

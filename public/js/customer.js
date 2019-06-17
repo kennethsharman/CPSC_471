@@ -176,7 +176,7 @@
           </div>`, `
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" id="add-order-btn" data-dismiss="modal">
-          <i class="fas fa-plus-square"></i> 
+          <i class="fas fa-plus-square"></i>
             Add
           </button>
         `)
@@ -184,7 +184,7 @@
 
         click('.add-order-btn', () => {
           const ordersArr = state('orders')
-          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val()} 
+          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val()}
           ordersArr.push(order)
           state('orders', ordersArr)
 
@@ -219,7 +219,7 @@
 
     click('#placeOrder-btn', () => {
       modal(``, `Placing order...`, ``)
-      requestService(`/order`, "POST", {
+      requestService(`/order2`, "POST", {
         orderArr: state('orders'),
         employee_id: state('user').employee_id,
         customer_number: state('currentGroup').customer_number

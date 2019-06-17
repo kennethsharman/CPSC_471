@@ -44,21 +44,22 @@
 
             <div class="container-fluid lighter">
               <div class="row">
-                <div class="col-md-6">
-                  <div class="dropdown">
-                    <a class="btn dropbtn btn-primary ">
-                      Station
-                      <i class="fas fa-sort-down"></i>
-                    </a>
-                    <div class="dropdown-content">
-                      <a href="#">Build</a>
-                      <a href="#">Fry</a>
-                      <a href="#">Pasta</a>
-                      <a href="#">Cut</a>
-                    </div><!-- content -->
-                  </div><!-- dropdown -->
-                </div><!-- L col -->
-                <div class="col-md-6">
+<!--                <div class="col-md-6">
+<!--                  <div class="dropdown">
+<!--                    <a class="btn dropbtn btn-primary ">
+<!--                      Station
+<!--                      <i class="fas fa-sort-down"></i>
+<!--                    </a>
+<!--                    <div class="dropdown-content">
+<!--                      <a href="#">Build</a>
+<!--                      <a href="#">Fry</a>
+<!--                      <a href="#">Pasta</a>
+<!--                      <a href="#">Cut</a>
+<!--                    </div><!-- content -->
+<!--                  </div><!-- dropdown -->
+<!--                </div><!-- L col -->
+
+                <div class="col-md-12">
                   <a href="#" id='c-dash-btn' class="btn btn-primary">Dashboard</a>
                 </div><!-- R col -->
               </div><!-- row -->
