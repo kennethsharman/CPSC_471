@@ -17,16 +17,14 @@ const order_consists_of_db = {
     return query_string
   },
 
-  // No update, entire table is the primary key.
-  // update() {
-  //   const query_string = {
-  //     text: "",
-  //     values: []
-  //   }
+  complete({order_number, item_number}) {
+    const query_string = {
+      text: `UPDATE customer_order SET completed_flag = true WHERE order_number = ${order_number} AND item_number = ${item_number}`,
+    }
 
-  //   result = db.query(query_string)
-  //   return result
-  // },
+    result = db.query(query_string)
+    return result
+  },
 
   delete(order_number, item_number) {
     const query_string = {

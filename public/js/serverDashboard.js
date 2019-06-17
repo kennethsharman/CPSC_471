@@ -2,6 +2,8 @@
 // Server Dashboard View
 
 {
+  const user = state('user');
+  var order_num;
   const user = state('user')
 
   // update cashout attribute
@@ -16,13 +18,14 @@
     $(`.loader-container`).hide()
   });
 
-  let openOrders;
   set_orders_list();
 
 
   // Load Server Dashboard
   function loadServerDB() {
-    openOrders= state('openOrders')
+    const openOrders= state('openOrders')
+    const closedOrders= state('closedOrders')
+
 
     $('#header-row').html(`
       <h3 class="header-title">
@@ -152,12 +155,13 @@
   }) // end click serverNewOrder-btn
 
   function set_orders_list() {
+    $("#main-bar").html('')
     $('.loader').show()
 
-    requestService(`order/${user.employee_id}/closed`, 'get', null, res => {
+    requestService(`/order/${user.employee_id}/closed`, 'get', null, res => {
       state('closedOrders', res.msg)
 
-      requestService(`order/${user.employee_id}/open`, 'get', null, res => {
+      requestService(`/order/${user.employee_id}/open`, 'get', null, res => {
         state('openOrders', res.msg)
         $('.loader').hide()
         loadServerDB()

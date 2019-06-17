@@ -38,7 +38,6 @@ const shift_log_api = {
   },
 
   completed_shifts_for_employee(req, res) {
-    console.log(req.params.employee_id)
     db.query(shift_log_db.employee_completed_shifts(req.params.employee_id))
       .then(success => {
         res.send(success)

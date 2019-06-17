@@ -34,7 +34,7 @@ const takes_inventory_db = {
         takes_inventory_json.manager_id,
         takes_inventory_json.name,
         takes_inventory_json.supplier,
-        takes_inventory_json.inventory_date
+        new Date(takes_inventory_json.inventory_date)
       ]
     }
 

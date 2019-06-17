@@ -47,7 +47,7 @@ const bodyAPI = (qString, pass) => (req, res, next) => new Promise((resolve, rej
  })
 
 // argument right on the URL- use when passing just a string or a number
-const paramsAPI = qString => (req, res, next) => new Promise((resolve, reject) => {
+const paramsAPI = (qString, pass) => (req, res, next) => new Promise((resolve, reject) => {
    db.query(qString(req.params.id)).then(success => {
         if(pass) next()
         else res.send({msg: success, status: 200})

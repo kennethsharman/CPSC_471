@@ -18,28 +18,25 @@ const customer_order_db = {
     return query_string
   },
 
-  find(order_obj) {
+  find(order_number) {
     const query_string = {
-      text: "SELECT * FROM customer_order WHERE order_number = $1;",
-      values: [order_obj.order_number]
+      text: `SELECT * FROM customer_order WHERE order_number = ${order_number};`,
     }
 
     return query_string
   },
 
-  findOpenOrdersEmp(employee_json) {
+  findOpenOrdersEmp(employee_id) {
     const query_string = {
-      text: "SELECT * FROM customer_order WHERE employee_id = $1 AND completed_flag = false;",
-      values: [employee_json.employee_id]
+      text: `SELECT * FROM customer_order WHERE employee_id = ${employee_id} AND completed_flag = false;`,
     }
 
     return query_string
   },
 
-  findClosedOrdersEmp(employee_json) {
+  findClosedOrdersEmp(employee_id) {
     const query_string = {
-      text: "SELECT * FROM customer_order WHERE employee_id = $1 AND completed_flag = true;",
-      values: [employee_json.employee_id]
+      text: `SELECT * FROM customer_order WHERE employee_id = ${employee_id} AND completed_flag = true;`,
     }
 
     return query_string
@@ -92,6 +89,7 @@ const customer_order_db = {
         customer_order_json.price,
         customer_order_json.ticket_time,
         customer_order_json.completed_flag,
+	      customer_order_json.special_request,
         customer_order_json.order_number
       ]
     }

@@ -1,15 +1,13 @@
 const food_db = {
   create(food_json) {
     const query_string = {
-      text: "INSERT INTO food (item_number, food_name, cook_id, station, special_request, allergy_info, out_of_stock_flag) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+      text: "INSERT INTO food (item_number, food_name, station, out_of_stock_flag, description) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
       values: [
         food_json.item_number,
         food_json.food_name,
-        food_json.cook_id,
         food_json.station,
-        food_json.special_request,
-        food_json.allergy_info,
-        food_json.out_of_stock_flag
+        food_json.out_of_stock_flag,
+        food_json.description
       ]
     }
 
@@ -33,14 +31,12 @@ const food_db = {
 
   update(food_json) {
     const query_string = {
-      text: "UPDATE food SET food_name = $1, cook_id = $2, station = $3, special_request = $4, allergy_info = $5, out_of_stock_flag = $6 WHERE item_number = $7 RETURNING *;",
+      text: "UPDATE food SET food_name = $1, station = $2, out_of_stock_flag = $3, description = $4 WHERE item_number = $5 RETURNING *;",
       values: [
         food_json.food_name,
-        food_json.cook_id,
         food_json.station,
-        food_json.special_request,
-        food_json.allergy_info,
         food_json.out_of_stock_flag,
+        food_json.description,
         food_json.item_number
       ]
     }

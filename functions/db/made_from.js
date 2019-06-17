@@ -4,13 +4,12 @@ const food = require('./food')
 const made_from_db = {
   create(made_from_json) {
     const query_string = {
-      text: "INSERT INTO made_from (name, supplier, item_number, amount, weight) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
+      text: "INSERT INTO made_from (name, supplier, item_number, amount) VALUES ($1, $2, $3, $4) RETURNING *;",
       values: [
         made_from_json.name,
         made_from_json.supplier,
         made_from_json.item_number,
         made_from_json.amount,
-        made_from_json.weight
       ]
     }
 
@@ -28,13 +27,12 @@ const made_from_db = {
 
   update(made_from_json) {
     const query_string = {
-      text: "UPDATE made_from SET amount = $1, weight = $2 WHERE name = $3 AND supplier = $4 AND item_number = $5 RETURNING *;",
+      text: "UPDATE made_from SET amount = $1, WHERE ingredient_number = $2 AND supplier = $3 AND item_number = $4 RETURNING *;",
       values: [
         made_from_json.amount,
-        made_from_json.weight,
-        made_from_json.name,
+        made_from_json.ingredient_number,
         made_from_json.supplier,
-        made_from_json.item_number
+        made_from_json.name
       ]
     }
 
