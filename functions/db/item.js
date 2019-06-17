@@ -6,8 +6,8 @@ const made_from = require('./made_from')
 const item_db = {
   create(item_json) {
     const query_string = {
-      text: "INSERT INTO item (price, completed_flag) VALUES ($1, $2) RETURNING *;",
-      values: [item_json.price, item_json.completed_flag]
+      text: "INSERT INTO item (price) VALUES ($1, $2) RETURNING *;",
+      values: [item_json.price]
     }
 
     return query_string

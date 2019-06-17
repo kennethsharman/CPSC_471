@@ -54,64 +54,117 @@ values(default, 2);
 insert into customer
 values(default, 2);
 
+-- default stuff in the pantry
+-- meats & drinks
+INSERT INTO ingredient values('GFS', 'pepperoni', 5, 2, 9);
+INSERT INTO ingredient values('GFS', 'wings', 20, 10, 30);
+INSERT INTO ingredient values('GFS', 'meat ball', 10, 5, 20);
+INSERT INTO ingredient values('GFS', 'pop syrup', 10, 5, 20);
+
+-- breads
+INSERT INTO ingredient VALUES('Sysco', 'noodles', 5, 3, 5);
+INSERT INTO ingredient VALUES('Sysco', 'macaroni', 5, 3, 6);
+INSERT INTO ingredient VALUES('Sysco', 'dough', 5, 3, 7);
+
+--cheeses 
+INSERT INTO ingredient VALUES('Sysco', 'mozzarella cheese', 5, 3, 5);
+INSERT INTO ingredient VALUES('Sysco', 'swiss cheese', 5, 3, 6);
+
+-- misc
+INSERT INTO ingredient VALUES('Sysco', 'buffalo sauce', 5, 3, 5);
+INSERT INTO ingredient VALUES('Sysco', 'bell pepper', 5, 3, 6);
+
+
+/*
+Merged food tables - this has to all be set in the database
+item * food * food category
+
+  price,
+  item_number,
+	food_name,
+	station,
+	out_of_stock_flag,
+	description,
+  
+  membership to one of {
+    drink,
+    wings,
+    menu_pizza,
+    pasta
+  }
+
+  made_from {
+    name,
+    supplier,
+    amount,
+    weight,
+  }
+
+  convention: all meats and drinks are GFS all rest is Sysco
+*/
+
 -- ITEM table
 ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numbering
-insert into item
-values(default, 12.99);
-insert into item
-values(default, 12.99);
-insert into item
-values(default, 10.00);
-insert into item
-values(default, 6.50);
-insert into item
-values(default, 2000.00);
 
--- FOOD table
-insert into food
-values(1, 'S&P Wings', null, 'FRY', false);
-insert into food
-values(2, 'Hot Wings', null, 'FRY', false);
-INSERT INTO food
-  VALUES(3, 'Soylent Soup', null, 'SOUP', true);
-INSERT INTO food
-  VALUES(4, 'Toast', null, 'BREAKFAST', false);
-INSERT INTO food
-  VALUES(5, 'Lightly (Not) Cocained Caviar', null, 'BREAKFAST', false);
+-- Pasta: Mom's Spaghetti
+  INSERT INTO item VALUES (default, 15.99);
+  INSERT INTO food VALUES (1, "Mom's spaghetti", null, "BAKE", false, "Made with creamy tomato sauce and never frozen meatballs.");
+  INSERT INTO pasta VALUES(1, true);
+  INSERT INTO made_from VALUES('noodles', 'Sysco', 1, 2);
+  INSERT INTO made_from VALUES('tomato sauce', 'Sysco', 1, 1);
+  INSERT INTO made_from VALUES('meat balls', 'GFS', 1, 5);
+  INSERT INTO made_from VALUES('mozzarella cheese', 'Sysco', 1, 3);
 
--- INGREDIENT table
-insert into ingredient
-values('GFS', 'Pound Wings', 72, 1, 3);
-insert into ingredient
-values('Sysco', 'Hot Sauce', 100, 1, 2);
-INSERT INTO ingredient
-  VALUES('Petes Mystery Meats', 'Soylent Green', 10, 5, 1);
-INSERT INTO ingredient
-  VALUES('GFS', 'White Bread', 100, 20, 30);
-INSERT INTO ingredient
-  VALUES('GFS', 'Strawberry Jam', 50, 10, 15);
-INSERT INTO ingredient
-  VALUES('Petes Mystery Meats', 'Caviar', 3, 2, 1);
-INSERT INTO ingredient
-  VALUES('Sketchy Business Student', 'Not-Cocaine (that would be illegal)', 3, 2, 1);
+-- Pasta: Dad's Macaroni
+  INSERT INTO item VALUES (default, 12.99);
+  INSERT INTO food VALUES (2, "Dad's macaroni", null, "BAKE", false, "Made with good the good old hearty macaroni and cheese recipe your dad made.");
+  INSERT INTO pasta VALUES(2, true);
+  INSERT INTO made_from VALUES('macaroni', 'Sysco', 2, 2);
+  INSERT INTO made_from VALUES('swiss cheese', 'Sysco', 2, 2);
 
--- MADE_FROM table
-insert into made_from
-values('Pound Wings', 'GFS', 1, 1, 1.0);
-insert into made_from
-values('Pound Wings', 'GFS', 2, 1, 1.0);
-insert into made_from
-values('Hot Sauce', 'Sysco', 2, 1, 0.25);
-INSERT INTO made_from
-  VALUES('Soylent Green', 'Petes Mystery Meats', 3, 3, 10.0);
-INSERT INTO made_from
-  VALUES('White Bread', 'GFS', 4, 2, 0.1);
-INSERT INTO made_from
-  VALUES('Strawberry Jam', 'GFS', 4, 1, 0.1);
-INSERT INTO made_from
-  VALUES('Caviar', 'Petes Mystery Meats', 5, 1, 0.1);
-INSERT INTO made_from
-  VALUES('Not-Cocaine (that would be illegal)', 'Sketchy Business Student', 5, 1, 0.0625);
+-- Wings: Hot and Spicy Wings
+  INSERT INTO item VALUES (default, 10.99);
+  INSERT INTO food VALUES (3, "6pc Hot and Spicy Wings", null, "BAKE", false, "Comes with the dip of your choice and smothered in buffalo sauce.");
+  INSERT INTO wings VALUES(3, 'buffalo', 'gravy');
+  INSERT INTO made_from VALUES('wings', 'GFS', 3, 6);
+  INSERT INTO made_from VALUES('buffalo sauce', 'Sysco', 3, 1);
+
+-- Wings: Salt and Pepper Wings
+  INSERT INTO item VALUES (default, 9.99);
+  INSERT INTO food VALUES (4, "6pc Salt and Pepper Wings", null, "BAKE", false, "Comes with the dip of your choice and crunchy seasoned breading.");
+  INSERT INTO wings VALUES(4, 'salt and pepper', 'gravy');
+  INSERT INTO made_from VALUES('wings', 'GFS', 4, 6);
+  
+-- Pizza: Canadian Deluxe
+  INSERT INTO item VALUES (default, 19.99);
+  INSERT INTO food VALUES (5, "Canadian Deluxe Pizza", null, "BAKE", false, "Pepperoni, mushroom, bell pepper, eh?")
+  INSERT INTO menu_pizza VALUES(5, 'thick', 'sour cream');
+  INSERT INTO made_from VALUES('dough', 'Sysco', 5, 1);
+  INSERT INTO made_from VALUES('mozzarella cheese', 'Sysco', 5, 4);
+  INSERT INTO made_from VALUES('pepperoni', 'GFS', 5, 2);
+  INSERT INTO made_from VALUES('bell pepper', 'Sysco', 5, 1);
+
+-- Pizza: Pepperoni
+  INSERT INTO item VALUES (default, 17.99);
+  INSERT INTO food VALUES (6, "Pepperoni Pizza", null, "BAKE", false, "Good for parties and late night netflix binges.");
+  INSERT INTO menu_pizza VALUES(6, 'thick', 'sour cream');
+  INSERT INTO made_from VALUES('dough', 'Sysco', 6, 1);
+  INSERT INTO made_from VALUES('mozzarella cheese', 'Sysco', 6, 4);
+  INSERT INTO made_from VALUES('pepperoni', 'GFS', 6, 2);
+
+
+-- Drinks: Koka Soda
+  INSERT INTO item VALUES (default, 2.99);
+  INSERT INTO food VALUES (7, "Koka Soda", null, "EXPO", false, "You're not you when you're thirsty.");
+  INSERT INTO drink VALUES(7);
+  INSERT INTO made_from VALUES('pop syrup', 'GFS', 7, 1);
+
+-- Drinks: Sespi Loca
+  INSERT INTO item VALUES (default, 2.99);
+  INSERT INTO food VALUES (8, "Sespi Loca", null, "EXPO", false, "Imported straight from Ruerto Pico.");
+  INSERT INTO drink VALUES(8);
+  INSERT INTO made_from VALUES('pop syrup', 'GFS', 8, 1);
+
 
 ALTER SEQUENCE customer_order_order_number_seq RESTART WITH 1;
 -- An open order for employee 1
