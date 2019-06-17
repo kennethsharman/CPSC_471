@@ -23,7 +23,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
       const MANAGER_EDIT = 0
       const MANAGER_NEW = 1
       const SELF_EDIT = 2
-  
+
       let mode = MANAGER_EDIT
       let employee
       let defaultEmployee
@@ -38,7 +38,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
           mode = MANAGER_NEW
           // new employee. Load up some blanks and make sure to POST
           break;
-  
+
         default:
           // manager editting a rando. Add manager options
           console.log(event.target.id)
@@ -46,11 +46,11 @@ click('#neworder-btn', () => view("./js/customer.js"))
           employee = Object.assign({}, e)
           defaultEmployee = Object.assign({}, e) // deep copy
       }
-  
+
       /**
        * HEADER
        */
-  
+
       $('.modal-header').html(`
       <div id="name-edit-container">
         <h4 class="modal-title" style="text-align: center" color="black">
@@ -73,7 +73,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
         <span> ${address || "No address provided"}</span>
         <a class="glyph" href="#" id="address-edit"><i class="fas fa-pencil-alt pad"></i></a>
       </p>`
-  
+
       $('.modal-body').html(`
         <h6>Email Address</h6>
         <p>${employee.email}</p>
@@ -191,7 +191,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
         }
         click('#role-edit-save', save)
       })
-  
+
       if(mode!==MANAGER_NEW) $(`.modal-body`).append(`
       <h6>Shift Log</h6>
       <div class="table-div">
@@ -241,7 +241,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
       $('.modal-footer').html(`
         <button type="button" class="btn btn-primary save-changes" data-dismiss="modal">Save</button>
       `)
-  
+
       if(mode===SELF_EDIT) $(`.modal-footer`).prepend(`
       <button type="button" class="btn btn-warning mr-auto logout" style="color: white" data-dismiss="modal">
         <i class="fas fa-sign-out-alt"></i>Logout
@@ -251,7 +251,7 @@ click('#neworder-btn', () => view("./js/customer.js"))
       else $(`.modal-footer`).prepend(`
       <button type="button" class="btn btn-secondary cancel-changes" id="manage-emp-btn">Back</button>
       `)
-  
+
       $('#modal-container').modal()
 
       click('.cancel-changes', e => {

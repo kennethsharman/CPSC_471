@@ -16,10 +16,10 @@ const made_from_db = {
     return query_string
   },
 
-  find(ingredient_number, supplier, item_number) {
+  find(name, supplier, item_number) {
     const query_string = {
-      text: "SELECT * FROM made_from WHERE ingredient_number = $1 AND supplier = $2 AND item_number = $3;",
-      values: [ingredient_number, supplier, item_number]
+      text: "SELECT * FROM made_from WHERE name = $1 AND supplier = $2 AND item_number = $3;",
+      values: [name, supplier, item_number]
     }
 
     return query_string
@@ -39,10 +39,10 @@ const made_from_db = {
     return query_string
   },
 
-  delete(ingredient_number, supplier, item_number) {
+  delete(name, supplier, item_number) {
     const query_string = {
-      text: "DELETE FROM made_from WHERE ingredient_number = $1 AND supplier = $2 AND item_number = $3",
-      values: [ingredient_number, supplier, item_number]
+      text: "DELETE FROM made_from WHERE name = $1 AND supplier = $2 AND item_number = $3",
+      values: [name, supplier, item_number]
     }
 
     return query_string

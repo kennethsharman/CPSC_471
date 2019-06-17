@@ -1,3 +1,5 @@
+const db = require('./db')
+
 const customer_db = {
   create(customer_json) {
     const query_string = {

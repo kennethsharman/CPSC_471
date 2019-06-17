@@ -111,7 +111,7 @@ const employee_db = {
               res.send({msg: err, status: 404})
             })
           break
-          
+
             // you're good
           case 1:
             console.log("OLD PERSON")

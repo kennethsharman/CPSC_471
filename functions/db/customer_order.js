@@ -42,6 +42,42 @@ const customer_order_db = {
     return query_string
   },
 
+  cashout(employee_json) {
+    const query_string = {
+      text: "UPDATE employee as e SET cash_out = (SELECT SUM(price) FROM customer_order as cust WHERE e.employee_id = cust.employee_id );",
+      values: []
+    }
+
+    return query_string
+  },
+
+  openItems(employee_json) {
+    const query_string = {
+      text: "SELECT order_consists_of.order_number, food.item_number, food_name, station FROM food inner join order_consists_of on order_consists_of.item_number=food.item_number where completed_flag=false;",
+      values: []
+    }
+
+    return query_string
+  },
+
+  bumpOrder(employee_json) {
+    const query_string = {
+      text: "UPDATE order_consists_of SET completed_flag=true where order_number=$1 and item_number=$2;",
+      values: [employee_json.order_number, employee_json.item_number]
+    }
+
+    return query_string
+  },
+
+  tipout(employee_json) {
+    const query_string = {
+      text: "UPDATE employee as e SET tip_out = ROUND( 0.04 * e.cash_out, 2 );",
+      values: []
+    }
+
+    return query_string
+  },
+
   update(customer_order_json) {
     const query_string = {
       text: "UPDATE customer_order SET customer_number = $1, employee_id = $2, start_time = $3, order_date = $4, price = $5, ticket_time = $6, completed_flag = $7 WHERE order_number = $8 RETURNING *;",
