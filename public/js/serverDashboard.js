@@ -4,31 +4,32 @@
 {
   const user = state('user')
 
+  // update cashout attribute
   requestService('/cashout', 'post', user, res => {
-    state('updatedCashout', res.msg)
+    //state('updatedCashout', res.msg)
     $(`.loader-container`).hide()
   });
 
+  // update tipout attribute
+  requestService('/tipout', 'post', user, res => {
+    //state('updatedtipout', res.msg)
+    $(`.loader-container`).hide()
+  });
 
   let openOrders;
-  let closedOrders;
-  var order_num;
   set_orders_list();
 
 
   // Load Server Dashboard
   function loadServerDB() {
     openOrders= state('openOrders')
-    closedOrders= state('closedOrders')
-
 
     $('#header-row').html(`
       <h3 class="header-title">
         <img id="header-logo" src="pics/logo1.png" alt="Company Logo">
         Server Dashboard
       </h3>
-
-    `) // end header-row
+    `)
 
     $('#left-bar').html(`
     <div class="card">
@@ -61,9 +62,7 @@
           <h5 class="card-title">EMPLOYEE ID # ${user.employee_id}</h5>
         </div><!-- card body-->
       </div><!-- card -->
-
       <br>
-
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Cash Out</h5>
@@ -76,9 +75,7 @@
           </div> <!-- container-->
         </div><!-- card body-->
       </div><!-- card -->
-
       <br>
-
       <div class="card">
         <div class="card-body">
         <h5 class="card-title">Tip Out</h5>
@@ -113,41 +110,53 @@
       )
       spinner.loadCtrl()
 
+      let currentCust
+      let newCustNo
       group.group_size = $('#groupSize').val()
+        click('.save-group', () => {
+          // modal loading
+          $('.modal-body').html(`
+          <h4>
+            Creating a group of ${group.group_size}...
+          </h4>`)
+          $('.modal-footer').hide()
 
+          // call backend to make a new customer
+          requestService('/customer', 'get', group, res => {
+          $('.modal-footer').show()
+          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
+          state('currentCust', res.msg)
+          currentCust = state('currentCust')
+          newCustNo = currentCust[0].customer_number
+          const order1 = {
+            customer_number: newCustNo,
+            employee_id: user.employee_id,
+            start_time: null,
+            order_date: null,
+            price: 0,
+            ticket_time: null,
+            completed_flag: false
+          }
 
-            click('.save-group', () => {
+          // call backend to make a new customer_order
+          requestService('/customerOrder', 'post', order1, res => {
+          $('.modal-footer').show() // shows the close button
+          $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
 
-              // modal loading
-              $('.modal-body').html(`
-              <h4>
-                Creating a group of ${group.group_size}...
-              </h4>`)
-              $('.modal-footer').hide()
-
-               // call backend to make a new group. res is the created group on db
-              requestService('/customer', 'post', group, res => {
-                $('.modal-footer').show() // shows the close button
-                $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
-
-                state('currentGroup', res.msg) // saves the group for later use
-                // res.msg = {customer_number: Number, group_size: Number}
-
-                view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
-
-              })
-            })
-
-
+          state('currentOrder', res.msg) // saves the group for later use
+            currentOrder = state('currentOrder')
+            view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+          })
+        })
+      })
   }) // end click serverNewOrder-btn
 
   function set_orders_list() {
     $('.loader').show()
-
     requestService('/openOrders', 'post', user, res => {
       state('openOrders', res.msg)
       $('.loader').hide()
-      //loadServerDB();
+
       $('#main-bar').html(`
         <div> <!-- Open orders Section -->
           <div class="card">
@@ -166,43 +175,36 @@
                 <div id="open-orders-card" class="card-text">
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-12">
-                        <h5 class="order1" style="text-align:left"> Order #${order_number} </h5>
-                      </div>
-                    </div><!-- top row -->
-                    <div class="row">
                       <div class="col-8">
                         <table class="table table-dark">
                           <tr>
                             <th class="tg-0lax">
-                              <p>Customer #<span>${customer_number}</span></p>
+                              <p>Order #<span>${order_number}</span></p>
                               <p><span>${new Date(order_date).toDateString()}</span></p>
                             </th>
                             <th class="tg-s268">
+                              <p>Customer #<span>${customer_number}</span></p>
                               <p>Total:  $<span>${price}</span></p>
-                              <p>Ticket Time: <span>${ticket_time}</span></p>
                             </th>
                           </tr>
                         </table>
                       </div><!-- col L -->
                       <div class="col-4">
-                  <!--  <a href="#" class="btn btn-primary order-btn" id='openOrder1-btn'> -->
-                        <a href="#" class="btn btn-primary order-btn" onclick="selectOrder(${order_number})">
-                          Open Order
-                        </a>
-                        <script>
-                          function selectOrder(ordNum) {
-                            const order_obj = {
-                              order_number: ordNum
-                            }
-
-                            requestService('/order', 'post', order_obj, res => {
-                              state('currentOrder', res.msg)
-                              console.log('HERE', res.msg[0]);
-                              view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
-                            })
+                      <a href="#" class="btn btn-primary order-btn" onclick="selectOrder(${order_number})">
+                        Open Order
+                      </a>
+                      <script>
+                        function selectOrder(ordNum) {
+                          const order_obj = {
+                            order_number: ordNum
                           }
-                        </script>
+
+                          requestService('/order', 'post', order_obj, res => {
+                            state('currentOrder', res.msg)
+                            view('./js/customer.js')
+                          })
+                        }
+                      </script>
                       </div><!-- col R -->
                     </div><!-- row main -->
                     <hr>
@@ -217,11 +219,7 @@
 
     }) // end requestService
 
-      loadServerDB();
+    loadServerDB();
   } // end set_orders_list
-
-  function setOrder() {
-    order_num = openOrders[0].order_number
-  }
 
 } // end serverDashboard.js

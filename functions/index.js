@@ -92,16 +92,20 @@ app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
-app.post('/customer', bodyAPI(customer.create))
+app.get('/customer', bodyAPI(customer.create))
 
 // inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
 app.post('/inventory/history', bodyAPI(inventory.find))
 
 // customer_order
+app.post('/customerOrder', bodyAPI(customer_order.create))
 app.post('/order', bodyAPI(customer_order.find))
 app.post('/openOrders', bodyAPI(customer_order.findOpenOrdersEmp))
 app.post('/closedOrders', bodyAPI(customer_order.findClosedOrdersEmp))
 app.post('/cashout', bodyAPI(customer_order.cashout))
+app.post('/tipout', bodyAPI(customer_order.tipout))
+app.post('/openItems', bodyAPI(customer_order.openItems))
+app.post('/bumpOrder', bodyAPI(customer_order.bumpOrder))
 
 exports.app = functions.https.onRequest(app)
