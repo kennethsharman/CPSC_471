@@ -1,5 +1,6 @@
 const db = require('./db')
 const ingredient = require('./ingredient')
+const made_from = require('./made_from')
 
 const takes_inventory_db = {
   create(takes_inventory_json) {
@@ -55,7 +56,6 @@ const takes_inventory_db = {
         const body = req.body[0]
         const calls = JSON.parse(body.inventory_file).map(({name, quantity}) => new Promise((resolveAll, rejectAll) => {
           // check if it exists
-          console.log(name, quantity)
           db.query(ingredient.find(name, body.supplier)).then(result => {
             if(result.length===0) {
               // make a new one
@@ -80,6 +80,9 @@ const takes_inventory_db = {
               })).catch(err => {
                 rejectAll({msg: err, status: 404})
               })
+
+              // check if food that is out of stock is now in stock
+              //CHECK IN STOCKss
             }
           }).catch(err => {
               rejectAll({msg: err, status: 404})
@@ -88,6 +91,7 @@ const takes_inventory_db = {
 
         // call them all at once
         Promise.all(calls).then(() => {
+          made_from.checkIfNowInStock()
           res.send({msg: '', status: 200})
         }).catch(err => {
           res.send(err)

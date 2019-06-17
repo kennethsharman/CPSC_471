@@ -192,7 +192,7 @@
       order_number: order_num
     }
 
-    requestService('/order', 'post', order_obj, res => {
+    requestService(`/order/${order_obj.order_number}`, 'get', null, res => {
       state('currentOrder', res.msg)
       console.log('HERE', res.msg[0]);
       view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
@@ -232,9 +232,8 @@
 
                // call backend to make a new group. res is the created group on db
               requestService('/customer', 'post', group, res => {
-                $('.modal-footer').show() // shows the close button
-                $('#cancel-group').click() // UI closes the modal by clicking the button instantaneously
-
+                modal().toggle()
+                
                 state('currentGroup', res.msg) // saves the group for later use
                 // res.msg = {customer_number: Number, group_size: Number}
 
@@ -249,14 +248,14 @@
   function set_orders_list() {
     $('.loader').show()
 
-    requestService('/closedOrders', 'post', user, res => {
+    requestService(`order/${user.employee_id}/closed`, 'get', null, res => {
       state('closedOrders', res.msg)
-    })
 
-    requestService('/openOrders', 'post', user, res => {
-      state('openOrders', res.msg)
-      $('.loader').hide()
-      loadServerDB();
+      requestService(`order/${user.employee_id}/open`, 'get', null, res => {
+        state('openOrders', res.msg)
+        $('.loader').hide()
+        loadServerDB()
+      })
     })
 
   } // end set_orders_list

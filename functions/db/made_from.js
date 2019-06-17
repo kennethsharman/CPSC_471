@@ -1,3 +1,6 @@
+const db = require('./db')
+const food = require('./food')
+
 const made_from_db = {
   create(made_from_json) {
     const query_string = {
@@ -45,6 +48,20 @@ const made_from_db = {
     }
 
     return query_string
+  },
+
+  checkIfNowInStock() {
+    db.query(food.find_out_of_stock()).then(res => {
+      res.forEach(food => {
+        food.item_number
+      })
+    })
+  },
+
+  checkIfNowOutOfStock() {
+    return new Promise((resolve, reject) => {
+      resolve()
+    })
   }
 }
 

@@ -15,112 +15,51 @@
   </h3>
 
     `) // end header-row
+    $('.loader').show()
+    state('orders', [])
 
-    $('#main-bar').html(`
+    const getTables = (foodArray, foodType) => foodArray.reduce((prev, {item_number, food_name, out_of_stock_flag, description}) => {
+      return out_of_stock_flag?prev:`${prev}
+      <table class="table table-dark">
+      <tr>
+        <th class="tg-s268">
+          <img class="headerlogo" src="/pics/pasta2.jpg" alt="Pasta2">
+        </th>
+        <th class="tg-0lax">
+          <div class="row">
+            <div class="col-sm-8">
+              <h4 class="food-name">${food_name}</h4>
+            </div><!-- name col -->
+            <div class="col-sm-4">
+              <a href="#" class="btn btn-primary food-action" id='food-${item_number}'>
+                <i class="fas fa-plus-square"></i> Add
+              </a>
+            </div> <!-- action col -->
+          </div><!--first row -->
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <p  class="food-desc">
+                ${description}
+              </p>
+            </div> <!-- singleton col -->
+          </div><!-- second row -->
+        </th>
+      </tr>
+    </table>`, `<div> <!-- ${foodType} Section -->
+      <h4 style="display: inline-block; text-align: left; width: 100%">
+        ${foodType}
+      </h4>
+    `}) + `</div> <!-- end ${foodType} Section --><br><br>`
 
-      <div> <!-- Pasta Section -->
+    requestService(`/menu`, "get", null, ({msg}) => {
+      $('.loader').hide()
+      $('#main-bar').html(msg.reduce((prev, curr) =>
+        curr.array.length==0? prev:
+        `${prev}${getTables(curr.array, curr.name)}`),
+      '') // end main-bar
+    })
 
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          Pasta
-        </h4>
-
-        <table class="table table-dark">
-          <tr>
-            <th class="tg-s268">
-              <img class="headerlogo" src="/pics/pasta2.jpg" alt="Pasta2">
-            </th>
-            <th class="tg-0lax">
-              <div class="row">
-                <div class="col-sm-8">
-                  <h4 class="food-name">Mom's Spaghetti</h4>
-                </div><!-- name col -->
-                <div class="col-sm-4">
-                  <a href="#" class="btn btn-primary food-action" id='spaghetti'>
-                    <i class="fas fa-plus-square"></i> Add
-                  </a>
-                </div> <!-- action col -->
-              </div><!--first row -->
-              <br>
-              <div class="row">
-                <div class="col-12">
-                  <p  class="food-desc">
-                    Made with the best spaghetti sauce.<br> May contain allergens: wheat, milk, eggs, shellfish.
-                  </p>
-                </div> <!-- singleton col -->
-              </div><!-- second row -->
-            </th>
-          </tr>
-        </table>
-
-        <table class="table table-dark">
-          <tr>
-            <th class="tg-s268">
-              <img class="headerlogo" src="/pics/pasta1.jpeg" alt="Pasta1">
-            </th>
-            <th class="tg-0lax">
-              <div class="row">
-                <div class="col-sm-6">
-                  <h4 class="food-name">Dad's Macaroni</h4>
-                </div><!-- name col -->
-                <div class="col-sm-6">
-                  <a href="#" class="btn btn-primary food-action" id='macaroni'>
-                    <i class="fas fa-plus-square"></i> Add
-                  </a>
-                </div> <!-- action col -->
-              </div><!--first row -->
-              <br>
-              <div class="row">
-                <div class="col-12">
-                  <p class="food-desc">
-                    Made with the best spaghetti sauce.<br> May contain allergens: wheat, milk, eggs, shellfish.
-                  </p>
-                </div> <!-- singleton col -->
-              </div><!-- second row -->
-            </th>
-          </tr>
-        </table>
-
-      </div> <!-- end Pasta Section -->
-
-      <br><br>
-
-      <div> <!-- Drink Section -->
-
-        <h4 style="display: inline-block; text-align: left; width: 100%">
-          Drinks
-        </h4>
-
-        <table class="table table-dark">
-          <tr>
-            <th class="tg-s268">
-              <img class="headerlogo" src="/pics/coke.jpg" alt="Drink1">
-            </th>
-            <th class="tg-0lax">
-              <div class="row">
-                <div class="col-sm-6">
-                  <h4 class="food-name">Coca Cola</h4>
-                </div><!-- name col -->
-                <div class="col-sm-6">
-                  <a href="#" class="btn btn-primary food-action" id='coke'>
-                    <i class="fas fa-plus-square"></i> Add
-                  </a>
-                </div> <!-- action col -->
-              </div><!--first row -->
-              <br>
-              <div class="row">
-                <div class="col-12">
-                  <p class="food-desc">
-                    You're not you when you're thirsty.
-                  </p>
-                </div> <!-- singleton col -->
-              </div><!-- second row -->
-            </th>
-          </tr>
-        </table>
-
-      </div> <!-- end Drinks Section -->
-
-    `) // end main-bar
 
     $('#left-bar').html(`
       <div class="card">
@@ -156,24 +95,16 @@
           <div class="row">
             <div class="col-lg-12">
               <table class="table table-dark" style="text-align: center">
-                <tr>
-                  <th>ABC</th>
-                </tr>
-                <tr>
-                  <td>123</td>
-                </tr>
-                <tr>
-                  <td>345 (No peanuts)</td>
-                </tr>
+              <div id="order-table">
+              </div>
               </table>
             </div><!-- col -->
           </div><!-- row -->
           </div> <!-- container-->
       </div><!-- card body-->
       <div class="card-footer">
-        <a href="#" class="btn btn-primary" style="width:100%, height:100%" id='placeOrder-btn'>
-          Place Order
-      </a>
+        <div id="place-order-container">
+        </div>
       </div>
     </div><!-- card -->
 
@@ -212,11 +143,10 @@
       <button type="button" class="btn btn-primary" id="paid-btn">Continue</button>`
   ))
 
-    const employeeFNAME = 'KEN'
 
-    click('.request-btn', () => modal(
+  click('.request-btn', () => modal(
       `<h4>Server requested</h4>`,`
-      <h5>${employeeFNAME} will be at your table shortly.</h5>`,`
+      <h5>${state('user').f_name} will be at your table shortly.</h5>`,`
       <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
     `))
 
@@ -228,26 +158,81 @@
 
     const spinner = new Spinner("#orderQuantity")
     click('.food-action', () => {
-      modal(`
-      <h4>Add to order</h4>`,`
-      <h5 style="text-align: center">${event.target.id}</h5>
-      <br>
+      modal(``,`Loading food item...`, ``)
 
-      <br>
-      ${spinner.getHTML()}
-      <br>
-      <div class="form-group">
-        <label for="comment">Note (Optional):</label>
-        <textarea class="form-control" rows="5" id="note"></textarea>
-      </div>`, `
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-primary" id="Add-order-btn" data-dismiss="modal">
-        <i class="fas fa-plus-square"></i>
-        Add
-      </button>
-      `)
-    spinner.loadCtrl()
+      requestService(`/menu/${event.target.id.substring(5)}`, 'get', null, res => {
+        const name = res.msg[0].food_name
+        modal(`
+          <h4>Add to order</h4>`,`
+          <h5 style="text-align: center">${name}</h5>
+          <br>
 
+          <br>
+          ${spinner.getHTML()}
+          <br>
+          <div class="form-group">
+            <label for="comment">Note (Optional):</label>
+            <textarea class="form-control" rows="5" id="note"></textarea>
+          </div>`, `
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="add-order-btn" data-dismiss="modal">
+          <i class="fas fa-plus-square"></i> 
+            Add
+          </button>
+        `)
+        spinner.loadCtrl()
+
+        click('.add-order-btn', () => {
+          const ordersArr = state('orders')
+          const order = {food: res.msg[0], quantity: $('#orderQuantity').val(), note: $('#note').val()} 
+          ordersArr.push(order)
+          state('orders', ordersArr)
+
+          // first order? display the button
+          if(ordersArr.length==1) $("#place-order-container").html(`
+            <a href="#" class="btn btn-primary" style="width:100%, height:100%" id='placeOrder-btn'>
+              Place Order
+          </a>`)
+
+          $("#order-table").append(`
+            <tr>
+              <th>${order.food.name}</th>
+            </tr>
+            ${
+              order.quantity!=1?
+              `<tr>
+                <td>${order.quantity}</td>
+              </tr>`
+              :""
+            } ${
+              order.quantity!=''?
+              `<tr>
+                <td>${order.note}</td>
+              </tr>`
+              :""
+            }
+          `)
+          modal().toggle()
+        })
+      })
+    })
+
+    click('#placeOrder-btn', () => {
+      modal(``, `Placing order...`, ``)
+      requestService(`/order`, "POST", {
+        orderArr: state('orders'),
+        employee_id: state('user').employee_id,
+        customer_number: state('currentGroup').customer_number
+      }, () => {
+        modal(`
+        <h4 class="modal-title" style="text-align: center" color="black">
+          Order complete
+        </h4>`, '<h4>Your order has been placed.</h4>',
+        `<button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>`)
+        $('#place-order-container').html(`
+          <h5>Order will be served shortly</h5>
+        `)
+      })
     })
 
 } // end customer.js

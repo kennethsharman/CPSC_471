@@ -83,7 +83,6 @@ CREATE TABLE item (
 
 CREATE TABLE drink (
 	item_number int REFERENCES item(item_number) PRIMARY KEY,
-	description text
 );
 
 CREATE TABLE food (
@@ -91,7 +90,8 @@ CREATE TABLE food (
 	food_name text,
 	cook_id int REFERENCES employee(employee_id),
 	station text,
-	out_of_stock_flag boolean
+	out_of_stock_flag boolean,
+	description text
 );
 
 CREATE TABLE wings (
