@@ -1,7 +1,4 @@
-
---drop schema public cascade;
---create schema public;
---UPDATE employee SET manager_flag=true WHERE email='' RETURNING *;
+-- drop schema public cascade; create schema public;
 
 CREATE TABLE employee (
 	employee_id serial PRIMARY KEY,
@@ -83,6 +80,7 @@ CREATE TABLE item (
 
 CREATE TABLE drink (
 	item_number int REFERENCES item(item_number) PRIMARY KEY,
+	diet boolean
 );
 
 CREATE TABLE food (

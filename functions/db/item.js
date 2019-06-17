@@ -118,7 +118,7 @@ const item_db = {
               FROM item, food, ingredient, made_from
               WHERE item.item_number = made_from.item_number
                 AND food.item_number = item.item_number
-                AND made_from.ingredient_number = ingredient.ingredient_number
+                AND made_from.name = ingredient.name
                 AND made_from.supplier = ingredient.supplier
                 AND ingredient.on_hand_count < made_from.amount;`
     }

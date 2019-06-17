@@ -11,11 +11,11 @@ delete from order_consists_of;
 -- EMPLOYEE table
 ALTER SEQUENCE employee_employee_id_seq RESTART WITH 1; -- reset serial auto-numbering
 insert into employee
-values(default, 'Mr. Manager', 'Man', '333-123-1111', '123 Fantasy St.', true, null, true, null, null, true, '2010-05-12', 'elvin.limpin@ucalgary.ca');
+values(default, 'Mr. Manager', 'Man', '333-123-1111', '123 Fantasy St.', true, null, true,  null, null, true, '2010-05-12', 'elvinlimpin@gmail.com');
 insert into employee
-values(default, 'Mr Cook', 'ey-Monster', '403-456-9089', '123 Nowhere Cresc.', true, null, true, null, null, false, null, 'peter.schulze@ucalgary.ca');
+values(default, 'Mr Cook', 'ey-Monster', '403-456-9089', '123 Nowhere Cresc.', true, null, true,  null, null, true, null, 'peter.schulze@ucalgary.ca');
 insert into employee
-values(default, 'Ms. Server', 'Sam', '780-567-8934', '123 Home Rd.', false, null, true, null, null, false, null, 'kenneth.sharman@ucalgary.ca');
+values(default, 'Ms. Server', 'Sam', '780-567-8934', '123 Home Rd.', true, null, true,  null, null, true, null,'kenneth.sharman@ucalgary.ca');
 
 -- SHIFT LOG table
 insert into shift_log
@@ -72,6 +72,7 @@ INSERT INTO ingredient VALUES('Sysco', 'swiss cheese', 5, 3, 6);
 
 -- misc
 INSERT INTO ingredient VALUES('Sysco', 'buffalo sauce', 5, 3, 5);
+INSERT INTO ingredient VALUES('Sysco', 'tomato sauce', 5, 3, 5);
 INSERT INTO ingredient VALUES('Sysco', 'bell pepper', 5, 3, 6);
 
 
@@ -108,7 +109,7 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 -- Pasta: Mom's Spaghetti
   INSERT INTO item VALUES (default, 15.99);
-  INSERT INTO food VALUES (1, "Mom's spaghetti", null, "BAKE", false, "Made with creamy tomato sauce and never frozen meatballs.");
+  INSERT INTO food VALUES (1, 'Mom''s spaghetti', 'BAKE', false, 'Made with creamy tomato sauce and never frozen meatballs.');
   INSERT INTO pasta VALUES(1, true);
   INSERT INTO made_from VALUES('noodles', 'Sysco', 1, 2);
   INSERT INTO made_from VALUES('tomato sauce', 'Sysco', 1, 1);
@@ -117,27 +118,27 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 -- Pasta: Dad's Macaroni
   INSERT INTO item VALUES (default, 12.99);
-  INSERT INTO food VALUES (2, "Dad's macaroni", null, "BAKE", false, "Made with good the good old hearty macaroni and cheese recipe your dad made.");
+  INSERT INTO food VALUES (2, 'Dad''s macaroni', 'BAKE', false, 'Made with good the good old hearty macaroni and cheese recipe your dad made.');
   INSERT INTO pasta VALUES(2, true);
   INSERT INTO made_from VALUES('macaroni', 'Sysco', 2, 2);
   INSERT INTO made_from VALUES('swiss cheese', 'Sysco', 2, 2);
 
 -- Wings: Hot and Spicy Wings
   INSERT INTO item VALUES (default, 10.99);
-  INSERT INTO food VALUES (3, "6pc Hot and Spicy Wings", null, "BAKE", false, "Comes with the dip of your choice and smothered in buffalo sauce.");
+  INSERT INTO food VALUES (3, '6pc Hot and Spicy Wings', 'BAKE', false, 'Comes with the dip of your choice and smothered in buffalo sauce.');
   INSERT INTO wings VALUES(3, 'buffalo', 'gravy');
   INSERT INTO made_from VALUES('wings', 'GFS', 3, 6);
   INSERT INTO made_from VALUES('buffalo sauce', 'Sysco', 3, 1);
 
 -- Wings: Salt and Pepper Wings
   INSERT INTO item VALUES (default, 9.99);
-  INSERT INTO food VALUES (4, "6pc Salt and Pepper Wings", null, "BAKE", false, "Comes with the dip of your choice and crunchy seasoned breading.");
+  INSERT INTO food VALUES (4, '6pc Salt and Pepper Wings', 'BAKE', false, 'Comes with the dip of your choice and crunchy seasoned breading.');
   INSERT INTO wings VALUES(4, 'salt and pepper', 'gravy');
   INSERT INTO made_from VALUES('wings', 'GFS', 4, 6);
   
 -- Pizza: Canadian Deluxe
   INSERT INTO item VALUES (default, 19.99);
-  INSERT INTO food VALUES (5, "Canadian Deluxe Pizza", null, "BAKE", false, "Pepperoni, mushroom, bell pepper, eh?")
+  INSERT INTO food VALUES (5, 'Canadian Deluxe Pizza', 'BAKE', false, 'Pepperoni, mushroom, bell pepper, eh?');
   INSERT INTO menu_pizza VALUES(5, 'thick', 'sour cream');
   INSERT INTO made_from VALUES('dough', 'Sysco', 5, 1);
   INSERT INTO made_from VALUES('mozzarella cheese', 'Sysco', 5, 4);
@@ -146,7 +147,7 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 -- Pizza: Pepperoni
   INSERT INTO item VALUES (default, 17.99);
-  INSERT INTO food VALUES (6, "Pepperoni Pizza", null, "BAKE", false, "Good for parties and late night netflix binges.");
+  INSERT INTO food VALUES (6, 'Pepperoni Pizza', 'BAKE', false, 'Good for parties and late night netflix binges.');
   INSERT INTO menu_pizza VALUES(6, 'thick', 'sour cream');
   INSERT INTO made_from VALUES('dough', 'Sysco', 6, 1);
   INSERT INTO made_from VALUES('mozzarella cheese', 'Sysco', 6, 4);
@@ -155,13 +156,13 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 -- Drinks: Koka Soda
   INSERT INTO item VALUES (default, 2.99);
-  INSERT INTO food VALUES (7, "Koka Soda", null, "EXPO", false, "You're not you when you're thirsty.");
+  INSERT INTO food VALUES (7, 'Koka Soda', 'EXPO', false, 'You''re not you when you''re thirsty.');
   INSERT INTO drink VALUES(7);
   INSERT INTO made_from VALUES('pop syrup', 'GFS', 7, 1);
 
 -- Drinks: Sespi Loca
   INSERT INTO item VALUES (default, 2.99);
-  INSERT INTO food VALUES (8, "Sespi Loca", null, "EXPO", false, "Imported straight from Ruerto Pico.");
+  INSERT INTO food VALUES (8, 'Sespi Loca', 'EXPO', false, 'Imported straight from Ruerto Pico.');
   INSERT INTO drink VALUES(8);
   INSERT INTO made_from VALUES('pop syrup', 'GFS', 8, 1);
 
