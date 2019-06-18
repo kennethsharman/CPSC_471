@@ -1,3 +1,4 @@
+delete from takes_inventory;
 delete from order_consists_of;
 delete from customer_order;
 delete from customer;
@@ -148,3 +149,4 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 
 ALTER SEQUENCE customer_order_order_number_seq RESTART WITH 1;
+ALTER SEQUENCE takes_inventory RESTART WITH 1; 

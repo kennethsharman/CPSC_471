@@ -25,7 +25,7 @@ const ingredient_db = {
 
   update(ingredient_json) {
     const query_string = {
-      text: "UPDATE ingredient SET recommended_count = $2, critical_count = $3, on_hand_count = $4 WHERE name = $5 AND supplier = $6 RETURNING *;",
+      text: "UPDATE ingredient SET recommended_count = $1, critical_count = $2, on_hand_count = $3 WHERE name = $4 AND supplier = $5 RETURNING *;",
       values: [
         ingredient_json.recommended_count,
         ingredient_json.critical_count,
@@ -34,7 +34,7 @@ const ingredient_db = {
         ingredient_json.supplier
       ]
     }
-
+    
     return query_string
   },
 

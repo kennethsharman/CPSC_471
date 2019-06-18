@@ -20,7 +20,7 @@ const takes_inventory_db = {
   find({manager_id, supplier, inventory_date}) {
     const query_string = {
       text: "SELECT * FROM takes_inventory WHERE manager_id = $1 AND supplier = $2 AND inventory_date = $3;",
-      values: [manager_id, supplier, new Date(inventory_date)]
+      values: [manager_id, supplier, inventory_date]
     }
 
     return query_string
@@ -74,10 +74,11 @@ const takes_inventory_db = {
                 on_hand_count: quantity,
                 recommended_count,
                 critical_count,
-                on_hand_count,
                 name,
                 supplier
-              })).catch(err => {
+              })).then(res => {
+                resolveAll()
+              }).catch(err => {
                 rejectAll({msg: err, status: 404})
               })
 
