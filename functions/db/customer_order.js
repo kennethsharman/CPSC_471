@@ -141,7 +141,7 @@ const customer_order_db = {
       FROM customer_order AS C,
         order_consists_of AS O
       WHERE C.order_number=O.order_number
-      AND C.order_number = ${req.params.id}`).then(response => {
+      AND C.order_number = ${req.params.id};`).then(response => {
         console.log("IS COMPLETE?")
         console.log(response.every(({completed_item}) => completed_item))
         if(response.every(({completed_item}) => completed_item)) { // for all items completed_item = true
