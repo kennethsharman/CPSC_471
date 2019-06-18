@@ -24,8 +24,8 @@ const item_db = {
 
   update(item_json) {
     const query_string = {
-      text: "UPDATE item SET price = $1, completed_flag = $2 WHERE item_number = $3 RETURNING *;",
-      values: [item_json.price, item_json.completed_flag, item_json.item_number]
+      text: "UPDATE item SET price = $1, completed_item = $2 WHERE item_number = $3 RETURNING *;",
+      values: [item_json.price, item_json.completed_item, item_json.item_number]
     }
 
     return query_string
@@ -77,11 +77,9 @@ const item_db = {
     let totalPrice = 0
 
     // get queries
-    req.body.orderArr.forEach(({food, quantity, note, orderNum}) => {
-      console.log("FOOD", food)
+    req.body.orderArr.forEach(({food, quantity, note}) => {
       for(let i = 0; i < quantity; i++) {
-        qArray.push(order_consists_of.create({order_number: orderNum, item_number: food.item_number}))
-        totalPrice += Number(food.price)
+        totalPrice += Math.ceil(Number(food.price) * 100)/100
       }
 
       if(note!=='') notes.push(`${food.food_name}: ${note}`)
@@ -95,15 +93,22 @@ const item_db = {
       order_date: new Date(),
       price: totalPrice,
       ticket_time: null,
-      completed_flag: false,
+      completed_order: false,
       special_request: notes.reduce((prev, curr) => `${prev} | ${curr}`, '')
     })).then(response => {
+      const order_number = response[0].order_number
+      req.body.orderArr.forEach(({food, quantity}) => {
+        for(let i = 0; i < quantity; i++) {
+          qArray.push(order_consists_of.create({order_number, item_number: food.item_number, quantity}))
+        }
+      })
       // make associated orders
-      const calls = qArray.map(qString => new Promise((resolve, reject) =>
-        order_consists_of.create(qString).then(() => {
-          made_from.checkIfNowOutOfStock().then(resolve)
-        }).catch(reject)
-        ))
+      const calls = qArray.map(qString => new Promise((resolve, reject) => {
+        console.log("Q STRING", qString)
+          db.query(qString).then(() => {
+            made_from.checkIfNowOutOfStock().then(resolve)
+          }).catch(reject)
+        }))
 
       Promise.all(calls).then(() => {
         res.send({msg: '', status: 200})

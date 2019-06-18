@@ -26,7 +26,7 @@
           <div class="container-fluid lighter">
               <div class="row">
                 <div class="col-md-6">
-                  <a href="#" id='neworder-btn' class="btn btn-primary">Take Order</a>
+                  <a href="#" class="btn btn-primary serverNewOrder-btn">Take Order</a>
                 </div><!-- L col -->
                 <div class="col-md-6">
                   <a href="#" id='s-dash-btn' class="btn btn-primary">Dashboard</a>
@@ -127,20 +127,9 @@
   </div>
     `) // end left-bar
 
-    $('#right-bar').html(`
-
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">86ed ITEMS</h5>
-        <div id="out-of-stock-items-list-card" class="card-text">
-        </div><!--card text -->
-      </div><!-- card body -->
-    </div><!-- card -->
-    `)
+    $('#right-bar').html(``)
   } // end loadAdmin
 
-
-  click('#neworder-btn', () => view("./js/customer.js"))
 
   function set_shift_clock() {
     const user = state('user')

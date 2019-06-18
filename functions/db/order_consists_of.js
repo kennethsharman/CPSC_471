@@ -1,8 +1,8 @@
 const order_consists_of_db = {
   create(order_consists_of_json) {
     const query_string = {
-      text: "INSERT INTO order_consists_of (order_number, item_number, completed_flag) VALUES ($1, $2, false) RETURNING *;",
-      values: [order_consists_of_json.order_number, order_consists_of_json.item_number]
+      text: "INSERT INTO order_consists_of (order_number, item_number, quantity, completed_item) VALUES ($1, $2, $3, false) RETURNING *;",
+      values: [order_consists_of_json.order_number, order_consists_of_json.item_number, order_consists_of_json.quantity]
     }
 
     return query_string
@@ -19,7 +19,8 @@ const order_consists_of_db = {
 
   complete({order_number, item_number}) {
     const query_string = {
-      text: `UPDATE customer_order SET completed_flag = true WHERE order_number = ${order_number} AND item_number = ${item_number}`,
+      text: `UPDATE customer_order SET completed_item = true WHERE order_number = $1 AND item_number = $2`,
+      values: [order_number, item_number]
     }
 
     result = db.query(query_string)

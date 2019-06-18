@@ -39,6 +39,7 @@
 
   function set_items_list() {
     $('.loader').show()
+    $('#main-bar').html('')
     requestService('/openItems', 'post', user, res => {
       state('openItems', res.msg)
       console.log("FIRST: ", res.msg[0]);
@@ -54,7 +55,7 @@
           </div>
         </div>
         ${
-          res.msg.reduce((prev, {order_number, item_number, food_name, station}) => `
+          res.msg.reduce((prev, {order_number, item_number, food_name, station, quantity}) => `
               ${prev}
                       <div class="card">
                         <div class="card-body">
@@ -69,7 +70,8 @@
                                 <table class="table table-dark">
                                   <tr>
                                     <th class="tg-0lax">
-                                      <p>Item Number: <span>Item #${item_number}</span></p>
+                                      <p>Quantity:<span> ${quantity}</span></p>
+                            
                                     </th>
                                     <th class="tg-s268">
                                       <p>Station: <span>${station}</span></p>
@@ -86,11 +88,12 @@
                                 </a>
                                 <script>
                                 function selectOrder(ordNum, itmNo) {
+                                  $('.order-btn').html('bumping order...')
                                   const order_obj = {
                                     order_number: ordNum,
                                     item_number: itmNo
                                   }
-                                  requestService('/bumpOrder', 'post', order_obj, res => {
+                                  requestService('/bumpOrder/${order_number}', 'post', order_obj, res => {
                                     console.log('DONE BUMP QUERY', res.msg[0]);
                                     view('./js/cookDashboard.js')
                                   })

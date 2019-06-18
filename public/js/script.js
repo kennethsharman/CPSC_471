@@ -263,4 +263,45 @@ click('#neworder-btn', () => view("./js/customer.js"))
         requestService('/user', 'PUT', employee)
       })
   })
+  
+  click('.serverNewOrder-btn', event => {
+      const group = {
+        group_size: 2 // default group size
+      }
+      const spinner = new Spinner("#groupSize", 2, 1, 20) // making a new spinner for input. Data can be accessed on the element param
+
+      modal(
+        `<h4 class="modal-title" style="text-align: center" color="black">
+          Group Size
+        </h4>`,
+        `<h5> How big is this group?</h5>
+          ${spinner.getHTML()}`,
+          `<button type="button" class="btn btn-secondary" id="cancel-group" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary save-group">Start Order</button>`
+      )
+      spinner.loadCtrl()
+
+      let currentCust
+      let newCustNo
+        click('.save-group', () => {
+          group.group_size = $('#groupSize').val()
+
+          // modal loading
+          modal().body(`
+          <h4>
+            Creating a group of ${group.group_size}...
+          </h4>`).foot('')
+
+          // call backend to make a new customer
+          requestService('/customer', 'post', group, res => {
+            modal().toggle()
+
+            state('currentGroup', res.msg[0])
+            console.log("CURRENT GROUP")
+            state('currentOrder', null)
+            view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
+          // })
+        })
+      })
+  }) // end click serverNewOrder-btn
 }
