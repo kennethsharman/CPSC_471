@@ -37,7 +37,7 @@ CREATE TABLE customer_order (
 	order_date date,
 	price numeric,
 	ticket_time interval,
-	completed_flag boolean,
+	completed_order boolean,
 	special_request text
 );
 
@@ -129,6 +129,6 @@ CREATE TABLE made_from (
 CREATE TABLE order_consists_of (
 	order_number int REFERENCES customer_order(order_number),
 	item_number int REFERENCES item(item_number),
-	completed_flag boolean,
+	completed_item boolean,
 	PRIMARY KEY (order_number, item_number)
 );

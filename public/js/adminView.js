@@ -26,7 +26,7 @@
           <div class="container-fluid lighter">
               <div class="row">
                 <div class="col-md-6">
-                  <a href="#" id='neworder-btn' class="btn btn-primary">Take Order</a>
+                  <a href="#" class="btn btn-primary serverNewOrder-btn">Take Order</a>
                 </div><!-- L col -->
                 <div class="col-md-6">
                   <a href="#" id='s-dash-btn' class="btn btn-primary">Dashboard</a>
@@ -139,8 +139,6 @@
     `)
   } // end loadAdmin
 
-
-  click('#neworder-btn', () => view("./js/customer.js"))
 
   function set_shift_clock() {
     const user = state('user')

@@ -33,30 +33,6 @@ values(3, '2019-05-22', '2019-05-22 19:10:25-06', '2019-05-22 21:10:25-06');
 
 -- CUSTOMER table
 ALTER SEQUENCE customer_customer_number_seq RESTART WITH 1; -- reset serial auto-numbering
-insert into customer
-values(default, 4);
-insert into customer
-values(default, 3);
-insert into customer
-values(default, 6);
-insert into customer
-values(default, 2);
-insert into customer
-values(default, 2);
-insert into customer
-values(default, 2);
-insert into customer
-values(default, 4);
-insert into customer
-values(default, 3);
-insert into customer
-values(default, 6);
-insert into customer
-values(default, 2);
-insert into customer
-values(default, 2);
-insert into customer
-values(default, 2);
 
 -- default stuff in the pantry
 -- meats & drinks
@@ -172,23 +148,3 @@ ALTER SEQUENCE item_item_number_seq RESTART WITH 1; -- reset serial auto-numberi
 
 
 ALTER SEQUENCE customer_order_order_number_seq RESTART WITH 1;
--- An open order for employee 1
-INSERT INTO customer_order
-  VALUES (default, 1, 1, '2016-06-22 20:07:25-06', '2016-06-22', 12.99, '15 minute', true, 'Nothing because I am not a pain in the ass.');
-INSERT INTO customer_order
-  VALUES (default, 2, 1, '2016-06-22 20:08:25-06', '2016-06-22', 10.00, '7 minute', true, 'Have it not be cold when it comes out k thx');
-INSERT INTO customer_order
-  VALUES (default, 3, 1, '2016-06-22 20:10:25-06', '2016-06-22', 2000.00, null, false, 'Make sure its made with EXTRA love <3');
-INSERT INTO customer_order
-  VALUES (default, 4, 1, '2016-06-22 20:14:25-06', '2016-06-22', 19.49, null, false, 'Extra fries plz');
-
-INSERT INTO order_consists_of
-  VALUES(1, 1, true);
-INSERT INTO order_consists_of
-  VALUES(2, 3, true);
-INSERT INTO order_consists_of
-  VALUES(3, 5, false);
-INSERT INTO order_consists_of
-  VALUES(4, 2, false);
-INSERT INTO order_consists_of
-  VALUES(4, 4, false);

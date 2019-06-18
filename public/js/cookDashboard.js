@@ -90,7 +90,7 @@
                                     order_number: ordNum,
                                     item_number: itmNo
                                   }
-                                  requestService('/bumpOrder', 'post', order_obj, res => {
+                                  requestService('/bumpOrder/${order_number}', 'post', order_obj, res => {
                                     console.log('DONE BUMP QUERY', res.msg[0]);
                                     view('./js/cookDashboard.js')
                                   })

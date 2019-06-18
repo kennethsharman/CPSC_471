@@ -71,7 +71,6 @@ const paramsAPI = (qString, pass) => (req, res, next) => new Promise((resolve, r
  app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))
 
 // recieves back end post/get/put/delete
-app.post('/echo', validator.echoMW, echoAPI.testEP)
 
 // employee
 app.post('/user', bodyAPI(employee.create))
@@ -93,7 +92,7 @@ app.post('/shift/end', (req, res) => shift_log_api.clock_out(req, res))
 app.get('/item/outofstock', (req, res) => item_api.out_of_stock_items(req, res))
 
 // customer
-app.get('/customer', bodyAPI(customer.create))
+app.post('/customer', bodyAPI(customer.create))
 
 // inventory - check managerDashboard.js
 app.post('/inventory', bodyAPI(inventory.create, true), inventory.makeIngredients)
@@ -105,15 +104,17 @@ app.get('/menu/:id', item.menuItem)
 
 // customer_order
 app.post('/customerOrder', bodyAPI(customer_order.create))
-app.post('/order', bodyAPI(customer_order.find))
-app.post('/openOrders', bodyAPI(customer_order.findOpenOrdersEmp))
-app.post('/closedOrders', bodyAPI(customer_order.findClosedOrdersEmp))
+app.post('/order', item.placeOrder)
+
+
 app.post('/cashout', bodyAPI(customer_order.cashout))
-app.post('/tipout', bodyAPI(customer_order.tipout))
+app.post('/tipout/:id', bodyAPI(customer_order.tipout, true), paramsAPI(employee.find)) // get user after
+
 app.post('/openItems', bodyAPI(customer_order.openItems))
-app.post('/bumpOrder', bodyAPI(customer_order.bumpOrder))
-app.post('/order2', item.placeOrder)
+app.post('/bumpOrder/:id', bodyAPI(customer_order.bumpOrder, true), customer_order.checkIfComplete)
+
 app.get('/order/:id', paramsAPI(customer_order.find))
+app.get('/order/:id/contents', paramsAPI(customer_order.findContents))
 app.get('/order/:id/open', paramsAPI(customer_order.findOpenOrdersEmp))
 app.get('/order/:id/closed', paramsAPI(customer_order.findClosedOrdersEmp))
 

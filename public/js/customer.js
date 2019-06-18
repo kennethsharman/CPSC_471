@@ -2,7 +2,14 @@
 // Customer Order View
 
 {
-  const currentOrder = state('currentOrder')? state('currentOrder')[0]: [{order_number: null}]
+  const showFood = (name, quantity, price, note) => {
+    $("#order-table").append(`
+      ${name} ${quantity!=1? `x${quantity}`: ""}
+      ${ note!=''? `<br>${price} | "${note}"<hr>`:`${price}<hr>`}
+    `)
+  }
+
+  const currentOrder = state('currentOrder')? state('currentOrder')[0]: {order_number: null} // don't show
   loadOrder();
 
   // Load Customer Order View Page
@@ -61,8 +68,46 @@
       $('.loader').hide()
       
       $('#main-bar').html(msg.reduceRight((prev, {name, array}) =>
-      curr.array.length==0? prev:  
+      array.length==0? prev:  
       `${prev}${getTables(array, name)}`, '')) // end main-bar
+
+
+      $('#right-bar').html(`
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Order ${currentOrder.order_number || ""} Contents
+          </h5>
+          <div class="container-fluid lighter">
+            <div class="row">
+              <div class="col-lg-12">
+                <table class="table table-dark" style="text-align: center">
+                <div id="order-table">
+                </div>
+                </table>
+              </div><!-- col -->
+            </div><!-- row -->
+            </div> <!-- container-->
+        </div><!-- card body-->
+        <div class="card-footer">
+          <div id="place-order-container">
+          </div>
+        </div>
+      </div><!-- card -->
+  
+        <br><br><br>
+  
+  
+      `) // end right-bar
+
+      if(currentOrder.order_number!=null) {
+        $('order-table').html('Loading order contents...')
+        requestService(`/order/${currentOrder.order_number}/contents`, "get", null, res => {
+          res.msg.map(({food_name, price}) => {
+            showFood(food_name, 1, price, '')
+          })
+        })
+      }
     })
 
 
@@ -89,34 +134,6 @@
         </div><!-- card -->
 
     `) // end left-bar
-
-    $('#right-bar').html(`
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">
-          Order ${currentOrder.order_number || ""} Contents
-        </h5>
-        <div class="container-fluid lighter">
-          <div class="row">
-            <div class="col-lg-12">
-              <table class="table table-dark" style="text-align: center">
-              <div id="order-table">
-              </div>
-              </table>
-            </div><!-- col -->
-          </div><!-- row -->
-          </div> <!-- container-->
-      </div><!-- card body-->
-      <div class="card-footer">
-        <div id="place-order-container">
-        </div>
-      </div>
-    </div><!-- card -->
-
-      <br><br><br>
-
-
-    `) // end right-bar
 
   } // end loadOrder
 
@@ -163,7 +180,7 @@
 
     const spinner = new Spinner("#orderQuantity")
     click('.food-action', () => {
-      modal(``,`Loading food item...`, ``)
+      modal(``,`Loading food item...`, `  `)
 
       requestService(`/menu/${event.target.id.substring(5)}`, 'get', null, res => {
         const food = res.msg[0]
@@ -199,26 +216,17 @@
               Place Order
           </a>`)
 
-          $("#order-table").append(`
-            <tr>
-              <th>${order.food.food_name} ${order.quantity!=1? `x${order.quantity}`: ""}</th>
-            </tr>
-            ${
-              order.quantity!=''?
-              `<tr>
-                <td>${order.note}</td>
-              </tr>`
-              :""
-            }
-          `)
-          modal().toggle()
+          showFood(order.food.food_name, order.quantity, order.food.price, order.note)
+
+          modal().toggle('hide')
         })
       })
     })
 
     click('#placeOrder-btn', () => {
       modal(``, `Placing order...`, ``)
-      requestService(`/order2`, "POST", {
+      console.log(state('currentGroup'))
+      requestService(`/order`, "POST", {
         orderArr: state('orders'),
         employee_id: state('user').employee_id,
         customer_number: state('currentGroup').customer_number
@@ -229,7 +237,9 @@
         </h4>`, '<h4>Your order has been placed.</h4>',
         `<button type="button" class="btn btn-primary" id="reset-order-btn" data-dismiss="modal">OK</button>`)
         $('#place-order-container').html(`
-          <h5>Order will be served shortly</h5>
+          <p>Your order will
+          <br>
+          be served shortly</p>
         `)
       })
     })
