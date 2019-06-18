@@ -99,7 +99,7 @@ const item_db = {
       const order_number = response[0].order_number
       req.body.orderArr.forEach(({food, quantity}) => {
         for(let i = 0; i < quantity; i++) {
-          qArray.push(order_consists_of.create({order_number, item_number: food.item_number}))
+          qArray.push(order_consists_of.create({order_number, item_number: food.item_number, quantity}))
         }
       })
       // make associated orders

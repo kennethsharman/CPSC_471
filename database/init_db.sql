@@ -130,5 +130,6 @@ CREATE TABLE order_consists_of (
 	order_number int REFERENCES customer_order(order_number),
 	item_number int REFERENCES item(item_number),
 	completed_item boolean,
+	quantity int,
 	PRIMARY KEY (order_number, item_number)
 );

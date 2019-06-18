@@ -1,8 +1,8 @@
 const order_consists_of_db = {
   create(order_consists_of_json) {
     const query_string = {
-      text: "INSERT INTO order_consists_of (order_number, item_number, completed_item) VALUES ($1, $2, false) RETURNING *;",
-      values: [order_consists_of_json.order_number, order_consists_of_json.item_number]
+      text: "INSERT INTO order_consists_of (order_number, item_number, quantity, completed_item) VALUES ($1, $2, $3, false) RETURNING *;",
+      values: [order_consists_of_json.order_number, order_consists_of_json.item_number, order_consists_of_json.quantity]
     }
 
     return query_string

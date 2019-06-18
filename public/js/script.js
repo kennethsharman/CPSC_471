@@ -296,7 +296,8 @@ click('#neworder-btn', () => view("./js/customer.js"))
           requestService('/customer', 'post', group, res => {
             modal().toggle()
 
-            state('currentGroup', res.msg)
+            state('currentGroup', res.msg[0])
+            console.log("CURRENT GROUP")
             state('currentOrder', null)
             view('./js/customer.js') // switches to customer view. You can access the group now with state('currentGroup')
           // })

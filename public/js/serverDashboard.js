@@ -4,6 +4,7 @@
 {
   let user = state('user');
 
+  $("#main-bar").html('')
   $('.loader').show()  // update cashout attribute
   requestService('/cashout', 'post', user, res => {
     requestService(`/tipout/${user.employee_id}`, 'post', user, res => {
@@ -66,7 +67,7 @@
           <div class="container-fluid lighter">
             <div class="row">
               <div class="col-lg-12">
-                ${("$" + user.cash_out) || "not available"}
+                ${("$" + (Math.ceil(user.cash_out*100)/100)) || "not available"}
               </div><!-- col -->
             </div><!-- row 1 -->
           </div> <!-- container-->
@@ -139,7 +140,7 @@
                                 </th>
                                 <th class="tg-s268">
                                   <p>Customer #<span>${customer_number}</span></p>
-                                  <p>Total:  $<span>${price}</span></p>
+                                  <p>Total:  $<span>${Math.ceil(price*100)/100}</span></p>
                                 </th>
                               </tr>
                             </table>
@@ -158,8 +159,52 @@
     
                 `,``)
               }
-          `) // end main-bar 
-
+              <br>
+              <div> <!-- Closed orders Section -->
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title order-heading">
+                    Closed Orders for ${user.f_name}
+                  </h4>
+                  <hr>
+                </div>
+              </div>
+            ${
+              state('closedOrders').reduce((prev, {order_number, customer_number, employee_id, start_time, order_date, price, ticket_time, completed_order, special_request}) => `
+              ${prev}
+                <div class="card">
+                  <div class="card-body">
+                    <div id="open-orders-card" class="card-text">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-8">
+                            <table class="table table-dark">
+                              <tr>
+                                <th class="tg-0lax">
+                                  <p>Order #<span>${order_number}</span></p>
+                                  <p><span>${new Date(order_date).toDateString()}</span></p>
+                                </th>
+                                <th class="tg-s268">
+                                  <p>Customer #<span>${customer_number}</span></p>
+                                  <p>Total:  $<span>${Math.ceil(price*100)/100}</span></p>
+                                </th>
+                              </tr>
+                            </table>
+                          </div><!-- col L -->
+                          <div class="col-4">
+                          <a href="#" class="btn btn-primary order-btn" id="order-${order_number}">
+                            Open Order
+                          </a>
+                          </div><!-- col R -->
+                        </div><!-- row main -->
+                        <hr>
+                        </div><!-- container -->
+                    </div><!-- card body -->
+                  </div><!-- card -->
+                </div> <!-- Closed orders Section -->
+    
+                `,``)
+              }`)
         loadServerDB()
       })
     })

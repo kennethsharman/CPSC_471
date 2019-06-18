@@ -22,8 +22,6 @@
 
  // local back end code
  // defined in API folder
- const echoAPI = require('./API/echoAPI')
- const validator = require('./API/validatorMW')
 
  const db = require('./db/db')
  const employee = require('./db/employee')

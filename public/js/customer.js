@@ -101,8 +101,9 @@
       `) // end right-bar
 
       if(currentOrder.order_number!=null) {
-        $('order-table').html('Loading order contents...')
+        $('#order-table').html('Loading order contents...')
         requestService(`/order/${currentOrder.order_number}/contents`, "get", null, res => {
+          $('#order-table').html('')
           res.msg.map(({food_name, price}) => {
             showFood(food_name, 1, price, '')
           })

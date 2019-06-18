@@ -80,7 +80,7 @@ const customer_order_db = {
 
   openItems(employee_json) {
     const query_string = {
-      text: "SELECT order_consists_of.order_number, food.item_number, food_name, station FROM food inner join order_consists_of on order_consists_of.item_number=food.item_number where completed_order=false;",
+      text: "SELECT order_consists_of.order_number, food.item_number, food_name, station, quantity FROM food inner join order_consists_of on order_consists_of.item_number=food.item_number where completed_item=false;",
       values: []
     }
 
@@ -89,7 +89,7 @@ const customer_order_db = {
 
   bumpOrder(employee_json) {
     const query_string = {
-      text: "UPDATE order_consists_of SET completed_order=true where order_number=$1 and item_number=$2;",
+      text: "UPDATE order_consists_of SET completed_item=true where order_number=$1 and item_number=$2;",
       values: [employee_json.order_number, employee_json.item_number]
     }
 
@@ -110,7 +110,7 @@ const customer_order_db = {
 
   update(customer_order_json) {
     const query_string = {
-      text: "UPDATE customer_order SET customer_number = $1, employee_id = $2, start_time = $3, order_date = $4, price = $5, ticket_time = $6, completed_order = $7 WHERE order_number = $8 RETURNING *;",
+      text: "UPDATE customer_order SET customer_number = $1, employee_id = $2, start_time = $3, order_date = $4, price = $5, ticket_time = $6, completed_order = $7, special_request = $8 WHERE order_number = $9 RETURNING *;",
       values: [
         customer_order_json.customer_number,
         customer_order_json.employee_id,
@@ -141,10 +141,15 @@ const customer_order_db = {
       FROM customer_order AS C,
         order_consists_of AS O
       WHERE C.order_number=O.order_number
-      AND order_number = ${req.params.id}`).then(response => {
+      AND C.order_number = ${req.params.id}`).then(response => {
+        console.log("IS COMPLETE?")
+        console.log(response.every(({completed_item}) => completed_item))
         if(response.every(({completed_item}) => completed_item)) { // for all items completed_item = true
-          response.completed_order = true
-          db.query(customer_order_db.update(response)).then(() => {
+          response[0].completed_order = true
+          console.log('REPSONSE', response)
+          const qstring = customer_order_db.update(response[0])
+          console.log(qstring)
+          db.query(qstring).then(() => {
             res.send({msg: "updated", status: 200})
           })
         } else res.send({msg: 'not done yet', status: 200})
