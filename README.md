@@ -2,10 +2,21 @@
 
 ## Instructions
 
-1) Clone
+1) Ask access for the firebase account and `.runtimeconfig.json` file.
+2) Clone repo.
 2) Copy `.runtimeconfig.json` into the `functions` folder
-3) Run `firebase serve`
+3) Log in to firebase account and`firebase serve` on bash/powershell/etc.
 4) Visit the app at http://localhost:5000
+
+## File structure
+### Functions
+This is the back end. It contains queries on `.db/` and API calls to postgreSQL on `.index.js`.
+
+### Public
+This is the front end. HTML, CSS, and JS for the views are here.
+
+### Database
+This contains sql files for the CLI.
 
 ## File Descriptions
 
