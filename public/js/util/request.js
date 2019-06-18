@@ -1,6 +1,6 @@
 // interface with backend
 
-const deployment = false
+const deployment = true
 
 const requestService = (url, method, params, success, error) => {
     const serverURL = deployment? `https://us-central1-seng471project.cloudfunctions.net/app`: `http://localhost:5001/seng471project/us-central1/app`
