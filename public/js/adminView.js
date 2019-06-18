@@ -127,7 +127,16 @@
   </div>
     `) // end left-bar
 
-    $('#right-bar').html(``)
+    $('#right-bar').html(`
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">86ed ITEMS</h5>
+        <div id="out-of-stock-items-list-card" class="card-text">
+        </div><!--card text -->
+      </div><!-- card body -->
+    </div><!-- card -->
+    `)
   } // end loadAdmin
 
 
