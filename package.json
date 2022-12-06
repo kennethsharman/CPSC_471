@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/elvinlimpin/CPSC471#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "firebase-admin": "^7.3.0",
